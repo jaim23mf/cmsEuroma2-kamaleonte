@@ -1,0 +1,54 @@
+<div class="center">
+    <h1>Services</h1>
+</div>
+
+<button class="mr pegado" mat-raised-button (click)="newService()" >NEW SERVICE</button>
+
+<div class="center">
+    <button mat-button (click)="openAllPanels()">Expand All</button>
+    <button mat-button (click)="closeAllPanels()">Collapse All</button>
+  </div>
+
+  <div class="center acordeon"   *ngFor="let p of services">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p>Service Title: &nbsp;&nbsp;</p>
+          <p class="descripcion">{{p.title}}</p>
+        </mat-panel-title>
+        <mat-panel-description>
+            <p>Service Descrption:&nbsp;&nbsp;</p> 
+            <p class="descripcion">{{p.description}}</p>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true">
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"></textarea>
+      </mat-form-field>
+
+
+      <app-file-upload requiredFileType="img" fileName="Upload icon" ></app-file-upload>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Order</mat-label>
+        <input matInput type="text" [(ngModel)]="p.order">
+      </mat-form-field>
+      <button class="mat-icon-color" mat-icon-button (click)="deleteService(p)" >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-expansion-panel>
+   
+  </mat-accordion>
+  </div>

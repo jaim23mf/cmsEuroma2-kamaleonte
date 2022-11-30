@@ -1,0 +1,59 @@
+.hours-form{
+    min-width: 100px;
+    max-width: 100px;
+    display: inline;
+
+}
+
+.descripcion{
+    max-width: 80%;
+    max-height: 20px;
+    word-break: break-all;
+
+}
+
+mat-form-field{
+    padding: 5px;
+}
+.general-form{
+    width: 99%;
+    margin: 10px;
+}
+
+.example-full-width{
+    /*width: 100%;*/
+    padding: 10px;
+}
+
+
+.mr{
+    margin-right: 50px;
+}
+
+.mb{
+    margin-bottom: 15px;
+}
+
+.pegado{
+    position: fixed;
+    top: 53%;
+    display: grid;
+}
+
+.acordeon{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.rules{
+    margin:10px;
+}
+
+.categorias{
+    display: inline-flex;
+    width: 80%;
+}
+
+.cat{
+    width: 50%;
+}

@@ -1,0 +1,66 @@
+<div class="center">
+    <h1>Blog</h1>
+</div>
+
+
+<button class="mr pegado" mat-raised-button (click)="newEntry()" >NEW ENTRY</button>
+
+<div class="center">
+    <button mat-button (click)="openAllPanels()">Expand All</button>
+    <button mat-button (click)="closeAllPanels()">Collapse All</button>
+  </div>
+
+  <div class="center acordeon"   *ngFor="let p of blog">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p>Blog Entry: &nbsp;&nbsp;</p>
+          <p class="descripcion">{{p.title}}</p>
+        </mat-panel-title>
+        <mat-panel-description>
+            <p>Blog Entry Descrption:&nbsp;&nbsp;</p> 
+            <p class="descripcion">{{p.short_desc}}&nbsp;&nbsp;</p>
+            <mat-icon>note_add</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true">
+      </mat-form-field>
+
+      <app-file-upload requiredFileType="img" fileName="Upload Image" ></app-file-upload>     
+      <app-file-upload requiredFileType="img" fileName="Upload Thumb" type="1"></app-file-upload>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Short Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.short_desc"></textarea>
+      </mat-form-field>
+
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Highlight</mat-label>
+        <input matInput >
+      </mat-form-field>
+      <button class="mat-icon-color" mat-icon-button (click)="deleteEntry(p)" >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+  </div>

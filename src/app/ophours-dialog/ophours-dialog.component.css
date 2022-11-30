@@ -1,0 +1,19 @@
+.lista{
+    list-style: none;
+    padding: 10px 10px 0px 10px;
+    text-align: end;
+    margin-bottom: 3px;
+}
+
+.dia{
+
+    margin: 5px;
+}
+
+.dia-inicio-fin{
+    margin-left: 5px;;
+}
+
+.close{
+    bottom: 20px;
+}

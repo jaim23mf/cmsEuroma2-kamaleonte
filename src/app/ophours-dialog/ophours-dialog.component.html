@@ -1,0 +1,85 @@
+<h1 mat-dialog-title class="center">Store Opening Hours</h1>
+<div mat-dialog-content class="center">
+  <ul class="lista">
+    <li>
+        <span class="dia">Monday:</span>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Open</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Mon.inicio">
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Close</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Mon.fin">
+        </mat-form-field>
+    </li>
+    <li>
+        <span class="dia">Tuesday:</span>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Open</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Tue.inicio">
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Close</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Tue.fin">
+        </mat-form-field>
+      </li>
+      <li>
+        <span class="dia">Wednesday:</span>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Open</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Wed.inicio">
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Close</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Wed.fin">
+        </mat-form-field>
+      </li>
+      <li>
+        <span class="dia">Thursday:</span>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Open</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Thu.inicio">
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Close</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Thu.fin">
+        </mat-form-field>
+      </li>
+      <li>
+        <span class="dia">Friday:</span>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Open</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Fri.inicio">
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Close</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Fri.fin">
+        </mat-form-field>
+      </li>
+      <li>
+        <span class="dia">Saturday:</span>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Open</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Sat.inicio">
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Close</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Sat.fin">
+        </mat-form-field>
+      </li>
+      <li>
+        <span class="dia">Sunday:</span>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Open</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Sun.inicio">
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="dia-inicio-fin">
+        <mat-label>Close</mat-label>
+        <input matInput type="time" [required]="true" [(ngModel)]="data.Sun.fin">
+        </mat-form-field>
+      </li>
+  </ul>
+  <button mat-stroked-button class="close" (click)="closeDialog()">Close</button>
+
+</div>
+

@@ -1,0 +1,224 @@
+<div class="center">
+    <h1>Opening Hours</h1>
+</div>
+
+<!-- GENERAL -->
+<div class="center">
+    <h2>General Rule</h2>
+
+    <div class="center acordeon" >
+      <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <p>Opening Hours </p>
+            </mat-panel-title>
+            <mat-panel-description>
+                <p> Set the general opening hours &nbsp;&nbsp; </p> 
+                <mat-icon>access_time</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+    <h3>Open at :</h3>
+    <form class="hours-form">
+
+        <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label>Global</mat-label>
+          <input matInput type="time" [(ngModel)]="inicio['global']" name="global">
+        </mat-form-field>
+      
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Food Court</mat-label>
+            <input matInput type="time" [(ngModel)]="inicio['food']" name="food">
+        </mat-form-field>
+
+          <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Hipermarket</mat-label>
+            <input matInput type="time" [(ngModel)]="inicio['market']" name="market">
+        </mat-form-field>
+
+          <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Our Stores</mat-label>
+            <input matInput type="time" [(ngModel)]="inicio['store']" name="stores">
+        </mat-form-field>
+    </form>
+    
+    <h3>Close at :</h3>
+    <form class="hours-form">
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Global</mat-label>
+            <input matInput type="time" [(ngModel)]="fin['global']" name="global">
+          </mat-form-field>
+        
+          <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Food Court</mat-label>
+              <input matInput type="time" [(ngModel)]="fin['food']" name="food">
+          </mat-form-field>
+  
+            <mat-form-field  appearance="outline" class="example-full-width">
+              <mat-label>Hipermarket</mat-label>
+              <input matInput type="time" [(ngModel)]="fin['market']" name="market">
+          </mat-form-field>
+  
+            <mat-form-field  appearance="outline" class="example-full-width">
+              <mat-label>Our Stores</mat-label>
+              <input matInput type="time" [(ngModel)]="fin['store']" name="stores">
+          </mat-form-field>
+
+    </form>
+  </mat-expansion-panel>
+   
+</mat-accordion>
+</div>
+</div>
+
+
+<!-- SPECIAL RULES-->
+<div class="center">
+    <h2>Special Rule</h2>
+
+    <div class="center acordeon" *ngFor="let hora of horasEspeciales" >
+      <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <p>Special Rule Day: &nbsp;</p>
+              <p>{{showDate(hora.diaInicio)}}</p>
+            </mat-panel-title>
+            <mat-panel-description>
+                <p> Set the special opening hours for:  &nbsp;</p>
+                <p> {{showDate(hora.diaInicio)}} &nbsp;&nbsp; {{showDate(hora.diaFin)}} &nbsp;&nbsp;</p> 
+                <mat-icon>event</mat-icon>
+
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+    <div>
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Type</mat-label>
+            <mat-select [required]="true" [(ngModel)]="hora.tipo" (ngModelChange)="onChange(hora)" >
+                <mat-option *ngFor="let tipo of tipos"  [value]="tipo.value" >
+                  {{tipo.viewValue}}
+                </mat-option>
+              </mat-select>
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="example-full-width" >
+            <mat-label>Opening Date</mat-label>
+            <input matInput [matDatepicker]="Odate" [required]="true" [(ngModel)]="hora.diaInicio" (ngModelChange)="onChange(hora)" >
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="Odate"></mat-datepicker-toggle>
+            <mat-datepicker #Odate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Closing Date (Optional)</mat-label>
+            <input matInput [matDatepicker]="Cdate" [(ngModel)]="hora.diaFin" (ngModelChange)="onChange(hora)">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="Cdate"></mat-datepicker-toggle>
+            <mat-datepicker #Cdate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Opening Time</mat-label>
+            <input matInput type="time" [required]="true" [(ngModel)]="hora.horaInicio" (ngModelChange)="onChange(hora)">
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Closing Time</mat-label>
+            <input matInput type="time" [required]="true" [(ngModel)]="hora.horaFin" (ngModelChange)="onChange(hora)">
+        </mat-form-field>
+        <button class="mat-icon-color" mat-icon-button (click)="deleteRule(hora)" >
+            <mat-icon>delete</mat-icon>
+          </button>
+          
+    </div>
+  </mat-expansion-panel>
+   
+  </mat-accordion>
+
+  </div>
+  <div class="rules">
+    <button class="mr" mat-raised-button (click)="newRule()"> NEW RULE</button>
+    <button mat-raised-button (click)="saveRules()"> SAVE ALL</button>
+  </div>
+
+  <!-- CATEGORY-->
+<div class="categorias">
+  <div class="center cat">
+    <h2>Category</h2>
+
+    <div class="center acordeon" *ngFor="let cat of category" >
+      <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <p>Category: &nbsp;</p>
+              <p class="descripcion">{{cat.title}}</p>
+            </mat-panel-title>
+            <mat-panel-description>
+                <p> Create or edit category </p> 
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+    <div>
+       
+        <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" [required]="true" [(ngModel)]="cat.title">
+        </mat-form-field>
+        <button class="mat-icon-color" mat-icon-button (click)="deleteCat(cat)" >
+            <mat-icon>delete</mat-icon>
+          </button>
+          
+    </div>
+  </mat-expansion-panel>
+   
+  </mat-accordion>
+
+  </div>
+  <div class="rules">
+    <button class="mr" mat-raised-button (click)="newCat()"> NEW CATEGORY</button>
+  </div>
+  </div>
+  <!-- -->
+
+    <!-- SUBCATEGORY-->
+
+    <div class="center cat">
+      <h2>Subcategory</h2>
+  
+      <div class="center acordeon" *ngFor="let sub of subcategory" >
+        <mat-accordion class="example-headers-align" multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <p>Subcategory: &nbsp;</p>
+                <p class="descripcion">{{sub.title}}</p>
+              </mat-panel-title>
+              <mat-panel-description>
+                  <p> Create or edit subcategory</p>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+  
+      <div>
+          <mat-form-field  appearance="outline" class="example-full-width">
+              <mat-label>Title</mat-label>
+              <input matInput type="text" [required]="true" [(ngModel)]="sub.title">
+          </mat-form-field>
+          <button class="mat-icon-color" mat-icon-button (click)="deleteSub(sub)" >
+              <mat-icon>delete</mat-icon>
+            </button>
+            
+      </div>
+    </mat-expansion-panel>
+     
+    </mat-accordion>
+  
+    </div>
+    
+    <div class="rules">
+      <button class="mr" mat-raised-button (click)="newSub()"> NEW SUBCAT</button>
+    </div>
+    </div>
+
+    </div>
+    <!-- -->
+
+</div>

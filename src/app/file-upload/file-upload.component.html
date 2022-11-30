@@ -1,0 +1,16 @@
+<input type="file" class="file-input"
+       (change)="onFileSelected($event)" #fileUpload>
+
+<div class="file-upload">
+
+
+<!--<label matformfieldfloatinglabel class="mdc-floating-label mat-mdc-floating-label ng-tns-c57-3 ng-star-inserted mdc-floating-label--float-above" style="    left: initial;
+top: 77px;"  ng-reflect-floating="true">GLTF</label>-->
+   {{fileName}}
+
+    <button class="mat-icon-color btn" mat-icon-button
+      (click)="fileUpload.click()">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+
+</div>

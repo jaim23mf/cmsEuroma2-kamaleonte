@@ -1,0 +1,88 @@
+<div class="center">
+    <h1>Stores</h1>
+</div>
+
+<button class="mr pegado" mat-raised-button (click)="newEvent()" > NEW STORE</button>
+
+<div class="center">
+    <button mat-button (click)="openAllPanels()">Expand All</button>
+    <button mat-button (click)="closeAllPanels()">Collapse All</button>
+  </div>
+
+  <div class="center acordeon"   *ngFor="let p of stores">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p>Store Name: &nbsp;&nbsp;</p>
+          <p class="descripcion">{{p.name}}&nbsp;&nbsp;</p>
+        </mat-panel-title>
+        <mat-panel-description>
+        <mat-icon>store</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.name" [required]="true">
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Type</mat-label>
+        <mat-select [formControl]="types" multiple [(ngModel)]="p.type">
+          <mat-select-trigger>
+            {{types.value?.[0] || ''}}
+            <span *ngIf="(types.value?.length || 0) > 1" class="example-additional-selection">
+              (+{{(types.value?.length || 0) - 1}} {{types.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let t of typesList" [value]="t">{{t}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <mat-select [formControl]="category" multiple [(ngModel)]="p.category">
+          <mat-select-trigger>
+            {{category.value?.[0] || ''}}
+            <span *ngIf="(category.value?.length || 0) > 1" class="example-additional-selection">
+              (+{{(category.value?.length || 0) - 1}} {{category.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let t of catList" [value]="t">{{t}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Subcategory</mat-label>
+        <mat-select [formControl]="subcategory" multiple [(ngModel)]="p.subcategory">
+          <mat-select-trigger>
+            {{subcategory.value?.[0] || ''}}
+            <span *ngIf="(subcategory.value?.length || 0) > 1" class="example-additional-selection">
+              (+{{(subcategory.value?.length || 0) - 1}} {{subcategory.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let t of subList" [value]="t">{{t}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <app-file-upload requiredFileType="logo" fileName="Upload Logo image" ></app-file-upload>
+      <app-file-upload requiredFileType="img" fileName="Upload Store image" type="1"></app-file-upload>
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input matInput type="text" [(ngModel)]="p.phone">
+      </mat-form-field>
+
+      <button mat-stroked-button (click)="openDialog(p.op_hours)">Opening Hours</button>
+
+      <button class="mat-icon-color" mat-icon-button (click)="deleteStore(p)" >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-expansion-panel>
+   
+  </mat-accordion>
+  </div>

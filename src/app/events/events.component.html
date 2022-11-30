@@ -1,0 +1,82 @@
+<div class="center">
+    <h1>Events</h1>
+</div>
+
+<button class="mr pegado" mat-raised-button (click)="newEvent()" > NEW EVENT</button>
+
+<div class="center">
+    <button mat-button (click)="openAllPanels()">Expand All</button>
+    <button mat-button (click)="closeAllPanels()">Collapse All</button>
+  </div>
+
+  <div class="center acordeon"   *ngFor="let p of events">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p>Event Title: &nbsp;&nbsp;</p>
+          <p class="descripcion">{{p.titulo}}</p>
+        </mat-panel-title>
+        <mat-panel-description>
+            <p>Event Descrption:&nbsp;&nbsp;</p> 
+            <p class="descripcion">{{p.descripcion}} &nbsp;&nbsp;</p>
+        <mat-icon>event</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.titulo" [required]="true">
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.descripcion"></textarea>
+      </mat-form-field>
+
+
+
+      <app-file-upload requiredFileType="img" fileName="Upload Event image" ></app-file-upload>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.diaInicio">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="Sdate"></mat-datepicker-toggle>
+        <mat-datepicker #Sdate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.diaFin">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="Edate"></mat-datepicker-toggle>
+        <mat-datepicker #Edate></mat-datepicker>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <mat-select [formControl]="category" multiple>
+          <mat-select-trigger>
+            {{category.value?.[0] || ''}}
+            <span *ngIf="(category.value?.length || 0) > 1" class="example-additional-selection">
+              (+{{(category.value?.length || 0) - 1}} {{category.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let t of catList" [value]="t">{{t}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button class="mat-icon-color" mat-icon-button (click)="deleteEvent(p)" >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-expansion-panel>
+   
+  </mat-accordion>
+  </div>

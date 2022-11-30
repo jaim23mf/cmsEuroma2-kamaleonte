@@ -1,0 +1,50 @@
+<div class="center">
+    <h1>Map</h1>
+</div>
+
+
+<button class="mr pegado" mat-raised-button (click)="newFloor()" >NEW FLOOR</button>
+
+<div class="center">
+    <button mat-button (click)="openAllPanels()">Expand All</button>
+    <button mat-button (click)="closeAllPanels()">Collapse All</button>
+  </div>
+
+  <div class="center acordeon"   *ngFor="let p of floors">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p>Floor Name:&nbsp;&nbsp; </p>
+          <p class="descripcion">{{p.name}}</p>
+        </mat-panel-title>
+        <mat-panel-description>
+            <p>Configure new map floor&nbsp;&nbsp;</p> 
+            <mat-icon> map</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.name" [required]="true">
+      </mat-form-field>
+  
+
+      <!--
+      -->
+
+      <app-file-upload requiredFileType="gltf" fileName="Upload GLTF file" ></app-file-upload>
+
+      <!--
+
+      -->
+
+      <button mat-stroked-button class="DBtn" (click)="open3D(p)">Open 3D Editor</button>
+
+      <button class="mat-icon-color" mat-icon-button (click)="deleteFloor(p)" >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+  </div>
