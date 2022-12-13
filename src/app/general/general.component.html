@@ -20,52 +20,103 @@
           </mat-expansion-panel-header>
 
     <h3>Open at :</h3>
-    <form class="hours-form">
-
+        <div>
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Global</mat-label>
-          <input matInput type="time" [(ngModel)]="inicio['global']" name="global">
+          <input matInput type="time" [(ngModel)]="general.global.from" name="global" (ngModelChange)="changeGeneral(general)">
         </mat-form-field>
       
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Food Court</mat-label>
-            <input matInput type="time" [(ngModel)]="inicio['food']" name="food">
+            <input matInput type="time" [(ngModel)]="general.food.from" name="food" (ngModelChange)="changeGeneral(general)">
         </mat-form-field>
 
           <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Hipermarket</mat-label>
-            <input matInput type="time" [(ngModel)]="inicio['market']" name="market">
+            <input matInput type="time" [(ngModel)]="general.hypermarket.from" name="market" (ngModelChange)="changeGeneral(general)">
         </mat-form-field>
 
           <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Our Stores</mat-label>
-            <input matInput type="time" [(ngModel)]="inicio['store']" name="stores">
+            <input matInput type="time" [(ngModel)]="general.ourStores.from" name="stores" (ngModelChange)="changeGeneral(general)">
         </mat-form-field>
-    </form>
-    
+      </div>
+      <div>
+      <mat-form-field  appearance="outline" class="example-full-width">
+        <mat-label>Food Start Day</mat-label>
+        <mat-select [required]="true" [(ngModel)]="general.food.fromWeekDay" (ngModelChange)="changeGeneral(general)" >
+            <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+              {{dia.viewValue}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <mat-form-field  appearance="outline" class="example-full-width">
+      <mat-label>Market Start Day</mat-label>
+      <mat-select [required]="true" [(ngModel)]="general.hypermarket.fromWeekDay" (ngModelChange)="changeGeneral(general)" >
+          <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+            {{dia.viewValue}}
+          </mat-option>
+        </mat-select>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="example-full-width">
+    <mat-label>Stores Start Day</mat-label>
+    <mat-select [required]="true" [(ngModel)]="general.ourStores.fromWeekDay" (ngModelChange)="changeGeneral(general)" >
+        <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+          {{dia.viewValue}}
+        </mat-option>
+      </mat-select>
+</mat-form-field>
+
+</div>
+
     <h3>Close at :</h3>
-    <form class="hours-form">
+    <div>
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Global</mat-label>
-            <input matInput type="time" [(ngModel)]="fin['global']" name="global">
+            <input matInput type="time" [(ngModel)]="general.global.to" name="global" (ngModelChange)="changeGeneral(general)">
           </mat-form-field>
         
           <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Food Court</mat-label>
-              <input matInput type="time" [(ngModel)]="fin['food']" name="food">
+              <input matInput type="time" [(ngModel)]="general.food.to" name="food" (ngModelChange)="changeGeneral(general)">
           </mat-form-field>
   
             <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>Hipermarket</mat-label>
-              <input matInput type="time" [(ngModel)]="fin['market']" name="market">
+              <input matInput type="time" [(ngModel)]="general.hypermarket.to" name="market" (ngModelChange)="changeGeneral(general)">
           </mat-form-field>
   
             <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>Our Stores</mat-label>
-              <input matInput type="time" [(ngModel)]="fin['store']" name="stores">
+              <input matInput type="time" [(ngModel)]="general.ourStores.to" name="stores" (ngModelChange)="changeGeneral(general)">
           </mat-form-field>
-
-    </form>
+        </div>
+        <div>
+      <mat-form-field  appearance="outline" class="example-full-width">
+        <mat-label>Food End Day</mat-label>
+        <mat-select [required]="true" [(ngModel)]="general.food.toWeekDay" (ngModelChange)="changeGeneral(general)" >
+            <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+              {{dia.viewValue}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <mat-form-field  appearance="outline" class="example-full-width">
+      <mat-label>Market End Day</mat-label>
+      <mat-select [required]="true" [(ngModel)]="general.hypermarket.toWeekDay" (ngModelChange)="changeGeneral(general)" >
+          <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+            {{dia.viewValue}}
+          </mat-option>
+        </mat-select>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="example-full-width">
+    <mat-label>Stores End Day</mat-label>
+    <mat-select [required]="true" [(ngModel)]="general.ourStores.toWeekDay" (ngModelChange)="changeGeneral(general)" >
+        <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+          {{dia.viewValue}}
+        </mat-option>
+      </mat-select>
+</mat-form-field>
+</div>
   </mat-expansion-panel>
    
 </mat-accordion>
@@ -83,18 +134,131 @@
           <mat-expansion-panel-header>
             <mat-panel-title>
               <p>Special Rule Day: &nbsp;</p>
-              <p>{{showDate(hora.diaInicio)}}</p>
+              <p>{{showDate(hora.dateRange.from)}} - {{showDate(hora.dateRange.to)}}</p>
             </mat-panel-title>
             <mat-panel-description>
-                <p> Set the special opening hours for:  &nbsp;</p>
-                <p> {{showDate(hora.diaInicio)}} &nbsp;&nbsp; {{showDate(hora.diaFin)}} &nbsp;&nbsp;</p> 
+                <p> Set the special opening hours</p>
                 <mat-icon>event</mat-icon>
 
             </mat-panel-description>
           </mat-expansion-panel-header>
 
     <div>
-        <mat-form-field  appearance="outline" class="example-full-width">
+      <mat-form-field  appearance="outline" class="example-full-width" >
+        <mat-label>Opening Date</mat-label>
+        <input matInput [matDatepicker]="Odate" [required]="true" [(ngModel)]="hora.dateRange.from" (ngModelChange)="changeException(hora)" >
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="Odate"></mat-datepicker-toggle>
+        <mat-datepicker #Odate></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field  appearance="outline" class="example-full-width">
+        <mat-label>Closing Date (Optional)</mat-label>
+        <input matInput [matDatepicker]="Cdate" [(ngModel)]="hora.dateRange.to" (ngModelChange)="changeException(hora)">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="Cdate"></mat-datepicker-toggle>
+        <mat-datepicker #Cdate></mat-datepicker>
+    </mat-form-field>
+    <h3>Open at :</h3>
+    <form class="hours-form">
+
+        <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label>Global</mat-label>
+          <input matInput type="time" [(ngModel)]="hora.global.from" name="global" (ngModelChange)="changeException(hora)">
+        </mat-form-field>
+      
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Food Court</mat-label>
+            <input matInput type="time" [(ngModel)]="hora.food.from" name="food" (ngModelChange)="changeException(hora)">
+        </mat-form-field>
+
+          <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Hipermarket</mat-label>
+            <input matInput type="time" [(ngModel)]="hora.hypermarket.from" name="market" (ngModelChange)="changeException(hora)">
+        </mat-form-field>
+
+          <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Our Stores</mat-label>
+            <input matInput type="time" [(ngModel)]="hora.ourStores.from" name="stores" (ngModelChange)="changeException(hora)">
+        </mat-form-field>
+    </form>
+    <div>
+      <mat-form-field  appearance="outline" class="example-full-width">
+        <mat-label>Food Start Day</mat-label>
+        <mat-select [required]="true" [(ngModel)]="hora.food.fromWeekDay" (ngModelChange)="changeException(hora)" >
+            <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+              {{dia.viewValue}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <mat-form-field  appearance="outline" class="example-full-width">
+      <mat-label>Market Start Day</mat-label>
+      <mat-select [required]="true" [(ngModel)]="hora.hypermarket.fromWeekDay" (ngModelChange)="changeException(hora)" >
+          <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+            {{dia.viewValue}}
+          </mat-option>
+        </mat-select>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="example-full-width">
+    <mat-label>Stores Start Day</mat-label>
+    <mat-select [required]="true" [(ngModel)]="hora.ourStores.fromWeekDay" (ngModelChange)="changeException(hora)" >
+        <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+          {{dia.viewValue}}
+        </mat-option>
+      </mat-select>
+</mat-form-field>
+
+</div>
+    <h3>Close at :</h3>
+    <form class="hours-form">
+        <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Global</mat-label>
+            <input matInput type="time" [(ngModel)]="hora.global.to" name="global" (ngModelChange)="changeException(hora)">
+          </mat-form-field>
+        
+          <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Food Court</mat-label>
+              <input matInput type="time" [(ngModel)]="hora.food.to" name="food" (ngModelChange)="changeException(hora)">
+          </mat-form-field>
+  
+            <mat-form-field  appearance="outline" class="example-full-width">
+              <mat-label>Hipermarket</mat-label>
+              <input matInput type="time" [(ngModel)]="hora.hypermarket.to" name="market" (ngModelChange)="changeException(hora)">
+          </mat-form-field>
+  
+            <mat-form-field  appearance="outline" class="example-full-width">
+              <mat-label>Our Stores</mat-label>
+              <input matInput type="time" [(ngModel)]="hora.ourStores.to" name="stores" (ngModelChange)="changeException(hora)">
+          </mat-form-field>
+
+    </form>
+
+    <div>
+      <mat-form-field  appearance="outline" class="example-full-width">
+        <mat-label>Food End Day</mat-label>
+        <mat-select [required]="true" [(ngModel)]="hora.food.toWeekDay" (ngModelChange)="changeException(hora)" >
+            <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+              {{dia.viewValue}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+    <mat-form-field  appearance="outline" class="example-full-width">
+      <mat-label>Market End Day</mat-label>
+      <mat-select [required]="true" [(ngModel)]="hora.hypermarket.toWeekDay" (ngModelChange)="changeException(hora)" >
+          <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+            {{dia.viewValue}}
+          </mat-option>
+        </mat-select>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="example-full-width">
+    <mat-label>Stores End Day</mat-label>
+    <mat-select [required]="true" [(ngModel)]="hora.ourStores.toWeekDay" (ngModelChange)="changeException(hora)" >
+        <mat-option *ngFor="let dia of dias"  [value]="dia.value" >
+          {{dia.viewValue}}
+        </mat-option>
+      </mat-select>
+</mat-form-field>
+</div>
+        <!--<mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Type</mat-label>
             <mat-select [required]="true" [(ngModel)]="hora.tipo" (ngModelChange)="onChange(hora)" >
                 <mat-option *ngFor="let tipo of tipos"  [value]="tipo.value" >
@@ -123,7 +287,7 @@
         <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Closing Time</mat-label>
             <input matInput type="time" [required]="true" [(ngModel)]="hora.horaFin" (ngModelChange)="onChange(hora)">
-        </mat-form-field>
+        </mat-form-field> -->
         <button class="mat-icon-color" mat-icon-button (click)="deleteRule(hora)" >
             <mat-icon>delete</mat-icon>
           </button>
@@ -136,7 +300,7 @@
   </div>
   <div class="rules">
     <button class="mr" mat-raised-button (click)="newRule()"> NEW RULE</button>
-    <button mat-raised-button (click)="saveRules()"> SAVE ALL</button>
+    <!--<button mat-raised-button (click)="saveRules()"> SAVE ALL</button>-->
   </div>
 
   <!-- CATEGORY-->
@@ -161,7 +325,7 @@
        
         <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Title</mat-label>
-            <input matInput type="text" [required]="true" [(ngModel)]="cat.title">
+            <input matInput type="text" [required]="true" [(ngModel)]="cat.title" (ngModelChange)="changeCat(cat)">
         </mat-form-field>
         <button class="mat-icon-color" mat-icon-button (click)="deleteCat(cat)" >
             <mat-icon>delete</mat-icon>
@@ -200,7 +364,7 @@
       <div>
           <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>Title</mat-label>
-              <input matInput type="text" [required]="true" [(ngModel)]="sub.title">
+              <input matInput type="text" [required]="true" [(ngModel)]="sub.title" (ngModelChange)="changeSubCat(sub)">
           </mat-form-field>
           <button class="mat-icon-color" mat-icon-button (click)="deleteSub(sub)" >
               <mat-icon>delete</mat-icon>

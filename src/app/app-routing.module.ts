@@ -7,15 +7,19 @@ import { MapComponent } from './map/map.component';
 import { PromoComponent } from './promo/promo.component';
 import { ServicesComponent } from './services/services.component';
 import { StoresComponent } from './stores/stores.component';
+import { AuthGuard } from './auth/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path:"Map",component:MapComponent,pathMatch:"full"},
-  { path:"General",component:GeneralComponent,pathMatch:"full"},
-  { path:"Promo",component:PromoComponent,pathMatch:"full"},
-  { path:"Events",component:EventsComponent,pathMatch:"full"},
-  { path:"Stores",component:StoresComponent,pathMatch:"full"},
-  { path:"Services",component:ServicesComponent,pathMatch:"full"},
-  { path:"Blog",component:BlogComponent,pathMatch:"full"}
+  { path:"Map",component:MapComponent,pathMatch:"full" , canActivate:[AuthGuard]},
+  { path:"General",component:GeneralComponent,pathMatch:"full",canActivate:[AuthGuard]},
+  { path:"Promo",component:PromoComponent,pathMatch:"full",canActivate:[AuthGuard]},
+  { path:"Events",component:EventsComponent,pathMatch:"full",canActivate:[AuthGuard]},
+  { path:"Stores",component:StoresComponent,pathMatch:"full",canActivate:[AuthGuard]},
+  { path:"Services",component:ServicesComponent,pathMatch:"full",canActivate:[AuthGuard]},
+  { path:"Blog",component:BlogComponent,pathMatch:"full",canActivate:[AuthGuard]},
+  { path: "Login",component:LoginComponent, pathMatch:"full"},
+  { path: "", component: LoginComponent, pathMatch: "full" }
 ];
 
 @NgModule({

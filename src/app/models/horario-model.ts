@@ -1,9 +1,18 @@
+import { FormControlOptions } from "@angular/forms";
 
 export interface Horario{
     id:Number | null;
-    tipo:"global" | "food" | "market" | "stores" | null;
-    diaInicio:Date;
-    diaFin?:Date;
-    horaInicio:String | null;
-    horaFin:String | null;
+   dateRange:Rango,
+   food:Rango,
+   global:Rango,
+   hypermarket:Rango,
+   ourStores:Rango
+}
+
+export interface Rango{
+    id:number,
+    from:string,
+    to:string,
+    fromWeekDay?: number|null,
+    toWeekDay?:number|null
 }

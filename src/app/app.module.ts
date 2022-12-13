@@ -24,7 +24,9 @@ import { OphoursDialogComponent } from './ophours-dialog/ophours-dialog.componen
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { TokenInterceptorService } from './usersService/token-interceptor.service';
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { HttpClientModule } from '@angular/common/http';
     BlogComponent,
     OphoursDialogComponent,
     FileUploadComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -59,7 +62,11 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     MatDialogModule
   ],
-  providers: [MatNativeDateModule],
+  providers: [MatNativeDateModule ,  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
