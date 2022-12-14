@@ -15,18 +15,18 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <p>Promo Title: &nbsp;&nbsp;</p>
-          <p class="descripcion">{{p.titulo}}</p>
+          <p class="descripcion">{{p.title}}</p>
         </mat-panel-title>
         <mat-panel-description>
             <p>Pomo Descrption: &nbsp;&nbsp;</p> 
-            <p class="descripcion">{{p.descripcion}} &nbsp;&nbsp;</p>
+            <p class="descripcion">{{p.description}} &nbsp;&nbsp;</p>
         <mat-icon>event</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
         <mat-label>Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.titulo" [required]="true">
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true">
       </mat-form-field>
   
       <mat-form-field appearance="outline">
@@ -35,7 +35,7 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.descripcion"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"></textarea>
       </mat-form-field>
 
 
@@ -44,14 +44,14 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.diaInicio">
+        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.dateRange.from">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Sdate"></mat-datepicker-toggle>
         <mat-datepicker #Sdate></mat-datepicker>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.diaFin">
+        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.dateRange.to">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Edate"></mat-datepicker-toggle>
         <mat-datepicker #Edate></mat-datepicker>
@@ -60,7 +60,7 @@
 
       <mat-form-field  appearance="outline" class="example-full-width">
         <mat-label>Store</mat-label>
-        <mat-select [required]="true" [(ngModel)]="p.store" >
+        <mat-select [required]="true" [(ngModel)]="p.shopId" >
             <mat-option *ngFor="let s of stores"  [value]="s.value" >
               {{s.viewValue}}
             </mat-option>

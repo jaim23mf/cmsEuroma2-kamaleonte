@@ -26,3 +26,10 @@ export class Semana implements Semana{
     }
 
 }
+
+export interface Opening_Day{
+    id: Number;
+    description: Number;
+    from: string;
+    to: string
+}

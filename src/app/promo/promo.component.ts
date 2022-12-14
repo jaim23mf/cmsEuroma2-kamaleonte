@@ -23,12 +23,12 @@ export class PromoComponent {
   panels!: QueryList<MatExpansionPanel>;
 
   promociones:Promo[] = [{
-    id:null,
-    titulo: "3x2",
-    diaInicio:new Date(),
-    diaFin:new Date(),
-    descripcion:"Description of the promo.....",
-    store: "Carrefour"
+    id:0,
+    title: "3x2",
+    dateRange:{id:0,from:"",to:""},
+    description:"Description of the promo.....",
+    shopId: 0,
+    interestIds:[]
   }];
 
 
@@ -42,12 +42,12 @@ export class PromoComponent {
 
   newPromo(){
     this.promociones = [...this.promociones,{
-      id:null,
-      titulo: "",
-      diaInicio:null,
-      diaFin:null,
-      descripcion:"",
-      store: ""
+      id:0,
+      title: "",
+      dateRange:{id:0,from:"",to:""},
+      description:"",
+      shopId: 0,
+      interestIds:[]
     }]
   }
 
