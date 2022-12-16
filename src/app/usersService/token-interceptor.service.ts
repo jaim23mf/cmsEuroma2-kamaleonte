@@ -1,5 +1,5 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
@@ -19,15 +19,15 @@ export class TokenInterceptorService implements HttpInterceptor {
     if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
     }
     return next.handle(request).pipe(
       catchError((err) => {
-        if (err.status === 401) {
+        //if (err.status === 401) {
           this.userService.logout();
-        }
+        //}
         const error = err.error.message || err.statusText;
         return throwError(error);
       })

@@ -38,7 +38,7 @@
       </mat-form-field>
 
 
-      <app-file-upload requiredFileType="img" fileName="Upload icon" ></app-file-upload>
+      <app-file-upload requiredFileType="img" fileName="{{getName(p.icon)}}"  elemId="{{p.id}}" type="/api/Service/ImgUpload/"></app-file-upload>
 
 
       <mat-form-field appearance="outline">

@@ -39,7 +39,7 @@
       </mat-form-field>
 
 
-    <app-file-upload requiredFileType="img" fileName="Upload Promo image" ></app-file-upload>
+    <app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}"  elemId="{{p.id}}" type="/api/Promo/ImgUpload/"></app-file-upload>
 
 
       <mat-form-field appearance="outline">

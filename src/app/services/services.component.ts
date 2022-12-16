@@ -17,7 +17,14 @@ export class ServicesComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService , private serviceService:ServiceService){
-    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+    this.subs = this.msg_service.getText().subscribe((data:any) =>{
+      let prom = this.services.find(f=>f.id == data.type); 
+
+      if(prom){
+        prom.icon = data.msg;
+        this.changeService(prom);
+      }
+    });
 
     this.serviceService.getAllServices().subscribe((data:Servicio[]) => {
       this.services = data;
@@ -36,6 +43,12 @@ export class ServicesComponent {
     });
   }
 
+  getName(name:any){
+    if(name){
+      let n = name.split("\\");
+      return n[n.length-1];
+    }
+  }
 
   openAllPanels() {
     this.panels.forEach(panel => {
@@ -86,10 +99,6 @@ export class ServicesComponent {
   }
 
 
-  fileUploaded(value:any){
-    console.log(value.msg);
-    
-  }
 
   ngOnDestroy(){
     this.subs.unsubscribe();

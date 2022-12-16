@@ -19,7 +19,15 @@ export class EventsComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService, private interestService:InterestService, private eventService: EventsService){
-    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+    this.subs = this.msg_service.getText().subscribe((data:any)=>{
+      let prom = this.events.find(f=>f.id == data.type); 
+
+      if(prom){
+        prom.image = data.msg;
+        this.changeEvent(prom);
+      }
+
+    });
 
 
     this.interestService.getAllInterests().subscribe((data:Interest[]) =>{
@@ -77,7 +85,12 @@ export class EventsComponent {
 
   }
 
-
+  getName(name:any){
+    if(name){
+      let n = name.split("\\");
+      return n[n.length-1];
+    }
+  }
 
   changeEvent(data:Evento){
 

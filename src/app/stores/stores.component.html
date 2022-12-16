@@ -64,8 +64,11 @@
         </mat-select>
       </mat-form-field>
 
-      <app-file-upload requiredFileType="logo" fileName="Upload Logo image" ></app-file-upload>
-      <app-file-upload requiredFileType="img" fileName="Upload Store image" type="1"></app-file-upload>
+
+      <app-file-upload requiredFileType="logo" fileName="{{getName(p.logo)}}"  elemId="{{p.id}}" type="/Shop/LogoUpload/" tipo="0"></app-file-upload>
+
+      <app-file-upload requiredFileType="img" fileName="{{getName(p.photo)}}"  elemId="{{p.id}}" type="/Shop/ImgUpload/" tipo="1"></app-file-upload>
+
       
       <mat-form-field appearance="outline">
         <mat-label>Phone Number</mat-label>

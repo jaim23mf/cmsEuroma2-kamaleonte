@@ -16,7 +16,14 @@ export class ReachComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService , private serviceService:ReachService){
-    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+    this.subs = this.msg_service.getText().subscribe((data:any)=>{
+      let prom = this.services.find(f=>f.id == data.type); 
+
+      if(prom){
+        prom.icon = data.msg;
+        this.changeService(prom);
+      }
+    });
 
     this.serviceService.getAllReach().subscribe((data:Reach[]) => {
       this.services = data;
@@ -34,6 +41,14 @@ export class ReachComponent {
             panel.close();
     });
   }
+
+  getName(name:any){
+    if(name){
+      let n = name.split("\\");
+      return n[n.length-1];
+    }
+  }
+
 
 
   openAllPanels() {
@@ -85,10 +100,7 @@ export class ReachComponent {
   }
 
 
-  fileUploaded(value:any){
-    console.log(value.msg);
-    
-  }
+
 
   ngOnDestroy(){
     this.subs.unsubscribe();

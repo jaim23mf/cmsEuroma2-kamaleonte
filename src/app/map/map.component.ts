@@ -19,7 +19,17 @@ export class MapComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService, private floorService:MapService){
-    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+
+
+    this.subs = this.msg_service.getText().subscribe((data:any)=>{
+      let floor = this.floors.find(f=>f.id == data.type); 
+
+      if(floor){
+        floor.modelUrl = data.msg;
+        this.floorService.putFloor(floor).subscribe();
+      }
+    });
+
 
     this.floorService.getAllFloors().subscribe((data:Floor[])=>{
       this.floors = data;
@@ -83,9 +93,11 @@ export class MapComponent {
   }
 
 
-  fileUploaded(value:any){
-    console.log(value.msg);
-    
+  getName(name:any){
+    if(name){
+      let n = name.split("\\");
+      return n[n.length-1];
+    }
   }
 
   open3D(piso:Floor){

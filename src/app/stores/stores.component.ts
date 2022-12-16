@@ -25,7 +25,23 @@ export class StoresComponent implements OnInit{
   subs:Subscription;
 
   public constructor(public dialog: MatDialog,public confirm: MatDialog, private msg_service:MsgService , private shopService:ShopService , private interestService:InterestService){
-    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+    this.subs = this.msg_service.getText().subscribe((data:any) =>{
+
+      let prom = this.stores.find(f=>f.id == data.type); 
+      console.log(data.tipo);
+      if(prom){
+      
+        if(data.tipo == 0){
+          prom.logo = data.msg;
+
+        }
+        else {
+          prom.photo = data.msg;
+        }
+        this.changeStore(prom);
+
+      }
+    });
   }
   ngOnInit(): void {
     this.shopService.getAllShop().subscribe((data:Store[])=>{
@@ -156,6 +172,13 @@ export class StoresComponent implements OnInit{
     this.panels.forEach(panel => {
             panel.close();
     });
+  }
+
+  getName(name:any){
+    if(name){
+      let n = name.split("\\");
+      return n[n.length-1];
+    }
   }
 
 

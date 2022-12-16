@@ -40,7 +40,7 @@
 
 
 
-      <app-file-upload requiredFileType="img" fileName="Upload Event image" ></app-file-upload>
+      <app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}"  elemId="{{p.id}}" type="/api/Events/ImgUpload/"></app-file-upload>
 
 
       <mat-form-field appearance="outline">

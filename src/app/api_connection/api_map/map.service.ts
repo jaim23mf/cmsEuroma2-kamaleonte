@@ -27,4 +27,7 @@ export class MapService {
   deleteFloor(id:any): Observable<any> {
     return this.http.delete(this.api + "/Map/Floor/"+id);
   }
+  uploadGltf(id:any,file:any): Observable<any> {
+    return this.http.post(this.api + "/Map/Floor/"+id + "/GltfFile",file);
+  }
 }

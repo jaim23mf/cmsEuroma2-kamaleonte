@@ -8,8 +8,8 @@ export class MsgService {
 
   private subject: Subject<any> = new Subject<any>();
 
-  sendText(text:String, type?:Number){
-    this.subject.next({msg:text, type:type});
+  sendText(text:String, type?:Number , tipo?:Number){
+    this.subject.next({msg:text, type:type , tipo:tipo});
   }
 
   getText():Observable<any>{

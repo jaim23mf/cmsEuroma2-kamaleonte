@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { InterestService } from '../api_connection/api_interest/interest.service';
 import { PromoService } from '../api_connection/api_promo/promo.service';
 import { ShopService } from '../api_connection/api_shop/shop.service';
+import { GlobalConstants } from '../common/global-constants';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { SelectModel } from '../models/global-model';
 import { Interest, LineaInteres_promo } from '../models/interest.model';
@@ -24,7 +25,15 @@ export class PromoComponent {
   public constructor(public confirm: MatDialog, private msg_service:MsgService ,
   private promosService:PromoService , private shopService:ShopService , private interestService:InterestService)
   {
-    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+    this.subs = this.msg_service.getText().subscribe((data:any) =>{
+      let prom = this.promociones.find(f=>f.id == data.type); 
+
+      if(prom){
+        prom.image = data.msg;
+        this.changePromo(prom);
+      }
+
+    });
     
     this.shopService.getAllShop().subscribe((data:Store[])=>{
         data.forEach(element => {
@@ -125,6 +134,12 @@ export class PromoComponent {
     
   }
 
+  getName(name:any){
+    if(name){
+      let n = name.split("\\");
+      return n[n.length-1];
+    }
+  }
 
   changePromo(p:Promo){
 
@@ -143,10 +158,7 @@ export class PromoComponent {
 
   }
 
-  fileUploaded(value:any){
-    console.log(value.msg);
-    
-  }
+
 
   ngOnDestroy(){
     this.subs.unsubscribe();
