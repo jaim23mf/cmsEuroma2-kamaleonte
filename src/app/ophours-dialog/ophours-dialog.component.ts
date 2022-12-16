@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Semana } from '../models/semana-model';
+import { ShopService } from '../api_connection/api_shop/shop.service';
+import { Opening_Day } from '../models/semana-model';
+import { Store } from '../models/store-model';
 import { StoresComponent } from '../stores/stores.component';
 
 @Component({
@@ -11,8 +13,28 @@ import { StoresComponent } from '../stores/stores.component';
 export class OphoursDialogComponent {
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Semana  , private dialogRef: MatDialogRef<OphoursDialogComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public store:Store  , private dialogRef: MatDialogRef<OphoursDialogComponent> , private shopService:ShopService) {
+
+    this.data=store.openingHours;
+    console.log(this.data);
+    while(this.data.length<7){
+      this.data.push({
+        id:0,
+        from:"00:00",
+        to:"00:00",
+        description:this.data.length,
+        id_shop:store.id
+      });
+    }
     dialogRef.disableClose = true;
+  }
+
+  data:Opening_Day[]=[];
+
+  change(data:Opening_Day[]){
+    this.store.openingHours = data;
+    this.shopService.putShop(this.store).subscribe();
+
   }
 
   closeDialog(){

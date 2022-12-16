@@ -382,6 +382,50 @@
     </div>
     </div>
 
+
+    <div class="center cat">
+      <h2>Interests</h2>
+  
+      <div class="center acordeon" *ngFor="let sub of interest" >
+        <mat-accordion class="example-headers-align" multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <p>Interest: &nbsp;</p>
+                <p class="descripcion">{{sub.name}}</p>
+              </mat-panel-title>
+              <mat-panel-description>
+                  <p> Create or edit interest</p>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+  
+      <div>
+          <mat-form-field  appearance="outline" class="example-full-width">
+              <mat-label>Title</mat-label>
+              <input matInput type="text" [required]="true" [(ngModel)]="sub.name" (ngModelChange)="changeInterest(sub)">
+          </mat-form-field>
+          <button class="mat-icon-color" mat-icon-button (click)="deleteInterest(sub)" >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <mat-form-field appearance="outline">
+            <mat-label>Group</mat-label>
+            <mat-select [(ngModel)]="sub.group" (ngModelChange)="changeInterest(sub)">
+              <mat-option *ngFor="let t of group" [value]="t.id">{{t.title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+            
+      </div>
+    </mat-expansion-panel>
+     
+    </mat-accordion>
+  
+    </div>
+    
+    <div class="rules">
+      <button class="mr" mat-raised-button (click)="newInterest()"> NEW INTEREST</button>
+    </div>
+    </div>
+
     </div>
     <!-- -->
 

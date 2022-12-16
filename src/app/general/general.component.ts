@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { DateRange } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { InterestService } from '../api_connection/api_interest/interest.service';
 import { OpeningService } from '../api_connection/api_opening/opening.service';
 import { ShopService } from '../api_connection/api_shop/shop.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Category } from '../models/category-model';
 import { Horario } from '../models/horario-model';
+import { Interest } from '../models/interest.model';
 import { Subcategory } from '../models/subcat-model';
 import { UsersService } from '../usersService/users.service';
 
@@ -60,14 +62,20 @@ export class GeneralComponent implements OnInit{
   ];
 
   horasEspeciales: Horario[] =  [];
-
+ 
+  group = [
+    {id:1, title:"Shops"},
+    {id:2, title:"Hobbies"},
+    {id:3, title:"Events"}
+  ];
 
   category : Category[] = [];
 
   subcategory : Subcategory[] = []
 
+  interest: Interest[]=[]
 
-  constructor(private dateAdapter: DateAdapter<Date>, public confirm: MatDialog,public shopService: ShopService , public openingService:OpeningService) {
+  constructor(private dateAdapter: DateAdapter<Date>, public confirm: MatDialog,public shopService: ShopService , public openingService:OpeningService , public interestService:InterestService) {
     this.dateAdapter.setLocale('it-IT'); //dd/MM/yyyy
   }
 
@@ -96,6 +104,9 @@ export class GeneralComponent implements OnInit{
       this.horasEspeciales = data;
     });
 
+    this.interestService.getAllInterests().subscribe((data:any)=>{
+      this.interest = data;
+    });
   }
 
   changeGeneral(general:any){
@@ -154,6 +165,19 @@ export class GeneralComponent implements OnInit{
 
   }
 
+  async newInterest(){
+    await this.interestService.postInterest({id:0,name:"",group:0}).subscribe((data:Interest) =>{
+      this.interest = [... this.interest,{
+        id:data.id,
+        name: data.name,
+        group:data.group
+      }
+      ];
+    })
+
+  }
+
+
   changeCat(cat:Category){
     this.shopService.putCategory(cat).subscribe(); 
   }
@@ -162,6 +186,9 @@ export class GeneralComponent implements OnInit{
     this.shopService.putSubCategory(cat).subscribe();
   }
 
+  changeInterest(i:Interest){    
+    this.interestService.putInterest(i).subscribe();
+  }
 
   deleteRule(hora:Horario){
     this.confirm
@@ -210,6 +237,23 @@ export class GeneralComponent implements OnInit{
 
   }
   
+
+  deleteInterest(cat:Interest){
+
+    this.confirm
+    .open(ConfirmDialogComponent, {
+      data: 'You are going to delete this interest.'
+    })
+    .afterClosed()
+    .subscribe((confirmado: Boolean) => {
+      if (confirmado) {
+        this.interest = this.interest.filter((event) => event !== cat);
+        this.interestService.deleteInterest(cat.id).subscribe();
+
+      } 
+    });
+
+  }
   /*saveRules(){
     console.log(this.horasEspeciales);
   }*/

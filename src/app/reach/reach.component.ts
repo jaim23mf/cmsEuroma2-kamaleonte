@@ -2,24 +2,23 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { Subscription } from 'rxjs';
-import { ServiceService } from '../api_connection/api_service/service.service';
+import { ReachService } from '../api_connection/api_reach/reach.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { Servicio } from '../models/servicio-model';
+import { Reach } from '../models/reach-model';
 import { MsgService } from '../msg.service';
 
 @Component({
-  selector: 'app-services',
-  templateUrl: './services.component.html',
-  styleUrls: ['./services.component.css']
+  selector: 'app-reach',
+  templateUrl: './reach.component.html',
+  styleUrls: ['./reach.component.css']
 })
-export class ServicesComponent {
-
+export class ReachComponent {
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService , private serviceService:ServiceService){
+  public constructor(public confirm: MatDialog, private msg_service:MsgService , private serviceService:ReachService){
     this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
 
-    this.serviceService.getAllServices().subscribe((data:Servicio[]) => {
+    this.serviceService.getAllReach().subscribe((data:Reach[]) => {
       this.services = data;
     });
 
@@ -28,7 +27,7 @@ export class ServicesComponent {
   @ViewChildren(MatExpansionPanel)
   panels!: QueryList<MatExpansionPanel>;
 
-  services:Servicio[]=[]
+  services:Reach[]=[]
 
   closeAllPanels() {
     this.panels.forEach(panel => {
@@ -45,7 +44,7 @@ export class ServicesComponent {
 
   newService(){
 
-    let serv :Servicio= 
+    let serv :Reach= 
       {
         id:0,
         icon: "",
@@ -54,7 +53,7 @@ export class ServicesComponent {
         order:0
       }
     
-    this.serviceService.postService(serv).subscribe((data:Servicio) =>{
+    this.serviceService.postReach(serv).subscribe((data:Reach) =>{
       this.services = [...this.services,{
         id:data.id,
         icon: data.icon,
@@ -67,11 +66,11 @@ export class ServicesComponent {
   }
 
 
-  changeService(s:Servicio){
-    this.serviceService.putService(s).subscribe();
+  changeService(s:Reach){
+    this.serviceService.putReach(s).subscribe();
   }
 
-  deleteService(s:Servicio){
+  deleteService(s:Reach){
     this.confirm
     .open(ConfirmDialogComponent, {
       data: 'You are going to delete this service.'
@@ -80,7 +79,7 @@ export class ServicesComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.services = this.services.filter((event) => event !== s);
-        this.serviceService.deleteService(s.id).subscribe();
+        this.serviceService.deleteReach(s.id).subscribe();
       } 
     });
   }
@@ -94,5 +93,4 @@ export class ServicesComponent {
   ngOnDestroy(){
     this.subs.unsubscribe();
   }
-
 }

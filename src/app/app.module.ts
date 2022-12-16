@@ -27,6 +27,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { TokenInterceptorService } from './usersService/token-interceptor.service';
+import { ReachComponent } from './reach/reach.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { TokenInterceptorService } from './usersService/token-interceptor.servic
     OphoursDialogComponent,
     FileUploadComponent,
     ConfirmDialogComponent,
-    LoginComponent
+    LoginComponent,
+    ReachComponent
   ],
   imports: [
     BrowserAnimationsModule,

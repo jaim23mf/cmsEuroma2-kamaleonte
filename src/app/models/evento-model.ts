@@ -1,9 +1,12 @@
+import { Rango } from "./horario-model";
+import { LineaInteres_event } from "./interest.model";
+
 export interface Evento{
     id:Number | null;
-    titulo:String;
-    diaInicio:Date | null;
-    diaFin:Date |null;
-    descripcion:String;
-    imagen?:String;
-    categoria:String;
+    title:String;
+    description:String;
+    image:String;
+    interestIds:LineaInteres_event[];
+    iiId?:Number[];
+    dateRange:Rango;
 }

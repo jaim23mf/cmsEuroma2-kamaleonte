@@ -43,7 +43,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Category</mat-label>
-        <mat-select multiple [(ngModel)]="p.categoryId" (ngModelChange)="changeStore(p)">
+        <mat-select [(ngModel)]="p.categoryId" (ngModelChange)="changeStore(p)">
           <mat-option *ngFor="let t of catList" [value]="t.id" [title]="t.title">{{t.title}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -52,8 +52,15 @@
       
       <mat-form-field appearance="outline">
         <mat-label>Subcategory</mat-label>
-        <mat-select multiple [(ngModel)]="p.subcategoryId" (ngModelChange)="changeStore(p)">
+        <mat-select [(ngModel)]="p.subcategoryId" (ngModelChange)="changeStore(p)">
           <mat-option *ngFor="let t of subList" [value]="t.id">{{t.title}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Insterest</mat-label>
+        <mat-select [(ngModel)]="p.iiId" (ngModelChange)="changeStore(p)" multiple>
+          <mat-option *ngFor="let t of interestList" [value]="t.id">{{t.name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -82,7 +89,7 @@
         <mat-datepicker #Odate></mat-datepicker>
     </mat-form-field>
 
-      <button mat-stroked-button (click)="openDialog(p.openingHours)">Opening Hours</button>
+      <button mat-stroked-button (click)="openDialog(p)">Opening Hours</button>
 
       <button class="mat-icon-color" mat-icon-button (click)="deleteStore(p)" >
         <mat-icon>delete</mat-icon>

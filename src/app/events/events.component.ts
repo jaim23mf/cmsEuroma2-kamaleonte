@@ -3,8 +3,11 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { Subscription } from 'rxjs';
+import { EventsService } from '../api_connection/api_events/events.service';
+import { InterestService } from '../api_connection/api_interest/interest.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Evento } from '../models/evento-model';
+import { Interest, LineaInteres_event } from '../models/interest.model';
 import { MsgService } from '../msg.service';
 
 @Component({
@@ -15,38 +18,82 @@ import { MsgService } from '../msg.service';
 export class EventsComponent {
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService){
+  public constructor(public confirm: MatDialog, private msg_service:MsgService, private interestService:InterestService, private eventService: EventsService){
     this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+
+
+    this.interestService.getAllInterests().subscribe((data:Interest[]) =>{
+      this.interestList=data;
+    });
+
+    this.eventService.getAllEvents().subscribe((data:Evento[])=>{
+      this.events = data;
+
+      this.events.forEach(s => {
+        s.iiId = [];
+        s.interestIds.forEach(i => {
+           s.iiId?.push(i.id_interest);
+        });
+      });
+
+      console.log(this.events);
+
+    });
   }
 
   @ViewChildren(MatExpansionPanel)
   panels!: QueryList<MatExpansionPanel>;
 
   category = new FormControl();
+  interestList:Interest[] =[];
+  events:Evento[] = [];
 
 
-  events:Evento[] = [{
-    id:0,
-    titulo: "EVENT!!!! ",
-    diaInicio:new Date(),
-    diaFin:new Date(),
-    descripcion:"Description of the promo.....",
-    categoria: "Category"
-  }];
+  async newEvent(){
 
-  catList=["a1","b1","c1","d1", "e1","f1","g1","h1"];
+    let ev:Evento = {
+      id:0,
+      title:"",
+      description:"",
+      dateRange:{id:0,from:'',to:''},
+      interestIds:[],
+      image:""
+    }
 
-  newEvent(){
-    this.events = [...this.events,{
-      id: null,
-      titulo: "",
-      diaInicio:null,
-      diaFin:null,
-      descripcion:"",
-      categoria: ""
-    }]
+
+
+    await this.eventService.postEvent(ev).subscribe((data:Evento)=>{
+
+      this.events = [...this.events,{
+        id:data.id,
+        title:"",
+        description:"",
+        dateRange:{id:0,from:'',to:''},
+        interestIds:[],
+        image:""
+        }];    
+  
+    });
+
   }
 
+
+
+  changeEvent(data:Evento){
+
+    if(data.iiId != null){
+     
+      let realInterest:LineaInteres_event[] = [];
+       data.iiId.forEach(element => {
+         realInterest.push({id:0,id_interest:element,id_event:data.id?data.id:0});
+     });
+
+     data.interestIds = realInterest;
+
+    }
+
+    this.eventService.putEvent(data).subscribe();
+  }
 
   closeAllPanels() {
     this.panels.forEach(panel => {
@@ -70,6 +117,7 @@ export class EventsComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.events = this.events.filter((event) => event !== e);
+        this.eventService.deleteEvent(e.id).subscribe();
       } 
     });
   }

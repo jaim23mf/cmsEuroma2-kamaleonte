@@ -17,15 +17,15 @@ export class PromoService {
     }
 
     postPromo(promo:Promo): Observable<any>{
-      return this.http.post(this.api + "api/Promo/" + promo.id , promo);
+      return this.http.post(this.api + "/api/Promo" , promo);
     }
 
     putPromo(promo:Promo): Observable<any>{
-      return this.http.put(this.api + "api/Promo/" + promo.id , promo);
+      return this.http.put(this.api + "/api/Promo/" + promo.id , promo);
 
     }
 
     deletePromo(promo:Promo): Observable<any>{
-      return this.http.delete(this.api + "api/Promo/" + promo.id);
+      return this.http.delete(this.api + "/api/Promo/" + promo.id);
     }
 }

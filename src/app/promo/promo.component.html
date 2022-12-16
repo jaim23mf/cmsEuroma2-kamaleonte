@@ -26,7 +26,7 @@
   
       <mat-form-field appearance="outline">
         <mat-label>Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title" [required]="true">
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true"  (ngModelChange)="changePromo(p)">
       </mat-form-field>
   
       <mat-form-field appearance="outline">
@@ -35,7 +35,7 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"  (ngModelChange)="changePromo(p)"></textarea>
       </mat-form-field>
 
 
@@ -44,14 +44,14 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.dateRange.from">
+        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.dateRange.from"  (ngModelChange)="changePromo(p)">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Sdate"></mat-datepicker-toggle>
         <mat-datepicker #Sdate></mat-datepicker>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.dateRange.to">
+        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.dateRange.to"  (ngModelChange)="changePromo(p)">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Edate"></mat-datepicker-toggle>
         <mat-datepicker #Edate></mat-datepicker>
@@ -60,13 +60,19 @@
 
       <mat-form-field  appearance="outline" class="example-full-width">
         <mat-label>Store</mat-label>
-        <mat-select [required]="true" [(ngModel)]="p.shopId" >
+        <mat-select [required]="true" [(ngModel)]="p.shopId"  (ngModelChange)="changePromo(p)" >
             <mat-option *ngFor="let s of stores"  [value]="s.value" >
               {{s.viewValue}}
             </mat-option>
           </mat-select>
     </mat-form-field>
 
+    <mat-form-field appearance="outline">
+      <mat-label>Insterest</mat-label>
+      <mat-select [(ngModel)]="p.iiId" (ngModelChange)="changePromo(p)" multiple>
+        <mat-option *ngFor="let t of interestList" [value]="t.id">{{t.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
       <button class="mat-icon-color" mat-icon-button (click)="deletePromo(p)" >
         <mat-icon>delete</mat-icon>

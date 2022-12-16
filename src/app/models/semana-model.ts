@@ -31,5 +31,6 @@ export interface Opening_Day{
     id: Number;
     description: Number;
     from: string;
-    to: string
+    to: string;
+    id_shop?:Number;
 }

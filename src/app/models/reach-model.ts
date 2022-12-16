@@ -1,4 +1,4 @@
-export interface Servicio{
+export interface Reach{
 	id:Number|null;
     icon:String | null;
 	title: String;
