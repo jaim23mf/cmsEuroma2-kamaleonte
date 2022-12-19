@@ -51,14 +51,32 @@ export class FileUploadComponent implements OnInit{
 
         const upload$ = this.http.post(this.api+this.type+this.elemId, fd);
 
-        upload$.subscribe((data:any)=>{
+        /*upload$.subscribe((data:any)=>{
           
-          console.log(data)
           let orden:Number = +this.elemId;
           this.msg.sendText(data.url,orden,+this.tipo);
+        }, error => {
+          console.log(error);
+          this.userService.logout();
         });
-       
-    }         
+       */
+
+        upload$.subscribe({
+          next: this.handleUpdateResponse.bind(this),
+          error: this.handleError.bind(this)
+       });
+
+    }     
+    
+  }
+
+  handleUpdateResponse(data:any){
+    let orden:Number = +this.elemId;
+    this.msg.sendText(data.url,orden,+this.tipo);
+  }
+  handleError(error:any){
+    console.log(error);
+          this.userService.logout();
   }
 
 }

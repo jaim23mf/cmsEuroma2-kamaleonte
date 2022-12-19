@@ -26,22 +26,24 @@ export class LoginComponent implements OnInit {
       this.userService.setToken(data.token);
       this.router.navigateByUrl("/Home");
     });*/
-    
-    this.userService.login(user).subscribe((data: { logged: boolean; token: any; }) => {
+    this.userService.login(user).subscribe((data: any) => {
       console.log(data);
       if(data.logged == true){
         this.error="";
         this.userService.setToken(data.token);
         this.router.navigateByUrl("/General");
+        let n = {userName: this.email, password: this.password ,refreshToken:data.refreshToken.token,refreshTokenExpires:data.refreshToken.expires};
+        this.userService.setTokenR(n);
+
       }
       else{
         this.error = "Usuario o contraseña incorrecta";
       }
-    });    
     
-    //Llamada para comprobar el login 
-
-    //this.userService.logintest(user);
+    });    
+  
 
   }
+
+
 }

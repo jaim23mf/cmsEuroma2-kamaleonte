@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { GlobalConstants } from '../common/global-constants';
+import { Route, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UsersService {
   api:string = GlobalConstants.api;
   //api:string = "http://api.softsignage.cc";
 
-  constructor(private http: HttpClient,private cookies: CookieService) {}
+  constructor(private http: HttpClient,private cookies: CookieService , private router:Router) {}
 
 
   login(user: any): Observable<any> {
@@ -21,9 +22,15 @@ export class UsersService {
 
   logout():void{
       this.cookies.deleteAll();
+      this.router.navigateByUrl("/Login");
   }
 
-  
+  setTokenR(u:any){
+    this.cookies.set("tokenR", u.RefreshToken);
+    this.cookies.set("tokenRE", u.refreshTokenExpires);
+
+    this.http.put(this.api + "/api/User/UpdateUser",u).subscribe();
+  }
 
   setToken(token: string) {
     this.cookies.set("token", token);
