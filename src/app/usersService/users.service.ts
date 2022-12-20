@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { GlobalConstants } from '../common/global-constants';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +26,18 @@ export class UsersService {
   }
 
   setTokenR(u:any){
-    this.cookies.set("tokenR", u.RefreshToken);
+    this.cookies.set("tokenR", u.refreshToken);
     this.cookies.set("tokenRE", u.refreshTokenExpires);
 
     this.http.put(this.api + "/api/User/UpdateUser",u).subscribe();
+
+
+
+  }
+
+  refreshToken():Observable<any>{
+     let l = {refreshToken:this.cookies.get("tokenR"),refreshTokenE:this.cookies.get("tokenRE")};
+     return this.http.post(this.api + "/identity/refresh-token",l);
   }
 
   setToken(token: string) {

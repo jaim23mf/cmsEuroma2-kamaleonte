@@ -2,7 +2,7 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
 
-  <p class="toolbarBtn" ><button class="mat-icon-color" mat-icon-button (click)="sidenav.toggle()" > <mat-icon>menu</mat-icon></button></p>
+  <p class="toolbarBtn" ><button class="mat-icon-color" mat-icon-button (click)="sidenav.toggle()" *ngIf="visible" > <mat-icon>menu</mat-icon></button></p>
   <div class="spacer"></div>
 
     <div class="euromaLogo">
@@ -13,17 +13,17 @@
 
 </div>
 
-<div class="sideNav">
-<mat-sidenav-container class="sideNav-container">
+<div class="sideNav" >
+<mat-sidenav-container class="sideNav-container" >
   <mat-sidenav class="sideNavBnt" #sidenav mode="side" position="start">
-    <p class="optionBtn"><button mat-button color="white" routerLink="/Map">Map</button></p>
-    <p class="optionBtn"><button mat-button color="white" routerLink="/General">General</button></p>
-    <p class="optionBtn"><button mat-button color="white" routerLink="/Promo">Promo</button></p>
-    <p class="optionBtn"><button mat-button color="white" routerLink="/Events">Events</button></p>
-    <p class="optionBtn"><button mat-button color="white" routerLink="/Stores">Stores</button></p>
-    <p class="optionBtn"><button mat-button color="white" routerLink="/Services">Services</button></p>
-    <p class="optionBtn"><button mat-button color="white" routerLink="/Reach">Reach Us</button></p>
-    <!--<p class="optionBtn"><button mat-button color="white" routerLink="/Blog">Blog</button></p>-->
+    <p class="optionBtn"><button mat-button color="white" routerLink="/Map" *ngIf="visible">Map</button></p>
+    <p class="optionBtn"><button mat-button color="white" routerLink="/General" *ngIf="visible">General</button></p>
+    <p class="optionBtn"><button mat-button color="white" routerLink="/Promo" *ngIf="visible">Promo</button></p>
+    <p class="optionBtn"><button mat-button color="white" routerLink="/Events" *ngIf="visible">Events</button></p>
+    <p class="optionBtn"><button mat-button color="white" routerLink="/Stores" *ngIf="visible">Stores</button></p>
+    <p class="optionBtn"><button mat-button color="white" routerLink="/Services" *ngIf="visible">Services</button></p>
+    <p class="optionBtn"><button mat-button color="white" routerLink="/Reach" *ngIf="visible">Reach Us</button></p>
+    <!--<p class="optionBtn"><button mat-button color="white" routerLink="/Blog" *ngIf="visible">Blog</button></p>-->
 
   </mat-sidenav>
   <mat-sidenav-content>

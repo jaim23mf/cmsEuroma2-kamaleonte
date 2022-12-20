@@ -45,7 +45,7 @@ import { ReachComponent } from './reach/reach.component';
     ConfirmDialogComponent,
     LoginComponent,
     ReachComponent
-  ],
+    ],
   imports: [
     BrowserAnimationsModule,
     MatFormFieldModule,

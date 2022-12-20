@@ -366,6 +366,12 @@
               <mat-label>Title</mat-label>
               <input matInput type="text" [required]="true" [(ngModel)]="sub.title" (ngModelChange)="changeSubCat(sub)">
           </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select [(ngModel)]="sub.categoryId" (ngModelChange)="changeSubCat(sub)">
+              <mat-option *ngFor="let t of catList" [value]="t.id" [title]="t.title">{{t.title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
           <button class="mat-icon-color" mat-icon-button (click)="deleteSub(sub)" >
               <mat-icon>delete</mat-icon>
             </button>

@@ -19,7 +19,6 @@ import { UsersService } from '../usersService/users.service';
 })
 export class GeneralComponent implements OnInit{
 
-
   general = {
     id: 0,
     global: {
@@ -75,8 +74,10 @@ export class GeneralComponent implements OnInit{
 
   interest: Interest[]=[]
 
+  catList:Category[] = [];
   constructor(private dateAdapter: DateAdapter<Date>, public confirm: MatDialog,public shopService: ShopService , public openingService:OpeningService , public interestService:InterestService) {
     this.dateAdapter.setLocale('it-IT'); //dd/MM/yyyy
+    
   }
 
   ngOnInit(): void {
@@ -87,6 +88,9 @@ export class GeneralComponent implements OnInit{
     this.shopService.getAllSubCategory().subscribe((data: Subcategory[]) => {
       this.subcategory = data;
     });    
+
+
+    this.changeCatList();
 
     this.openingService.getAllOpening().subscribe((data:any)=>{
       console.log(data);
@@ -120,6 +124,16 @@ export class GeneralComponent implements OnInit{
 
   }
 
+  changeCatList(){
+    this.catList = [];
+    this.shopService.getAllCategory().subscribe((data: Category[]) => {
+      this.catList.push({id:0,title:"Nothing Selected"});
+      data.forEach(element => {
+        this.catList.push(element);
+      });
+    });    
+  }
+
   async newRule(){
 
     let elem = {
@@ -151,13 +165,15 @@ export class GeneralComponent implements OnInit{
         title: data.title
       }
       ];
+      this.changeCatList();
     });
 
   }
   async newSub(){
-    await this.shopService.postSubCategory({id:0,title:""}).subscribe((data:Subcategory) =>{
+    await this.shopService.postSubCategory({id:0,categoryId:0,title:""}).subscribe((data:Subcategory) =>{
       this.subcategory = [... this.subcategory,{
         id:data.id,
+        categoryId:data.categoryId,
         title: data.title
       }
       ];
@@ -179,7 +195,10 @@ export class GeneralComponent implements OnInit{
 
 
   changeCat(cat:Category){
-    this.shopService.putCategory(cat).subscribe(); 
+    this.shopService.putCategory(cat).subscribe(()=>{
+      this.changeCatList();
+    }); 
+    
   }
 
   changeSubCat(cat:Subcategory){    

@@ -63,7 +63,7 @@ export class StoresComponent implements OnInit{
     });    
 
     this.shopService.getAllSubCategory().subscribe((data: Subcategory[]) => {
-      this.subList.push({id:0,title:"Nothing Selected"});
+      this.subList.push({id:0,categoryId:0,title:"Nothing Selected"});
       data.forEach(element => {
         this.subList.push(element);
       });

@@ -12,7 +12,6 @@ export class LoginComponent implements OnInit {
   public password: string="";
   error:string="";
   constructor(public router: Router , public userService: UsersService) { }
-
   ngOnInit(): void {
   }
 
@@ -33,6 +32,8 @@ export class LoginComponent implements OnInit {
         this.userService.setToken(data.token);
         this.router.navigateByUrl("/General");
         let n = {userName: this.email, password: this.password ,refreshToken:data.refreshToken.token,refreshTokenExpires:data.refreshToken.expires};
+        console.log(n);
+        console.log(data.refreshToken);
         this.userService.setTokenR(n);
 
       }
