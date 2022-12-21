@@ -19,7 +19,7 @@ export class OpeningService {
     return this.http.get(this.api + "/api/Opening/General").pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -31,7 +31,7 @@ export class OpeningService {
     return this.http.get(this.api + "/api/Opening/Exceptions").pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -45,7 +45,7 @@ export class OpeningService {
     return this.http.post(this.api + "/api/Opening/Exceptions",op).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -56,11 +56,11 @@ export class OpeningService {
 
 
   deleteException(id:any):Observable<any> {
-    console.log("id a eleminar",id);
+    //console.log("id a eleminar",id);
     return this.http.delete(this.api + "/api/Opening/Exception/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -74,7 +74,7 @@ export class OpeningService {
     return this.http.put(this.api + "/api/Opening/General/1" , op).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -87,7 +87,7 @@ export class OpeningService {
     return this.http.put(this.api + "/api/Opening/Exception/"+op.id , op).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;

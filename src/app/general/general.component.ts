@@ -94,7 +94,7 @@ export class GeneralComponent implements OnInit{
     this.changeCatList();
 
     this.openingService.getAllOpening().subscribe((data:any)=>{
-      console.log(data);
+      //console.log(data);
       this.general = {
         id:data[0].id,
         global:data[0].global,
@@ -105,7 +105,7 @@ export class GeneralComponent implements OnInit{
     });
 
     this.openingService.getAllExceptions().subscribe((data:any) =>{
-      console.log(data);
+      //console.log(data);
       this.horasEspeciales = data;
     });
 
@@ -133,7 +133,7 @@ export class GeneralComponent implements OnInit{
         this.catList.push(element);
       });
 
-      console.log(this.catList);
+      //console.log(this.catList);
 
     });    
   }
@@ -278,7 +278,7 @@ export class GeneralComponent implements OnInit{
 
   }
   /*saveRules(){
-    console.log(this.horasEspeciales);
+    //console.log(this.horasEspeciales);
   }*/
 
   showDate(today:Date| undefined | string){

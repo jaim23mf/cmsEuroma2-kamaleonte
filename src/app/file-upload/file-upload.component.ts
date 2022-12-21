@@ -42,7 +42,7 @@ export class FileUploadComponent implements OnInit{
 
     if (file) {
 
-      console.log(this.elemId);
+      //console.log(this.elemId);
 
 
         this.fileName = file.name;
@@ -57,7 +57,7 @@ export class FileUploadComponent implements OnInit{
           let orden:Number = +this.elemId;
           this.msg.sendText(data.url,orden,+this.tipo);
         }, error => {
-          console.log(error);
+          //console.log(error);
           this.userService.logout();
         });
        */
@@ -76,7 +76,7 @@ export class FileUploadComponent implements OnInit{
     this.msg.sendText(data.url,orden,+this.tipo);
   }
   handleError(error:any){
-    console.log(error);
+    //console.log(error);
           this.userService.logout();
   }
 

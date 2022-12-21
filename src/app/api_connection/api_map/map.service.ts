@@ -16,7 +16,7 @@ export class MapService {
     return this.http.get(this.api + "/Map/Floor").pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -29,7 +29,7 @@ export class MapService {
     return this.http.post(this.api + "/Map/Floor",ev).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -42,7 +42,7 @@ export class MapService {
     return this.http.put(this.api + "/Map/Floor/"+ev.id,ev).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -55,7 +55,7 @@ export class MapService {
     return this.http.delete(this.api + "/Map/Floor/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -67,7 +67,7 @@ export class MapService {
     return this.http.post(this.api + "/Map/Floor/"+id + "/GltfFile",file).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;

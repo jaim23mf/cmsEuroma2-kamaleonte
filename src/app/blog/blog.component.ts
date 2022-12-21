@@ -66,7 +66,7 @@ export class BlogComponent {
   }
 
   fileUploaded(value:any){
-    console.log(value.msg, value.type);
+    //console.log(value.msg, value.type);
     
   }
   ngOnDestroy(){

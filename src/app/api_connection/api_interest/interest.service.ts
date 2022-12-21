@@ -16,7 +16,7 @@ export class InterestService {
     return this.http.get(this.api + "/api/Interest").pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -29,7 +29,7 @@ export class InterestService {
     return this.http.get(this.api + "/api/Interest/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -42,7 +42,7 @@ export class InterestService {
     return this.http.put(this.api + "/api/Interest/"+i.id,i).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -55,7 +55,7 @@ export class InterestService {
     return this.http.post(this.api + "/api/Interest",i).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -67,7 +67,7 @@ export class InterestService {
     return this.http.delete(this.api + "/api/Interest/" + i).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;

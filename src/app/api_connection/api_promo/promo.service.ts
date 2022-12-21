@@ -16,7 +16,7 @@ export class PromoService {
       return this.http.get(this.api + "/api/Promo").pipe(
         map((res: any) => {
           if (!res) {
-            console.log('Error occurred.');
+            //console.log('Error occurred.');
             throw new Error('Error');
           }
           return res;
@@ -29,7 +29,7 @@ export class PromoService {
       return this.http.post(this.api + "/api/Promo" , promo).pipe(
         map((res: any) => {
           if (!res) {
-            console.log('Error occurred.');
+            //console.log('Error occurred.');
             throw new Error('Error');
           }
           return res;
@@ -42,7 +42,7 @@ export class PromoService {
       return this.http.put(this.api + "/api/Promo/" + promo.id , promo).pipe(
         map((res: any) => {
           if (!res) {
-            console.log('Error occurred.');
+            //console.log('Error occurred.');
             throw new Error('Error');
           }
           return res;
@@ -56,7 +56,7 @@ export class PromoService {
       return this.http.delete(this.api + "/api/Promo/" + promo.id).pipe(
         map((res: any) => {
           if (!res) {
-            console.log('Error occurred.');
+            //console.log('Error occurred.');
             throw new Error('Error');
           }
           return res;

@@ -16,7 +16,7 @@ export class ReachService {
     return this.http.get(this.api + "/api/Reach").pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -29,7 +29,7 @@ export class ReachService {
     return this.http.post(this.api + "/api/Reach",ev).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -42,7 +42,7 @@ export class ReachService {
     return this.http.put(this.api + "/api/Reach/"+ev.id,ev).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -55,7 +55,7 @@ export class ReachService {
     return this.http.delete(this.api + "/api/Reach/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;

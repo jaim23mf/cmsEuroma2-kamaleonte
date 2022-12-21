@@ -17,7 +17,7 @@ export class OphoursDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public store:Store  , private dialogRef: MatDialogRef<OphoursDialogComponent> , private shopService:ShopService) {
 
     this.data=store.openingHours;
-    console.log(this.data);
+    //console.log(this.data);
     while(this.data.length<7){
       this.data.push({
         id:0,

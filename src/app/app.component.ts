@@ -14,7 +14,7 @@ visible = false;
   constructor(private userService : UsersService, private router:Router) {
     this.userToken = this.userService.getToken();
     this.visible=false;
-    console.log(this.userToken);
+    //console.log(this.userToken);
     if(this.userToken != ''){
       this.visible=true;
     }

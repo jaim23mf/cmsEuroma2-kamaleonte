@@ -48,7 +48,7 @@ export class UsersService {
   }
 
   getUserLogged():Observable<any> {
-    console.log(this.cookies.get("token"));
+    //console.log(this.cookies.get("token"));
     return this.http.post(this.api + "/PostUser",{token:this.getToken()});
   }
 }

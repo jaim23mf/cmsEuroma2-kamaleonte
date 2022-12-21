@@ -44,7 +44,7 @@ export class EventsComponent {
         });
       });
 
-      console.log(this.events);
+      //console.log(this.events);
 
     });
   }
@@ -136,7 +136,7 @@ export class EventsComponent {
   }
 
   fileUploaded(value:any){
-    console.log(value.msg);
+    //console.log(value.msg);
     
   }
 

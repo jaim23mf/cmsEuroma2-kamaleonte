@@ -31,7 +31,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err) => {
         //if (err.status === 401) {
-        console.log("Error");
+        //console.log("Error");
         if (err.status === 0 ||err.status === 401) {
             return this.handleResponseError(err, request, next);
         }
@@ -50,7 +50,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
 
       return this.userService.refreshToken().subscribe((data:any)=>{
-        console.log(data);
+        //console.log(data);
         if(data.token || data.logged == true){
         this.userService.setToken(data.token);
         return true;
@@ -64,7 +64,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 }
 
   handleResponseError(error:any, request?:any, next?:any):any {
-    console.log(error);
+    //console.log(error);
     // Business error
     if (error.status === 400) {
         // Show message

@@ -28,7 +28,7 @@ export class StoresComponent implements OnInit{
     this.subs = this.msg_service.getText().subscribe((data:any) =>{
 
       let prom = this.stores.find(f=>f.id == data.type); 
-      console.log(data.tipo);
+      //console.log(data.tipo);
       if(prom){
       
         if(data.tipo == 0){
@@ -53,7 +53,7 @@ export class StoresComponent implements OnInit{
           });
         });
 
-        console.log(this.stores);
+        //console.log(this.stores);
     });
     this.shopService.getAllCategory().subscribe((data: Category[]) => {
       this.catList.push({id:0,title:"Nothing Selected"});
@@ -220,7 +220,7 @@ export class StoresComponent implements OnInit{
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.stores = this.stores.filter((event) => event !== s);
-        console.log(s.id);
+        //console.log(s.id);
         this.shopService.deleteShop(s.id).subscribe();
       } 
     });
@@ -228,7 +228,7 @@ export class StoresComponent implements OnInit{
 
 
   fileUploaded(value:any){
-    console.log(value.msg , value.type);
+    //console.log(value.msg , value.type);
     
   }
 

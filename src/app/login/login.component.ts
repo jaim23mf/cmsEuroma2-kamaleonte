@@ -16,8 +16,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    //console.log(this.email);
-    //console.log(this.password);
+    ////console.log(this.email);
+    ////console.log(this.password);
 
     const user = { username: this.email, password: this.password };
 
@@ -26,14 +26,14 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl("/Home");
     });*/
     this.userService.login(user).subscribe((data: any) => {
-      console.log(data);
+      //console.log(data);
       if(data.logged == true){
         this.error="";
         this.userService.setToken(data.token);
         this.router.navigateByUrl("/General");
         let n = {userName: this.email, password: this.password ,refreshToken:data.refreshToken.token,refreshTokenExpires:data.refreshToken.expires};
-        console.log(n);
-        console.log(data.refreshToken);
+        //console.log(n);
+        //console.log(data.refreshToken);
         this.userService.setTokenR(n);
 
       }

@@ -20,7 +20,7 @@ export class ShopService {
     return this.http.get(this.api + "/Shop/Category").pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -33,7 +33,7 @@ export class ShopService {
     return this.http.get(this.api + "/Shop/SubCategory").pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -46,7 +46,7 @@ export class ShopService {
     return this.http.get(this.api + "/Shop").pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -59,7 +59,7 @@ export class ShopService {
     return this.http.get(this.api + "/Shop/Category/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -72,7 +72,7 @@ export class ShopService {
     return this.http.get(this.api + "/Shop/SubCategory/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -85,7 +85,7 @@ export class ShopService {
     return this.http.get(this.api + "/Shop/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -100,7 +100,7 @@ export class ShopService {
     return this.http.post(this.api + "/Shop/Category",shop).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -112,7 +112,7 @@ export class ShopService {
     return this.http.post(this.api + "/Shop/SubCategory",shop).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -124,7 +124,7 @@ export class ShopService {
     return this.http.post(this.api + "/Shop",id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -139,7 +139,7 @@ export class ShopService {
     return this.http.put(this.api + "/Shop/Category/"+shop.id,shop).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -151,7 +151,7 @@ export class ShopService {
     return this.http.put(this.api + "/Shop/SubCategory/"+id.id,id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -163,7 +163,7 @@ export class ShopService {
     return this.http.put(this.api + "/Shop/"+id.id,id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -176,7 +176,7 @@ export class ShopService {
     return this.http.delete(this.api + "/Shop/Category/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -188,7 +188,7 @@ export class ShopService {
     return this.http.delete(this.api + "/Shop/SubCategory/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;
@@ -200,7 +200,7 @@ export class ShopService {
     return this.http.delete(this.api + "/Shop/"+id).pipe(
       map((res: any) => {
         if (!res) {
-          console.log('Error occurred.');
+          //console.log('Error occurred.');
           throw new Error('Error');
         }
         return res;

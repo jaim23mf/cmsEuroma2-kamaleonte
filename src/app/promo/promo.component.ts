@@ -56,7 +56,7 @@ export class PromoComponent {
         });
       });
 
-      console.log(this.promociones);
+      //console.log(this.promociones);
 
     });
   }
