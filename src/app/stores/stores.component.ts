@@ -2,7 +2,7 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { lastValueFrom, Observable, of, Subscription } from 'rxjs';
+import { delay, lastValueFrom, Observable, of, retry, Subscription } from 'rxjs';
 import { InterestService } from '../api_connection/api_interest/interest.service';
 import { ShopService } from '../api_connection/api_shop/shop.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -25,7 +25,7 @@ export class StoresComponent implements OnInit{
   subs:Subscription;
 
   public constructor(public dialog: MatDialog,public confirm: MatDialog, private msg_service:MsgService , private shopService:ShopService , private interestService:InterestService){
-    this.subs = this.msg_service.getText().subscribe((data:any) =>{
+    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe((data:any) =>{
 
       let prom = this.stores.find(f=>f.id == data.type); 
       console.log(data.tipo);
@@ -44,7 +44,7 @@ export class StoresComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-    this.shopService.getAllShop().subscribe((data:Store[])=>{
+    this.shopService.getAllShop().pipe(retry(3), delay(1000)).subscribe((data:Store[])=>{
         this.stores = data;
         this.stores.forEach(s => {
           s.iiId = [];
@@ -55,21 +55,21 @@ export class StoresComponent implements OnInit{
 
         console.log(this.stores);
     });
-    this.shopService.getAllCategory().subscribe((data: Category[]) => {
+    this.shopService.getAllCategory().pipe(retry(3), delay(1000)).subscribe((data: Category[]) => {
       this.catList.push({id:0,title:"Nothing Selected"});
       data.forEach(element => {
         this.catList.push(element);
       });
     });    
 
-    this.shopService.getAllSubCategory().subscribe((data: Subcategory[]) => {
+    this.shopService.getAllSubCategory().pipe(retry(3), delay(1000)).subscribe((data: Subcategory[]) => {
       this.subList.push({id:0,categoryId:0,title:"Nothing Selected"});
       data.forEach(element => {
         this.subList.push(element);
       });
     });    
 
-    this.interestService.getAllInterests().subscribe((data:Interest[]) =>{
+    this.interestService.getAllInterests().pipe(retry(3), delay(1000)).subscribe((data:Interest[]) =>{
       this.interestList=data;
     });
 
@@ -137,7 +137,7 @@ export class StoresComponent implements OnInit{
       interestIds: []
     };
 
-    await this.shopService.postShop(shop).subscribe((data:Store)=>{
+    await this.shopService.postShop(shop).pipe(retry(3), delay(1000)).subscribe((data:Store)=>{
       let oph:Opening_Day[] = []
       while(oph.length<7){
         oph.push({
@@ -207,7 +207,7 @@ export class StoresComponent implements OnInit{
      s.interestIds = realInterest;
 
     }
-    this.shopService.putShop(s).subscribe();
+    this.shopService.putShop(s).pipe(retry(3), delay(1000)).subscribe();
 
   }
 
@@ -221,7 +221,7 @@ export class StoresComponent implements OnInit{
       if (confirmado) {
         this.stores = this.stores.filter((event) => event !== s);
         console.log(s.id);
-        this.shopService.deleteShop(s.id).subscribe();
+        this.shopService.deleteShop(s.id).pipe(retry(3), delay(1000)).subscribe();
       } 
     });
   }

@@ -1,7 +1,7 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { Subscription } from 'rxjs';
+import { delay, retry, Subscription } from 'rxjs';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { BlogEntry } from '../models/blog-model';
 import { MsgService } from '../msg.service';
@@ -16,7 +16,7 @@ export class BlogComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService){
-    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe(this.fileUploaded);
   }
   @ViewChildren(MatExpansionPanel)
   panels!: QueryList<MatExpansionPanel>;

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { delay, retry } from 'rxjs';
 import { ReachService } from '../api_connection/api_reach/reach.service';
 import { GlobalConstants } from '../common/global-constants';
 import { MsgService } from '../msg.service';
@@ -61,7 +62,7 @@ export class FileUploadComponent implements OnInit{
         });
        */
 
-        upload$.subscribe({
+        upload$.pipe(retry(3), delay(1000)).subscribe({
           next: this.handleUpdateResponse.bind(this),
           error: this.handleError.bind(this)
        });

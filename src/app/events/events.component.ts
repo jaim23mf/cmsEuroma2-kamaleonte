@@ -2,7 +2,7 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { Subscription } from 'rxjs';
+import { delay, retry, Subscription } from 'rxjs';
 import { EventsService } from '../api_connection/api_events/events.service';
 import { InterestService } from '../api_connection/api_interest/interest.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -19,7 +19,7 @@ export class EventsComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService, private interestService:InterestService, private eventService: EventsService){
-    this.subs = this.msg_service.getText().subscribe((data:any)=>{
+    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe((data:any)=>{
       let prom = this.events.find(f=>f.id == data.type); 
 
       if(prom){
@@ -30,11 +30,11 @@ export class EventsComponent {
     });
 
 
-    this.interestService.getAllInterests().subscribe((data:Interest[]) =>{
+    this.interestService.getAllInterests().pipe(retry(3), delay(1000)).subscribe((data:Interest[]) =>{
       this.interestList=data;
     });
 
-    this.eventService.getAllEvents().subscribe((data:Evento[])=>{
+    this.eventService.getAllEvents().pipe(retry(3), delay(1000)).subscribe((data:Evento[])=>{
       this.events = data;
 
       this.events.forEach(s => {
@@ -70,7 +70,7 @@ export class EventsComponent {
 
 
 
-    await this.eventService.postEvent(ev).subscribe((data:Evento)=>{
+    await this.eventService.postEvent(ev).pipe(retry(3), delay(1000)).subscribe((data:Evento)=>{
 
       this.events = [...this.events,{
         id:data.id,
@@ -105,7 +105,7 @@ export class EventsComponent {
 
     }
 
-    this.eventService.putEvent(data).subscribe();
+    this.eventService.putEvent(data).pipe(retry(3), delay(1000)).subscribe();
   }
 
   closeAllPanels() {
@@ -130,7 +130,7 @@ export class EventsComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.events = this.events.filter((event) => event !== e);
-        this.eventService.deleteEvent(e.id).subscribe();
+        this.eventService.deleteEvent(e.id).pipe(retry(3), delay(1000)).subscribe();
       } 
     });
   }

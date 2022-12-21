@@ -1,7 +1,7 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { Subscription } from 'rxjs';
+import { delay, retry, Subscription } from 'rxjs';
 import { ServiceService } from '../api_connection/api_service/service.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Servicio } from '../models/servicio-model';
@@ -17,7 +17,7 @@ export class ServicesComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService , private serviceService:ServiceService){
-    this.subs = this.msg_service.getText().subscribe((data:any) =>{
+    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe((data:any) =>{
       let prom = this.services.find(f=>f.id == data.type); 
 
       if(prom){
@@ -26,7 +26,7 @@ export class ServicesComponent {
       }
     });
 
-    this.serviceService.getAllServices().subscribe((data:Servicio[]) => {
+    this.serviceService.getAllServices().pipe(retry(3), delay(1000)).subscribe((data:Servicio[]) => {
       this.services = data;
     });
 
@@ -67,7 +67,7 @@ export class ServicesComponent {
         order:0
       }
     
-    this.serviceService.postService(serv).subscribe((data:Servicio) =>{
+    this.serviceService.postService(serv).pipe(retry(3), delay(1000)).subscribe((data:Servicio) =>{
       this.services = [...this.services,{
         id:data.id,
         icon: data.icon,
@@ -81,7 +81,7 @@ export class ServicesComponent {
 
 
   changeService(s:Servicio){
-    this.serviceService.putService(s).subscribe();
+    this.serviceService.putService(s).pipe(retry(3), delay(1000)).subscribe();
   }
 
   deleteService(s:Servicio){
@@ -93,7 +93,7 @@ export class ServicesComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.services = this.services.filter((event) => event !== s);
-        this.serviceService.deleteService(s.id).subscribe();
+        this.serviceService.deleteService(s.id).pipe(retry(3), delay(1000)).subscribe();
       } 
     });
   }

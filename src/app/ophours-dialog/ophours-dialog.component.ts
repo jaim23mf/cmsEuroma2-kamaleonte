@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { delay, retry } from 'rxjs';
 import { ShopService } from '../api_connection/api_shop/shop.service';
 import { Opening_Day } from '../models/semana-model';
 import { Store } from '../models/store-model';
@@ -33,7 +34,7 @@ export class OphoursDialogComponent {
 
   change(data:Opening_Day[]){
     this.store.openingHours = data;
-    this.shopService.putShop(this.store).subscribe();
+    this.shopService.putShop(this.store).pipe(retry(3), delay(1000)).subscribe();
 
   }
 
