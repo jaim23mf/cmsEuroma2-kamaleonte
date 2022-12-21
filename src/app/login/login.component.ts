@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
       }
       else{
-        this.error = "Usuario o contraseña incorrecta";
+        this.error = "Incorrect user or password";
       }
     
     });    
