@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable, retry } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Servicio } from 'src/app/models/servicio-model';
 
@@ -13,18 +13,54 @@ export class ServiceService {
   constructor(private http: HttpClient) {}
 
   getAllServices(): Observable<any> {
-    return this.http.get(this.api + "/api/Service");
+    return this.http.get(this.api + "/api/Service").pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
 
   postService(ev:Servicio): Observable<any> {
-    return this.http.post(this.api + "/api/Service",ev);
+    return this.http.post(this.api + "/api/Service",ev).pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
 
   putService(ev:Servicio): Observable<any> {
-    return this.http.put(this.api + "/api/Service/"+ev.id,ev);
+    return this.http.put(this.api + "/api/Service/"+ev.id,ev).pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
 
   deleteService(id:any): Observable<any> {
-    return this.http.delete(this.api + "/api/Service/"+id);
+    return this.http.delete(this.api + "/api/Service/"+id).pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
 }

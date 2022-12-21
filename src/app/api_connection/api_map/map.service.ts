@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable, retry } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Floor } from 'src/app/models/floor-model';
 
@@ -13,21 +13,66 @@ export class MapService {
   constructor(private http: HttpClient) {}
 
   getAllFloors(): Observable<any> {
-    return this.http.get(this.api + "/Map/Floor");
+    return this.http.get(this.api + "/Map/Floor").pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
 
   postFloor(ev:Floor): Observable<any> {
-    return this.http.post(this.api + "/Map/Floor",ev);
+    return this.http.post(this.api + "/Map/Floor",ev).pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
 
   putFloor(ev:Floor): Observable<any> {
-    return this.http.put(this.api + "/Map/Floor/"+ev.id,ev);
+    return this.http.put(this.api + "/Map/Floor/"+ev.id,ev).pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
 
   deleteFloor(id:any): Observable<any> {
-    return this.http.delete(this.api + "/Map/Floor/"+id);
+    return this.http.delete(this.api + "/Map/Floor/"+id).pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
   uploadGltf(id:any,file:any): Observable<any> {
-    return this.http.post(this.api + "/Map/Floor/"+id + "/GltfFile",file);
+    return this.http.post(this.api + "/Map/Floor/"+id + "/GltfFile",file).pipe(
+      map((res: any) => {
+        if (!res) {
+          console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
   }
 }

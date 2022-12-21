@@ -82,18 +82,18 @@ export class GeneralComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.shopService.getAllCategory().pipe(retry(3), delay(1000)).subscribe((data: Category[]) => {
+    this.shopService.getAllCategory().subscribe((data: Category[]) => {
       this.category = data;
     });    
 
-    this.shopService.getAllSubCategory().pipe(retry(3), delay(1000)).subscribe((data: Subcategory[]) => {
+    this.shopService.getAllSubCategory().subscribe((data: Subcategory[]) => {
       this.subcategory = data;
     });    
 
 
     this.changeCatList();
 
-    this.openingService.getAllOpening().pipe(retry(3), delay(1000)).subscribe((data:any)=>{
+    this.openingService.getAllOpening().subscribe((data:any)=>{
       console.log(data);
       this.general = {
         id:data[0].id,
@@ -104,34 +104,37 @@ export class GeneralComponent implements OnInit{
       };
     });
 
-    this.openingService.getAllExceptions().pipe(retry(3), delay(1000)).subscribe((data:any) =>{
+    this.openingService.getAllExceptions().subscribe((data:any) =>{
       console.log(data);
       this.horasEspeciales = data;
     });
 
-    this.interestService.getAllInterests().pipe(retry(3), delay(1000)).subscribe((data:any)=>{
+    this.interestService.getAllInterests().subscribe((data:any)=>{
       this.interest = data;
     });
   }
 
   changeGeneral(general:any){
-    this.openingService.putGeneral(general).pipe(retry(3), delay(1000)).subscribe();
+    this.openingService.putGeneral(general).subscribe();
 
   }
 
   changeException(hora:Horario){
 
-    this.openingService.putException(hora).pipe(retry(3), delay(1000)).subscribe();
+    this.openingService.putException(hora).subscribe();
 
   }
 
   changeCatList(){
-    this.catList = [];
-    this.shopService.getAllCategory().pipe(retry(3), delay(1000)).subscribe((data: Category[]) => {
+    this.shopService.getAllCategory().subscribe((data: Category[]) => {
+      this.catList = [];
       this.catList.push({id:0,title:"Nothing Selected"});
       data.forEach(element => {
         this.catList.push(element);
       });
+
+      console.log(this.catList);
+
     });    
   }
 
@@ -146,7 +149,7 @@ export class GeneralComponent implements OnInit{
       ourStores:{id:0,from:"",to:""}
       };
 
-    await this.openingService.postException(elem).pipe(retry(3), delay(1000)).subscribe((data:Horario)=>{
+    await this.openingService.postException(elem).subscribe((data:Horario)=>{
     this.horasEspeciales = [... this.horasEspeciales,{
       id:data.id,
       dateRange:{id:data.dateRange.id,from:data.dateRange.from,to:data.dateRange.from},
@@ -160,7 +163,7 @@ export class GeneralComponent implements OnInit{
   }
 
   async newCat(){
-    await this.shopService.postCategory({id:0,title:""}).pipe(retry(3), delay(1000)).subscribe((data:Category)=>{
+    await this.shopService.postCategory({id:0,title:""}).subscribe((data:Category)=>{
       this.category = [... this.category,{
         id:data.id,
         title: data.title
@@ -171,7 +174,7 @@ export class GeneralComponent implements OnInit{
 
   }
   async newSub(){
-    await this.shopService.postSubCategory({id:0,categoryId:0,title:""}).pipe(retry(3), delay(1000)).subscribe((data:Subcategory) =>{
+    await this.shopService.postSubCategory({id:0,categoryId:0,title:""}).subscribe((data:Subcategory) =>{
       this.subcategory = [... this.subcategory,{
         id:data.id,
         categoryId:data.categoryId,
@@ -183,7 +186,7 @@ export class GeneralComponent implements OnInit{
   }
 
   async newInterest(){
-    await this.interestService.postInterest({id:0,name:"",group:0}).pipe(retry(3), delay(1000)).subscribe((data:Interest) =>{
+    await this.interestService.postInterest({id:0,name:"",group:0}).subscribe((data:Interest) =>{
       this.interest = [... this.interest,{
         id:data.id,
         name: data.name,
@@ -196,18 +199,18 @@ export class GeneralComponent implements OnInit{
 
 
   changeCat(cat:Category){
-    this.shopService.putCategory(cat).pipe(retry(3), delay(1000)).subscribe(()=>{
+    this.shopService.putCategory(cat).subscribe(()=>{
       this.changeCatList();
     }); 
     
   }
 
   changeSubCat(cat:Subcategory){    
-    this.shopService.putSubCategory(cat).pipe(retry(3), delay(1000)).subscribe();
+    this.shopService.putSubCategory(cat).subscribe();
   }
 
   changeInterest(i:Interest){    
-    this.interestService.putInterest(i).pipe(retry(3), delay(1000)).subscribe();
+    this.interestService.putInterest(i).subscribe();
   }
 
   deleteRule(hora:Horario){
@@ -219,7 +222,7 @@ export class GeneralComponent implements OnInit{
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.horasEspeciales = this.horasEspeciales.filter((event) => event !== hora);
-        this.openingService.deleteException(hora.id).pipe(retry(3), delay(1000)).subscribe();
+        this.openingService.deleteException(hora.id).subscribe();
       } 
     });
   }
@@ -234,7 +237,7 @@ export class GeneralComponent implements OnInit{
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.category = this.category.filter((event) => event !== cat);
-        this.shopService.deleteCategory(cat.id).pipe(retry(3), delay(1000)).subscribe();
+        this.shopService.deleteCategory(cat.id).subscribe();
       } 
     });
 
@@ -250,7 +253,7 @@ export class GeneralComponent implements OnInit{
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.subcategory = this.subcategory.filter((event) => event !== cat);
-        this.shopService.deleteSubCategory(cat.id).pipe(retry(3), delay(1000)).subscribe();
+        this.shopService.deleteSubCategory(cat.id).subscribe();
 
       } 
     });
@@ -268,7 +271,7 @@ export class GeneralComponent implements OnInit{
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.interest = this.interest.filter((event) => event !== cat);
-        this.interestService.deleteInterest(cat.id).pipe(retry(3), delay(1000)).subscribe();
+        this.interestService.deleteInterest(cat.id).subscribe();
 
       } 
     });

@@ -21,7 +21,7 @@ export class MapComponent {
   public constructor(public confirm: MatDialog, private msg_service:MsgService, private floorService:MapService){
 
 
-    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe((data:any)=>{
+    this.subs = this.msg_service.getText().subscribe((data:any)=>{
       let floor = this.floors.find(f=>f.id == data.type); 
 
       if(floor){
@@ -31,7 +31,7 @@ export class MapComponent {
     });
 
 
-    this.floorService.getAllFloors().pipe(retry(3), delay(1000)).subscribe((data:Floor[])=>{
+    this.floorService.getAllFloors().subscribe((data:Floor[])=>{
       this.floors = data;
     });
 
@@ -65,7 +65,7 @@ export class MapComponent {
       name:""
     };
 
-    this.floorService.postFloor(f).pipe(retry(3), delay(1000)).subscribe((data:Floor)=>{
+    this.floorService.postFloor(f).subscribe((data:Floor)=>{
       this.floors = [...this.floors,{
         id:data.id,
         name: data.name,
@@ -75,7 +75,7 @@ export class MapComponent {
   }
 
   changeFloor(f:Floor){
-    this.floorService.putFloor(f).pipe(retry(3), delay(1000)).subscribe();
+    this.floorService.putFloor(f).subscribe();
   }
 
   deleteFloor(piso:Floor){
@@ -87,7 +87,7 @@ export class MapComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.floors = this.floors.filter((event) => event !== piso);
-        this.floorService.deleteFloor(piso.id).pipe(retry(3), delay(1000)).subscribe();
+        this.floorService.deleteFloor(piso.id).subscribe();
       } 
     });
   }

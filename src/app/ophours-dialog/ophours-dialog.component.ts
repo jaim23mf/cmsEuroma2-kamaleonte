@@ -34,7 +34,7 @@ export class OphoursDialogComponent {
 
   change(data:Opening_Day[]){
     this.store.openingHours = data;
-    this.shopService.putShop(this.store).pipe(retry(3), delay(1000)).subscribe();
+    this.shopService.putShop(this.store).subscribe();
 
   }
 

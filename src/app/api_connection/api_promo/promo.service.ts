@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable, retry } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Promo } from 'src/app/models/promo-model';
 
@@ -13,19 +13,55 @@ export class PromoService {
 
     //LLAMADA GET A LA API
     getAllPromo(): Observable<any> {
-      return this.http.get(this.api + "/api/Promo");
+      return this.http.get(this.api + "/api/Promo").pipe(
+        map((res: any) => {
+          if (!res) {
+            console.log('Error occurred.');
+            throw new Error('Error');
+          }
+          return res;
+        }),
+        retry(3)
+      );
     }
 
     postPromo(promo:Promo): Observable<any>{
-      return this.http.post(this.api + "/api/Promo" , promo);
+      return this.http.post(this.api + "/api/Promo" , promo).pipe(
+        map((res: any) => {
+          if (!res) {
+            console.log('Error occurred.');
+            throw new Error('Error');
+          }
+          return res;
+        }),
+        retry(3)
+      );
     }
 
     putPromo(promo:Promo): Observable<any>{
-      return this.http.put(this.api + "/api/Promo/" + promo.id , promo);
+      return this.http.put(this.api + "/api/Promo/" + promo.id , promo).pipe(
+        map((res: any) => {
+          if (!res) {
+            console.log('Error occurred.');
+            throw new Error('Error');
+          }
+          return res;
+        }),
+        retry(3)
+      );
 
     }
 
     deletePromo(promo:Promo): Observable<any>{
-      return this.http.delete(this.api + "/api/Promo/" + promo.id);
+      return this.http.delete(this.api + "/api/Promo/" + promo.id).pipe(
+        map((res: any) => {
+          if (!res) {
+            console.log('Error occurred.');
+            throw new Error('Error');
+          }
+          return res;
+        }),
+        retry(3)
+      );
     }
 }

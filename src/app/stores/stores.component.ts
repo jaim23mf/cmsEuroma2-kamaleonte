@@ -25,7 +25,7 @@ export class StoresComponent implements OnInit{
   subs:Subscription;
 
   public constructor(public dialog: MatDialog,public confirm: MatDialog, private msg_service:MsgService , private shopService:ShopService , private interestService:InterestService){
-    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe((data:any) =>{
+    this.subs = this.msg_service.getText().subscribe((data:any) =>{
 
       let prom = this.stores.find(f=>f.id == data.type); 
       console.log(data.tipo);
@@ -44,7 +44,7 @@ export class StoresComponent implements OnInit{
     });
   }
   ngOnInit(): void {
-    this.shopService.getAllShop().pipe(retry(3), delay(1000)).subscribe((data:Store[])=>{
+    this.shopService.getAllShop().subscribe((data:Store[])=>{
         this.stores = data;
         this.stores.forEach(s => {
           s.iiId = [];
@@ -55,21 +55,21 @@ export class StoresComponent implements OnInit{
 
         console.log(this.stores);
     });
-    this.shopService.getAllCategory().pipe(retry(3), delay(1000)).subscribe((data: Category[]) => {
+    this.shopService.getAllCategory().subscribe((data: Category[]) => {
       this.catList.push({id:0,title:"Nothing Selected"});
       data.forEach(element => {
         this.catList.push(element);
       });
     });    
 
-    this.shopService.getAllSubCategory().pipe(retry(3), delay(1000)).subscribe((data: Subcategory[]) => {
+    this.shopService.getAllSubCategory().subscribe((data: Subcategory[]) => {
       this.subList.push({id:0,categoryId:0,title:"Nothing Selected"});
       data.forEach(element => {
         this.subList.push(element);
       });
     });    
 
-    this.interestService.getAllInterests().pipe(retry(3), delay(1000)).subscribe((data:Interest[]) =>{
+    this.interestService.getAllInterests().subscribe((data:Interest[]) =>{
       this.interestList=data;
     });
 
@@ -137,7 +137,7 @@ export class StoresComponent implements OnInit{
       interestIds: []
     };
 
-    await this.shopService.postShop(shop).pipe(retry(3), delay(1000)).subscribe((data:Store)=>{
+    await this.shopService.postShop(shop).subscribe((data:Store)=>{
       let oph:Opening_Day[] = []
       while(oph.length<7){
         oph.push({
@@ -207,7 +207,7 @@ export class StoresComponent implements OnInit{
      s.interestIds = realInterest;
 
     }
-    this.shopService.putShop(s).pipe(retry(3), delay(1000)).subscribe();
+    this.shopService.putShop(s).subscribe();
 
   }
 
@@ -221,7 +221,7 @@ export class StoresComponent implements OnInit{
       if (confirmado) {
         this.stores = this.stores.filter((event) => event !== s);
         console.log(s.id);
-        this.shopService.deleteShop(s.id).pipe(retry(3), delay(1000)).subscribe();
+        this.shopService.deleteShop(s.id).subscribe();
       } 
     });
   }

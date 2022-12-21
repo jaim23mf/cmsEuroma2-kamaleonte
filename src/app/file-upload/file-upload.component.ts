@@ -62,7 +62,7 @@ export class FileUploadComponent implements OnInit{
         });
        */
 
-        upload$.pipe(retry(3), delay(1000)).subscribe({
+        upload$.subscribe({
           next: this.handleUpdateResponse.bind(this),
           error: this.handleError.bind(this)
        });

@@ -16,7 +16,7 @@ export class BlogComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService){
-    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe(this.fileUploaded);
+    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
   }
   @ViewChildren(MatExpansionPanel)
   panels!: QueryList<MatExpansionPanel>;

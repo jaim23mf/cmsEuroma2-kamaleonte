@@ -25,7 +25,7 @@ export class PromoComponent {
   public constructor(public confirm: MatDialog, private msg_service:MsgService ,
   private promosService:PromoService , private shopService:ShopService , private interestService:InterestService)
   {
-    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe((data:any) =>{
+    this.subs = this.msg_service.getText().subscribe((data:any) =>{
       let prom = this.promociones.find(f=>f.id == data.type); 
 
       if(prom){
@@ -35,18 +35,18 @@ export class PromoComponent {
 
     });
     
-    this.shopService.getAllShop().pipe(retry(3), delay(1000)).subscribe((data:Store[])=>{
+    this.shopService.getAllShop().subscribe((data:Store[])=>{
         data.forEach(element => {
           this.stores.push({value:element.id , viewValue: element.title});
         });
 
     });
 
-    this.interestService.getAllInterests().pipe(retry(3), delay(1000)).subscribe((data:Interest[]) =>{
+    this.interestService.getAllInterests().subscribe((data:Interest[]) =>{
       this.interestList=data;
     });
 
-    this.promosService.getAllPromo().pipe(retry(3), delay(1000)).subscribe((data:Promo[])=>{
+    this.promosService.getAllPromo().subscribe((data:Promo[])=>{
       this.promociones = data;
 
       this.promociones.forEach(s => {
@@ -90,7 +90,7 @@ export class PromoComponent {
       interestIds: []
     };
 
-    await this.promosService.postPromo(promo).pipe(retry(3), delay(1000)).subscribe((data:Promo)=>{
+    await this.promosService.postPromo(promo).subscribe((data:Promo)=>{
 
       this.promociones = [...this.promociones,{
         id:data.id,
@@ -128,7 +128,7 @@ export class PromoComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.promociones = this.promociones.filter((event) => event !== p);
-        this.promosService.deletePromo(p).pipe(retry(3), delay(1000)).subscribe();
+        this.promosService.deletePromo(p).subscribe();
       } 
     });
     
@@ -154,7 +154,7 @@ export class PromoComponent {
 
     }
 
-    this.promosService.putPromo(p).pipe(retry(3), delay(1000)).subscribe();
+    this.promosService.putPromo(p).subscribe();
 
   }
 

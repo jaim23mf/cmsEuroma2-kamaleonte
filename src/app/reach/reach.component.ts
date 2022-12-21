@@ -16,7 +16,7 @@ export class ReachComponent {
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, private msg_service:MsgService , private serviceService:ReachService){
-    this.subs = this.msg_service.getText().pipe(retry(3), delay(1000)).subscribe((data:any)=>{
+    this.subs = this.msg_service.getText().subscribe((data:any)=>{
       let prom = this.services.find(f=>f.id == data.type); 
 
       if(prom){
@@ -25,7 +25,7 @@ export class ReachComponent {
       }
     });
 
-    this.serviceService.getAllReach().pipe(retry(3), delay(1000)).subscribe((data:Reach[]) => {
+    this.serviceService.getAllReach().subscribe((data:Reach[]) => {
       this.services = data;
     });
 
@@ -68,7 +68,7 @@ export class ReachComponent {
         order:0
       }
     
-    this.serviceService.postReach(serv).pipe(retry(3), delay(1000)).subscribe((data:Reach) =>{
+    this.serviceService.postReach(serv).subscribe((data:Reach) =>{
       this.services = [...this.services,{
         id:data.id,
         icon: data.icon,
@@ -82,7 +82,7 @@ export class ReachComponent {
 
 
   changeService(s:Reach){
-    this.serviceService.putReach(s).pipe(retry(3), delay(1000)).subscribe();
+    this.serviceService.putReach(s).subscribe();
   }
 
   deleteService(s:Reach){
@@ -94,7 +94,7 @@ export class ReachComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.services = this.services.filter((event) => event !== s);
-        this.serviceService.deleteReach(s.id).pipe(retry(3), delay(1000)).subscribe();
+        this.serviceService.deleteReach(s.id).subscribe();
       } 
     });
   }
