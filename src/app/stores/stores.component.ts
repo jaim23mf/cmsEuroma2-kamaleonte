@@ -56,7 +56,7 @@ export class StoresComponent implements OnInit{
         //console.log(this.stores);
     });
     this.shopService.getAllCategory().subscribe((data: Category[]) => {
-      this.catList.push({id:0,title:"Nothing Selected"});
+      this.catList.push({id:0,title:"Nothing Selected",shopType:0});
       data.forEach(element => {
         this.catList.push(element);
       });

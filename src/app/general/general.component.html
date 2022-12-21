@@ -327,6 +327,13 @@
             <mat-label>Title</mat-label>
             <input matInput type="text" [required]="true" [(ngModel)]="cat.title" (ngModelChange)="changeCat(cat)">
         </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Shop Type</mat-label>
+          <mat-select [(ngModel)]="cat.shopType" (ngModelChange)="changeCat(cat)">
+            <mat-option *ngFor="let t of shopTypes" [value]="t.id">{{t.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+          <br>        
         <button class="mat-icon-color" mat-icon-button (click)="deleteCat(cat)" >
             <mat-icon>delete</mat-icon>
           </button>
@@ -353,7 +360,7 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <p>Subcategory: &nbsp;</p>
+                <p>SubCat: &nbsp;</p>
                 <p class="descripcion">{{sub.title}}</p>
               </mat-panel-title>
               <mat-panel-description>
@@ -372,6 +379,7 @@
               <mat-option *ngFor="let t of catList" [value]="t.id" [title]="t.title">{{t.title}}</mat-option>
             </mat-select>
           </mat-form-field>
+          <br>
           <button class="mat-icon-color" mat-icon-button (click)="deleteSub(sub)" >
               <mat-icon>delete</mat-icon>
             </button>
@@ -410,16 +418,17 @@
               <mat-label>Title</mat-label>
               <input matInput type="text" [required]="true" [(ngModel)]="sub.name" (ngModelChange)="changeInterest(sub)">
           </mat-form-field>
-          <button class="mat-icon-color" mat-icon-button (click)="deleteInterest(sub)" >
-            <mat-icon>delete</mat-icon>
-          </button>
+    
           <mat-form-field appearance="outline">
             <mat-label>Group</mat-label>
             <mat-select [(ngModel)]="sub.group" (ngModelChange)="changeInterest(sub)">
               <mat-option *ngFor="let t of group" [value]="t.id">{{t.title}}</mat-option>
             </mat-select>
           </mat-form-field>
-            
+            <br>
+          <button class="mat-icon-color" mat-icon-button (click)="deleteInterest(sub)" >
+            <mat-icon>delete</mat-icon>
+          </button>
       </div>
     </mat-expansion-panel>
      

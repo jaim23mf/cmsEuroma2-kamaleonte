@@ -11,7 +11,7 @@ import { CookieOptions, CookieService } from 'ngx-cookie-service';
   providedIn: 'root',
 })
 export class TokenInterceptorService implements HttpInterceptor {
-  constructor( private userService:UsersService) {}
+  constructor( private userService:UsersService,private cookie:CookieService) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -31,7 +31,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err) => {
         //if (err.status === 401) {
-        //console.log("Error");
+        console.log("Error <__" , err);
         if (err.status === 0 ||err.status === 401) {
             return this.handleResponseError(err, request, next);
         }
@@ -40,7 +40,7 @@ export class TokenInterceptorService implements HttpInterceptor {
           this.userService.logout();
         //}
         const error = err.message || err.statusText;
-        return throwError(error);
+        return error;
         }
       })
     );
@@ -48,19 +48,15 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   refreshToken(){
 
-
-      return this.userService.refreshToken().subscribe((data:any)=>{
-        //console.log(data);
+      return  this.userService.refreshToken().subscribe((data:any)=>{
         if(data.token || data.logged == true){
         this.userService.setToken(data.token);
-        return true;
         }
         else{
           this.userService.logout();
-          return false;
         }
       });
-
+    
 }
 
   handleResponseError(error:any, request?:any, next?:any):any {
@@ -72,8 +68,11 @@ export class TokenInterceptorService implements HttpInterceptor {
 
     // Invalid token error
     else if (error.status === 0 || error.status === 401) {
-      let i = this.refreshToken();
-      if (i){
+      //console.log(this.refreshToken());
+      this.refreshToken();
+      //console.log(i);
+      //i.unsubscribe();
+      if (this.cookie.get("active-token") == "true"){
         return next.handle(request);
       }
       else{
@@ -111,7 +110,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         // Redirect to the maintenance page
     }
 
-    return throwError(error);
+    return error;
 }
 
 }

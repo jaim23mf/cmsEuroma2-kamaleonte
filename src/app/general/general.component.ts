@@ -64,10 +64,18 @@ export class GeneralComponent implements OnInit{
   horasEspeciales: Horario[] =  [];
  
   group = [
+
     {id:1, title:"Shops"},
     {id:2, title:"Hobbies"},
     {id:3, title:"Events"}
+
   ];
+
+  shopTypes = [
+    {id:1, title:"Food And Beverage"},
+    {id:2, title:"Store"}
+  ];
+
 
   category : Category[] = [];
 
@@ -128,7 +136,7 @@ export class GeneralComponent implements OnInit{
   changeCatList(){
     this.shopService.getAllCategory().subscribe((data: Category[]) => {
       this.catList = [];
-      this.catList.push({id:0,title:"Nothing Selected"});
+      this.catList.push({id:0,title:"Nothing Selected",shopType:0});
       data.forEach(element => {
         this.catList.push(element);
       });
@@ -163,10 +171,11 @@ export class GeneralComponent implements OnInit{
   }
 
   async newCat(){
-    await this.shopService.postCategory({id:0,title:""}).subscribe((data:Category)=>{
+    await this.shopService.postCategory({id:0,title:"",shopType:0}).subscribe((data:Category)=>{
       this.category = [... this.category,{
         id:data.id,
-        title: data.title
+        title: data.title,
+        shopType:data.shopType
       }
       ];
       this.changeCatList();

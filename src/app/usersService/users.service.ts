@@ -36,12 +36,15 @@ export class UsersService {
   }
 
   refreshToken():Observable<any>{
+    this.cookies.set("active-token", "false");
      let l = {refreshToken:this.cookies.get("tokenR"),refreshTokenE:this.cookies.get("tokenRE")};
      return this.http.post(this.api + "/identity/refresh-token",l);
   }
 
   setToken(token: string) {
     this.cookies.set("token", token);
+    this.cookies.set("active-token", "true");
+
   }
   getToken() {
     return this.cookies.get("token");
