@@ -66,14 +66,7 @@ export class PromoComponent {
   @ViewChildren(MatExpansionPanel)
   panels!: QueryList<MatExpansionPanel>;
 
-  promociones:Promo[] = [{
-    id:0,
-    title: "3x2",
-    dateRange:{id:0,from:"",to:""},
-    description:"Description of the promo.....",
-    shopId: 0,
-    interestIds:[]
-  }];
+  promociones:Promo[] = [];
 
   interestList:Interest[] =[];
   stores:SelectModel[] = [];
