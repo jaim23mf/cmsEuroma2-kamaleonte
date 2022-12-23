@@ -28,6 +28,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { TokenInterceptorService } from './usersService/token-interceptor.service';
 import { ReachComponent } from './reach/reach.component';
+import { MapEditorComponent } from './map-editor/map-editor.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { ReachComponent } from './reach/reach.component';
     FileUploadComponent,
     ConfirmDialogComponent,
     LoginComponent,
-    ReachComponent
+    ReachComponent,
+    MapEditorComponent
     ],
   imports: [
     BrowserAnimationsModule,

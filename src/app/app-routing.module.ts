@@ -10,6 +10,7 @@ import { StoresComponent } from './stores/stores.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { ReachComponent } from './reach/reach.component';
+import { MapEditorComponent } from './map-editor/map-editor.component';
 
 const routes: Routes = [
   { path:"Map",component:MapComponent,pathMatch:"full" , canActivate:[AuthGuard]},
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path:"Services",component:ServicesComponent,pathMatch:"full",canActivate:[AuthGuard]},
   { path:"Reach",component:ReachComponent,pathMatch:"full",canActivate:[AuthGuard]},
   { path:"Blog",component:BlogComponent,pathMatch:"full",canActivate:[AuthGuard]},
+  { path:"MapEditor",component:MapEditorComponent,pathMatch:"full"},
   { path: "Login",component:LoginComponent, pathMatch:"full"},
   { path: "", component: LoginComponent, pathMatch: "full" }
 ];

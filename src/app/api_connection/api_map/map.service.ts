@@ -25,6 +25,46 @@ export class MapService {
     );
   }
 
+  getShopList(): Observable<any> {
+    return this.http.get(this.api + "/Map/ShopInfo").pipe(
+      map((res: any) => {
+        if (!res) {
+          //console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
+  }
+
+  getNavInfoPoint(): Observable<any> {
+    return this.http.get(this.api + "/Map/NavInfoPoint").pipe(
+      map((res: any) => {
+        if (!res) {
+          //console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
+  }
+
+
+  getFloor(id:any): Observable<any> {
+    return this.http.get(this.api + "/Map/FloorView/"+id).pipe(
+      map((res: any) => {
+        if (!res) {
+          //console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
+  }
+
   postFloor(ev:Floor): Observable<any> {
     return this.http.post(this.api + "/Map/Floor",ev).pipe(
       map((res: any) => {

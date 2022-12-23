@@ -8,6 +8,7 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { MsgService } from '../msg.service';
 import { delay, retry, Subscription } from 'rxjs';
 import { MapService } from '../api_connection/api_map/map.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -18,7 +19,7 @@ export class MapComponent {
 
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService, private floorService:MapService){
+  public constructor(public confirm: MatDialog, private msg_service:MsgService, private floorService:MapService , private router:Router){
 
 
     this.subs = this.msg_service.getText().subscribe((data:any)=>{
@@ -101,7 +102,7 @@ export class MapComponent {
   }
 
   open3D(piso:Floor){
-
+    this.router.navigateByUrl("/MapEditor");
   }
 
   ngOnDestroy(){
