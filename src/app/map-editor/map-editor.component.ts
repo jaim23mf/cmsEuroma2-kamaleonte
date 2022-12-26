@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MapService } from '../api_connection/api_map/map.service';
 import { EditorComponetProxy } from '../editor-communication/editor-component-proxy';
+import { FloorSaveInfo } from '../editor-communication/models/floor-save-info.type';
 import { EditorRequest } from '../editor-communication/requests/editor-request';
 import { RequestType } from '../editor-communication/requests/request-type';
 import { ResponseType } from '../editor-communication/responses/response-type';
@@ -15,12 +17,19 @@ import { ResponseType } from '../editor-communication/responses/response-type';
 export class MapEditorComponent implements OnInit {
     public _hostingIframe!: HTMLIFrameElement;
     public  componentProxy = new EditorComponetProxy(window);
-    constructor(private mapService:MapService) {}
+    constructor(private mapService:MapService, private _route:ActivatedRoute,private _router:Router) {}
+
+    private piso:Number = 0;
 
   ngOnInit(): void {
     this._hostingIframe = document.getElementById("iframeId") as HTMLIFrameElement;
     this.componentProxy = new EditorComponetProxy(this._hostingIframe.contentWindow!);
     this.componentProxy.addListener((request) => this.onRequestReceived(request));
+
+    this._route.params.subscribe((params:Params) =>{
+        this.piso = params['floor'];
+    });
+
   }
 
 
@@ -33,7 +42,7 @@ export class MapEditorComponent implements OnInit {
             this.sendFloorsNavPoints(request.excludeFloor);
             break;
         case RequestType.Save:
-            //this.saveFloorInfo(request.data);
+            this.saveFloorInfo(request.data);
             this._hostingIframe.src = this._hostingIframe.src;
             break;
         case RequestType.ShopsList:
@@ -48,7 +57,7 @@ ngOnDestroy(){
 
 
 private sendFloorInfo(){
- this.mapService.getFloor(1).subscribe((data:any) =>{
+ this.mapService.getFloor(this.piso).subscribe((data:any) =>{
   this.componentProxy.sendResponse({
     type: ResponseType.FloorInformation,
     data: data
@@ -56,17 +65,21 @@ private sendFloorInfo(){
 });
 }
 
-private saveFloorInfo(){
-  this.componentProxy.sendResponse({
+private saveFloorInfo(data:FloorSaveInfo){
+  this.mapService.saveFloor(this.piso,data).subscribe((data:any) =>{
+
+  });
+  //No need to response this request...?
+  /*this.componentProxy.sendResponse({
     type: ResponseType.FloorInformation,
     data: {
       id: "1",
       modelUrl: "PTA00.gltf",
       name: "floor.name",
-      navPoints: [],
-      shopsNodes: []
+      navPoints: data.navPoints,
+      shopsNodes: data.shopsNodes
   }
-  });
+  });*/
 }
 
 

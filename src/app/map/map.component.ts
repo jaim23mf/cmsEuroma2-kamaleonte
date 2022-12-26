@@ -63,14 +63,16 @@ export class MapComponent {
     let f : Floor = {
       id:0,
       modelUrl:"",
-      name:""
+      name:"",
+      floor:1
     };
 
     this.floorService.postFloor(f).subscribe((data:Floor)=>{
       this.floors = [...this.floors,{
         id:data.id,
         name: data.name,
-        modelUrl:data.modelUrl
+        modelUrl:data.modelUrl,
+        floor:data.floor
       }];
     });
   }
@@ -102,7 +104,8 @@ export class MapComponent {
   }
 
   open3D(piso:Floor){
-    this.router.navigateByUrl("/MapEditor");
+
+    this.router.navigateByUrl("/MapEditor/"+piso.id);
   }
 
   ngOnDestroy(){

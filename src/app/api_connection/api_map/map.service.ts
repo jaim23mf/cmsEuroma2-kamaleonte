@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, retry } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
+import { FloorSaveInfo } from 'src/app/editor-communication/models/floor-save-info.type';
 import { Floor } from 'src/app/models/floor-model';
 
 @Injectable({
@@ -63,6 +64,20 @@ export class MapService {
       }),
       retry(3)
     );
+  }
+
+  saveFloor(id:any,data:FloorSaveInfo){
+    return this.http.post(this.api + "/Map/SaveFloor/"+id,data).pipe(
+      map((res: any) => {
+        if (!res) {
+          //console.log('Error occurred.');
+          throw new Error('Error');
+        }
+        return res;
+      }),
+      retry(3)
+    );
+
   }
 
   postFloor(ev:Floor): Observable<any> {
