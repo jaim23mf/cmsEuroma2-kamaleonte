@@ -139,14 +139,17 @@ export class StoresComponent implements OnInit{
 
     await this.shopService.postShop(shop).subscribe((data:Store)=>{
       let oph:Opening_Day[] = []
-      while(oph.length<7){
+      console.log(data);
+      let i = 0;
+      while(data.openingHours.length<7){
         oph.push({
-          id:0,
-          from:"00:00",
-          to:"00:00",
-          description:oph.length,
-          id_shop:data.id
+          id:data.openingHours[i].id,
+          from:data.openingHours[i].from,
+          to:data.openingHours[i].to,
+          description:data.openingHours[i].description,
+          id_shop:data.openingHours[i].id_shop
         });
+        i++;
       }
 
     this.stores = [...this.stores,{
