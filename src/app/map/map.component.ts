@@ -24,9 +24,17 @@ export class MapComponent {
 
     this.subs = this.msg_service.getText().subscribe((data:any)=>{
       let floor = this.floors.find(f=>f.id == data.type); 
-
       if(floor){
-        floor.modelUrl = data.msg;
+
+
+        if(data.tipo == 0){
+          floor.modelUrl = data.msg;
+
+        }
+        else {
+          floor.modelBinUrl = data.msg;
+        }
+
         this.floorService.putFloor(floor).subscribe();
       }
     });
@@ -63,6 +71,7 @@ export class MapComponent {
     let f : Floor = {
       id:0,
       modelUrl:"",
+      modelBinUrl:"",
       name:"",
       floor:1
     };
@@ -72,6 +81,7 @@ export class MapComponent {
         id:data.id,
         name: data.name,
         modelUrl:data.modelUrl,
+        modelBinUrl:data.modelBinUrl,
         floor:data.floor
       }];
     });
@@ -98,7 +108,7 @@ export class MapComponent {
 
   getName(name:any){
     if(name){
-      let n = name.split("\\");
+      let n = name.split("/");
       return n[n.length-1];
     }
   }

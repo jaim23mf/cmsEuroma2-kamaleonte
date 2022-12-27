@@ -36,7 +36,10 @@
       <!--
       -->
 
-      <app-file-upload requiredFileType="gltf" fileName="{{getName(p.modelUrl)}}" elemId="{{p.id}}" type="/Map/Floor/GltfFile/"></app-file-upload>
+      <app-file-upload requiredFileType="gltf" fileName="{{getName(p.modelUrl)}}" elemId="{{p.id}}" type="/Map/Floor/GltfFile/" tipo="0"></app-file-upload>
+
+      <app-file-upload requiredFileType="bin" fileName="{{getName(p.modelBinUrl)}}" elemId="{{p.id}}" type="/Map/Floor/BinFile/" tipo="1" ></app-file-upload>
+
 
       <!--
 
