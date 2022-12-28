@@ -1,8 +1,7 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { delay, lastValueFrom, Observable, of, retry, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { InterestService } from '../api_connection/api_interest/interest.service';
 import { ShopService } from '../api_connection/api_shop/shop.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -13,6 +12,8 @@ import { Store } from '../models/store-model';
 import { Subcategory } from '../models/subcat-model';
 import { MsgService } from '../msg.service';
 import { OphoursDialogComponent } from '../ophours-dialog/ophours-dialog.component';
+
+
 
 @Component({
   selector: 'app-stores',
@@ -79,31 +80,7 @@ export class StoresComponent implements OnInit{
   @ViewChildren(MatExpansionPanel)
   panels!: QueryList<MatExpansionPanel>;
 
-  stores:Store[] = [
-    {
-    id: 0,
-    title: "string",
-    type: 0,
-    categoryId: 0,
-    subcategoryId: 0,
-    logo: "string",
-    photo: "string",
-    openingHours: [
-      {
-        id: 0,
-        description: 0,
-        from: "string",
-        to: "string"
-      }
-    ],
-    phoneNumber: "string",
-    description: "string",
-    firstOpeningDay: "string",
-    interestIds: [
-      
-    ]
-  }];
-
+  stores:Store[] = [];
   categoryId:Number[]=[];
   subcategoryId:Number[]=[];
   catList:Category[] = [];

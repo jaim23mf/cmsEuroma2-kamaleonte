@@ -13,7 +13,7 @@ export class EventsService {
   constructor(private http: HttpClient) {}
 
   getAllEvents(): Observable<any> {
-    return this.http.get(this.api + "/api/Events").pipe(
+    return this.http.get(this.api + "/api/Events/EventCMS").pipe(
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
