@@ -18,7 +18,7 @@
           <p class="descripcion">{{p.title}}</p>
         </mat-panel-title>
         <mat-panel-description>
-            <p>Pomo Descrption: &nbsp;&nbsp;</p> 
+            <p>Promo Descrption: &nbsp;&nbsp;</p> 
             <p class="descripcion">{{p.description}} &nbsp;&nbsp;</p>
         <mat-icon>event</mat-icon>
         </mat-panel-description>
@@ -68,7 +68,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Insterest</mat-label>
+      <mat-label>Insterests</mat-label>
       <mat-select [(ngModel)]="p.iiId" (ngModelChange)="changePromo(p)" multiple>
         <mat-option *ngFor="let t of interestList" [value]="t.id">{{t.name}}</mat-option>
       </mat-select>
