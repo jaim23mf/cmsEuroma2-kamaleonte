@@ -25,12 +25,17 @@
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
+        <mat-label>English Title</mat-label>
         <input matInput type="text" [(ngModel)]="p.title" [required]="true"  (ngModelChange)="changePromo(p)">
       </mat-form-field>
   
       <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
+        <mat-label>Italian Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true"  (ngModelChange)="changePromo(p)">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>English Description</mat-label>
         <textarea matInput
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
@@ -38,6 +43,14 @@
             cdkAutosizeMaxRows="5" [(ngModel)]="p.description"  (ngModelChange)="changePromo(p)"></textarea>
       </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>Italian Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it"  (ngModelChange)="changePromo(p)"></textarea>
+      </mat-form-field>
 
     <app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}"  elemId="{{p.id}}" type="/api/Promo/ImgUpload/"></app-file-upload>
 

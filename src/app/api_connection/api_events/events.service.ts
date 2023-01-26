@@ -39,6 +39,7 @@ export class EventsService {
   }
 
   putEvent(ev:Evento): Observable<any> {
+    console.log(this.api + "/api/Events/"+ev.id,ev);
     return this.http.put(this.api + "/api/Events/"+ev.id,ev).pipe(
       map((res: any) => {
         if (!res) {

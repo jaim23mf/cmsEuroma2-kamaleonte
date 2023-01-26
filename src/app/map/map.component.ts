@@ -73,16 +73,22 @@ export class MapComponent {
       modelUrl:"",
       modelBinUrl:"",
       name:"",
-      floor:1
+      name_it:"",
+      floor:1,
+      navPoints:[],
+      shopsNodes:[]
     };
 
     this.floorService.postFloor(f).subscribe((data:Floor)=>{
       this.floors = [...this.floors,{
         id:data.id,
         name: data.name,
+        name_it:data.name_it,
         modelUrl:data.modelUrl,
         modelBinUrl:data.modelBinUrl,
-        floor:data.floor
+        floor:data.floor,
+        navPoints:data.navPoints,
+        shopsNodes:data.shopsNodes
       }];
     });
   }

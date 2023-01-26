@@ -6,6 +6,7 @@ import { Subcategory } from "./subcat-model";
 export interface Store{
     id: Number;
     title: string;
+    title_it?:String;
     type: Number;
     categoryId:Number; 
     subcategoryId:Number;
@@ -14,6 +15,7 @@ export interface Store{
     openingHours: Opening_Day[],
     phoneNumber: string;
     description: string;
+    description_it?:String;
     firstOpeningDay: string;
     interestIds: LineaInteres_shop[];
     iiId?:Number[];

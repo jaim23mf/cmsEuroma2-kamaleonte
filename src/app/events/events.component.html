@@ -25,19 +25,31 @@
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title" [required]="true">
+        <mat-label>English Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title" (ngModelChange)="changeEvent(p)" [required]="true">
       </mat-form-field>
   
       <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
+        <mat-label>Italian Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title_it" (ngModelChange)="changeEvent(p)" [required]="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>English Description</mat-label>
         <textarea matInput
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (ngModelChange)="changeEvent(p)"></textarea>
       </mat-form-field>
-
+      <mat-form-field appearance="outline">
+        <mat-label>Italian Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (ngModelChange)="changeEvent(p)"></textarea>
+      </mat-form-field>
 
 
       <app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}"  elemId="{{p.id}}" type="/api/Events/ImgUpload/"></app-file-upload>
@@ -45,7 +57,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.dateRange.from">
+        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.dateRange.from" (ngModelChange)="changeEvent(p)">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Sdate"></mat-datepicker-toggle>
         <mat-datepicker #Sdate></mat-datepicker>
@@ -53,7 +65,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.dateRange.to">
+        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.dateRange.to" (ngModelChange)="changeEvent(p)">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Edate"></mat-datepicker-toggle>
         <mat-datepicker #Edate></mat-datepicker>

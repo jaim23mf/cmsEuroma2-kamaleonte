@@ -62,9 +62,11 @@ export class ReachComponent {
     let serv :Reach= 
       {
         id:0,
-        icon: "",
-        title: "",
-        description: "",
+        icon: " ",
+        title: " ",
+        title_it: " ",
+        description: " ",
+        description_it:" ",
         order:0
       }
     
@@ -73,7 +75,9 @@ export class ReachComponent {
         id:data.id,
         icon: data.icon,
         title: data.title,
+        title_it: data.title_it ||" ",
         description: data.description,
+        description_it: data.description_it|| " ",
         order:data.order
       }];
     });
@@ -82,6 +86,10 @@ export class ReachComponent {
 
 
   changeService(s:Reach){
+    if(s.description_it == null) {s.description_it="";}
+    
+    if(s.title_it == null) {s.title_it="";}
+
     this.serviceService.putReach(s).subscribe();
   }
 

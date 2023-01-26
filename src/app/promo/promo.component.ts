@@ -51,7 +51,7 @@ export class PromoComponent {
 
       this.promociones.forEach(s => {
         s.iiId = [];
-        s.interestIds.forEach(i => {
+        s.interestIds?.forEach(i => {
            s.iiId?.push(i.id_interest);
         });
       });
@@ -78,8 +78,10 @@ export class PromoComponent {
       shopId: 0,
       dateRange:{id:0,from:"",to:""},
       title: "",
+      title_it: "",
       image: "",
       description: "",
+      description_it: "",
       interestIds: []
     };
 
@@ -88,8 +90,10 @@ export class PromoComponent {
       this.promociones = [...this.promociones,{
         id:data.id,
         title: "",
+        title_it: "",
         dateRange:{id:0,from:"",to:""},
         description:"",
+        description_it: "",
         shopId: 0,
         image:"",
         interestIds:[]

@@ -324,9 +324,13 @@
     <div>
        
         <mat-form-field  appearance="outline" class="example-full-width">
-            <mat-label>Title</mat-label>
+            <mat-label>English Title</mat-label>
             <input matInput type="text" [required]="true" [(ngModel)]="cat.title" (ngModelChange)="changeCat(cat)">
         </mat-form-field>
+        <mat-form-field  appearance="outline" class="example-full-width">
+          <mat-label>Italian Title</mat-label>
+          <input matInput type="text" [required]="true" [(ngModel)]="cat.title_it" (ngModelChange)="changeCat(cat)">
+      </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Shop Type</mat-label>
           <mat-select [(ngModel)]="cat.shopType" (ngModelChange)="changeCat(cat)">
@@ -370,9 +374,13 @@
   
       <div>
           <mat-form-field  appearance="outline" class="example-full-width">
-              <mat-label>Title</mat-label>
+              <mat-label>English Title</mat-label>
               <input matInput type="text" [required]="true" [(ngModel)]="sub.title" (ngModelChange)="changeSubCat(sub)">
           </mat-form-field>
+          <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Italian Title</mat-label>
+            <input matInput type="text" [required]="true" [(ngModel)]="sub.title_it" (ngModelChange)="changeSubCat(sub)">
+        </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Category</mat-label>
             <mat-select [(ngModel)]="sub.categoryId" (ngModelChange)="changeSubCat(sub)">
@@ -415,10 +423,15 @@
   
       <div>
           <mat-form-field  appearance="outline" class="example-full-width">
-              <mat-label>Title</mat-label>
+              <mat-label>English Title</mat-label>
               <input matInput type="text" [required]="true" [(ngModel)]="sub.name" (ngModelChange)="changeInterest(sub)">
           </mat-form-field>
     
+          <mat-form-field  appearance="outline" class="example-full-width">
+            <mat-label>Italian Title</mat-label>
+            <input matInput type="text" [required]="true" [(ngModel)]="sub.name_it" (ngModelChange)="changeInterest(sub)">
+        </mat-form-field>
+
           <mat-form-field appearance="outline">
             <mat-label>Group</mat-label>
             <mat-select [(ngModel)]="sub.group" (ngModelChange)="changeInterest(sub)">

@@ -1,6 +1,7 @@
 export interface Interest{
     id:Number|null;
     name:String;
+    name_it:String;
     group:number | null;
 }
 

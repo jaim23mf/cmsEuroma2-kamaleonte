@@ -25,9 +25,15 @@
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
+        <mat-label>English Title</mat-label>
         <input matInput type="text" [(ngModel)]="p.name" [required]="true" (ngModelChange)="changeFloor(p)">
       </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Italian Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.name_it" [required]="true" (ngModelChange)="changeFloor(p)">
+      </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Floor Number</mat-label>
         <input matInput type="number" [(ngModel)]="p.floor" [required]="true" (ngModelChange)="changeFloor(p)">

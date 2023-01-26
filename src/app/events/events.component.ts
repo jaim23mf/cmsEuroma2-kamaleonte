@@ -62,7 +62,9 @@ export class EventsComponent {
     let ev:Evento = {
       id:0,
       title:"",
+      title_it:"",
       description:"",
+      description_it:"",
       dateRange:{id:0,from:'',to:''},
       interestIds:[],
       image:""
@@ -75,7 +77,9 @@ export class EventsComponent {
       this.events = [...this.events,{
         id:data.id,
         title:"",
+        title_it:"",
         description:"",
+        description_it:"",
         dateRange:{id:0,from:'',to:''},
         interestIds:[],
         image:""

@@ -23,10 +23,13 @@
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
+        <mat-label>English Title</mat-label>
         <input matInput type="text" [(ngModel)]="p.title" [required]="true" (ngModelChange)="changeStore(p)">
       </mat-form-field>
-  
+      <mat-form-field appearance="outline">
+        <mat-label>Italian Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true" (ngModelChange)="changeStore(p)">
+      </mat-form-field>
       <!--<mat-form-field appearance="outline">
         <mat-label>Type</mat-label>
         <mat-select [formControl]="types" multiple [(ngModel)]="p.type">
@@ -64,7 +67,7 @@
         </mat-select>
       </mat-form-field>
 
-
+    <br>
       <app-file-upload requiredFileType="logo" fileName="{{getName(p.logo)}}"  elemId="{{p.id}}" type="/Shop/LogoUpload/" tipo="0"></app-file-upload>
 
       <app-file-upload requiredFileType="img" fileName="{{getName(p.photo)}}"  elemId="{{p.id}}" type="/Shop/ImgUpload/" tipo="1"></app-file-upload>
@@ -74,14 +77,23 @@
         <mat-label>Phone Number</mat-label>
         <input matInput type="text" [(ngModel)]="p.phoneNumber" (ngModelChange)="changeStore(p)">
       </mat-form-field>
-
+<br>
       <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
+        <mat-label>English Description</mat-label>
         <textarea matInput
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
             cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (ngModelChange)="changeStore(p)"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Italian Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (ngModelChange)="changeStore(p)"></textarea>
       </mat-form-field>
 
       <mat-form-field  appearance="outline" class="example-full-width" >

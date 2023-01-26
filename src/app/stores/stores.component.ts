@@ -47,6 +47,7 @@ export class StoresComponent implements OnInit{
   ngOnInit(): void {
     this.shopService.getAllShop().subscribe((data:Store[])=>{
         this.stores = data;
+        console.log(data);
         this.stores.forEach(s => {
           s.iiId = [];
           s.interestIds.forEach(i => {
@@ -57,14 +58,14 @@ export class StoresComponent implements OnInit{
         //console.log(this.stores);
     });
     this.shopService.getAllCategory().subscribe((data: Category[]) => {
-      this.catList.push({id:0,title:"Nothing Selected",shopType:0});
+      this.catList.push({id:0,title:"Nothing Selected",title_it:"",shopType:0});
       data.forEach(element => {
         this.catList.push(element);
       });
     });    
 
     this.shopService.getAllSubCategory().subscribe((data: Subcategory[]) => {
-      this.subList.push({id:0,categoryId:0,title:"Nothing Selected"});
+      this.subList.push({id:0,categoryId:0,title:"Nothing Selected",title_it:""});
       data.forEach(element => {
         this.subList.push(element);
       });
@@ -102,6 +103,7 @@ export class StoresComponent implements OnInit{
     let shop = {
       id: 0,
       title: "",
+      title_it:"",
       type: 0,
       categoryId: 0,
       subcategoryId:0,
@@ -110,6 +112,7 @@ export class StoresComponent implements OnInit{
       openingHours: oph,
       phoneNumber: "",
       description: "",
+      desciption_it:"",
       firstOpeningDay: "",
       interestIds: []
     };
@@ -132,6 +135,7 @@ export class StoresComponent implements OnInit{
     this.stores = [...this.stores,{
       id: data.id,
       title: "",
+      title_it:"",
       type: data.type,
       categoryId: 0,
       subcategoryId: 0,
@@ -140,6 +144,7 @@ export class StoresComponent implements OnInit{
       openingHours: oph,
       phoneNumber: "",
       description: "",
+      description_it :"",
       firstOpeningDay: "",
       interestIds: []
     }];
@@ -187,6 +192,10 @@ export class StoresComponent implements OnInit{
      s.interestIds = realInterest;
 
     }
+
+    if(s.title_it == null){s.title_it ="";}
+    if(s.description_it == null) {s.description_it ="";}
+
     this.shopService.putShop(s).subscribe();
 
   }

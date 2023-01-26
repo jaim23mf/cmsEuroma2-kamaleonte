@@ -136,7 +136,7 @@ export class GeneralComponent implements OnInit{
   changeCatList(){
     this.shopService.getAllCategory().subscribe((data: Category[]) => {
       this.catList = [];
-      this.catList.push({id:0,title:"Nothing Selected",shopType:0});
+      this.catList.push({id:0,title:"Nothing Selected",title_it:"Nothing Selected",shopType:0});
       data.forEach(element => {
         this.catList.push(element);
       });
@@ -171,10 +171,11 @@ export class GeneralComponent implements OnInit{
   }
 
   async newCat(){
-    await this.shopService.postCategory({id:0,title:"",shopType:0}).subscribe((data:Category)=>{
+    await this.shopService.postCategory({id:0,title:"",title_it:"",shopType:0}).subscribe((data:Category)=>{
       this.category = [... this.category,{
         id:data.id,
         title: data.title,
+        title_it:data.title_it|| "",
         shopType:data.shopType
       }
       ];
@@ -183,11 +184,12 @@ export class GeneralComponent implements OnInit{
 
   }
   async newSub(){
-    await this.shopService.postSubCategory({id:0,categoryId:0,title:""}).subscribe((data:Subcategory) =>{
+    await this.shopService.postSubCategory({id:0,categoryId:0,title:"",title_it:""}).subscribe((data:Subcategory) =>{
       this.subcategory = [... this.subcategory,{
         id:data.id,
         categoryId:data.categoryId,
-        title: data.title
+        title: data.title,
+        title_it:data.title_it || ""
       }
       ];
     })
@@ -195,10 +197,12 @@ export class GeneralComponent implements OnInit{
   }
 
   async newInterest(){
-    await this.interestService.postInterest({id:0,name:"",group:0}).subscribe((data:Interest) =>{
+    await this.interestService.postInterest({id:0,name:"",name_it:"",group:0}).subscribe((data:Interest) =>{
+      console.log(data);
       this.interest = [... this.interest,{
         id:data.id,
         name: data.name,
+        name_it:data.name_it || "",
         group:data.group
       }
       ];

@@ -14,7 +14,7 @@ export class MapService {
   constructor(private http: HttpClient) {}
 
   getAllFloors(): Observable<any> {
-    return this.http.get(this.api + "/Map/Floor").pipe(
+    return this.http.get(this.api + "/Map/FloorCMS").pipe(
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

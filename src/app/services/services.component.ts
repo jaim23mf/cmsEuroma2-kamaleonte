@@ -63,7 +63,9 @@ export class ServicesComponent {
         id:0,
         icon: "",
         title: "",
+        title_it:"",
         description: "",
+        description_it:"",
         order:0
       }
     
@@ -72,7 +74,9 @@ export class ServicesComponent {
         id:data.id,
         icon: data.icon,
         title: data.title,
+        title_it:data.title_it || "",
         description: data.description,
+        description_it:data.description_it ||"",
         order:data.order
       }];
     });
@@ -81,6 +85,9 @@ export class ServicesComponent {
 
 
   changeService(s:Servicio){
+    if(s.description_it == null){s.description_it ="";}
+    if(s.title_it == null){s.title_it ="";}
+    
     this.serviceService.putService(s).subscribe();
   }
 

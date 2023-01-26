@@ -13,7 +13,7 @@ export class ReachService {
   constructor(private http: HttpClient) {}
 
   getAllReach(): Observable<any> {
-    return this.http.get(this.api + "/api/Reach").pipe(
+    return this.http.get(this.api + "/api/ReachCMS").pipe(
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
