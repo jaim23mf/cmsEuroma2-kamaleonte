@@ -1,7 +1,9 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { delay, retry, Subscription } from 'rxjs';
+import { ApiBlogService } from '../api_connection/api_blog/api-blog.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { BlogEntry } from '../models/blog-model';
 import { MsgService } from '../msg.service';
@@ -14,20 +16,35 @@ import { MsgService } from '../msg.service';
 export class BlogComponent {
 
   subs:Subscription;
+  hideRequiredControl = new FormControl(false);
+  public constructor(public confirm: MatDialog, private msg_service:MsgService, private blogService:ApiBlogService){
+    //this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+    this.subs = this.msg_service.getText().subscribe((data:any)=>{
+      let prom = this.blog.find(f=>f.id == data.type); 
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService){
-    this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
+      if(prom){
+        if(data.tipo == 0){
+          prom.thumb = data.msg;
+
+        }
+        else {
+          prom.image = data.msg;
+        }
+
+        this.changeBlog(prom);
+      }
+    });
+
+    this.blogService.getAllBlog().subscribe((data:BlogEntry[]) => {
+      this.blog = data;
+    });
+
+
   }
   @ViewChildren(MatExpansionPanel)
   panels!: QueryList<MatExpansionPanel>;
 
-  blog:BlogEntry[]=[{
-    id:null,
-    title: "Blog...",
-    description: "Blog description",
-    short_desc: "Blog short desc",
-    date: new Date()
-  }]
+  blog:BlogEntry[]=[];
 
   closeAllPanels() {
     this.panels.forEach(panel => {
@@ -35,21 +52,59 @@ export class BlogComponent {
     });
   }
 
-
+  getName(name:any){
+    if(name){
+      let n = name.split("\\");
+      return n[n.length-1];
+    }
+  }
   openAllPanels() {
     this.panels.forEach(panel => {
             panel.open();
     });
   }
 
-  newEntry(){
-    this.blog = [...this.blog,{
-      id:null,
-      title: "",
-      description: "",
-      date: new Date()
-    }]
+  async newEntry(){
 
+    var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      let fecha = yyyy + '-' + mm + '-' + dd;
+
+    let entry :BlogEntry= {
+      id: 0,
+      title: "",
+      title_it:"",
+      date:fecha,
+      shortDescription: "",
+      shortDescription_it: "",
+      image: "",
+      thumb:"",
+      description: "",
+      description_it: "",
+      highlight:false,
+
+    };
+
+    await this.blogService.postBlog(entry).subscribe((data:BlogEntry)=>{
+
+      this.blog = [...this.blog,{
+        id: data.id,
+        title: data.title,
+        title_it:data.title_it,
+        date:fecha,
+        shortDescription: data.shortDescription,
+        shortDescription_it: data.shortDescription_it,
+        image: data.image,
+        thumb:data.thumb,
+        description: data.description,
+        description_it: data.description_it,
+        highlight:data.highlight,
+      }];
+  
+    });
   }
 
   deleteEntry(entry:BlogEntry){
@@ -61,6 +116,7 @@ export class BlogComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.blog = this.blog.filter((event) => event !== entry);
+        this.blogService.deleteReach(entry).subscribe();
       } 
     });
   }
@@ -69,6 +125,15 @@ export class BlogComponent {
     //console.log(value.msg, value.type);
     
   }
+
+  changeBlog(s:BlogEntry){
+    if(s.description_it == null) {s.description_it="";}
+    if(s.shortDescription_it == null) {s.shortDescription_it="";}
+    if(s.title_it == null) {s.title_it="";}
+
+    this.blogService.putBlog(s).subscribe();
+  }
+
   ngOnDestroy(){
     this.subs.unsubscribe();
   }

@@ -17,3 +17,18 @@
 mat-form-field{
     padding: 5px;
 }
+
+.hcheck{
+    height: 20px;
+    position: relative;
+    width: 40px;
+    top: 5px;
+    left:8px;
+}
+
+.hdiv{
+    display: inline-grid;
+    bottom: 15px;
+    position: relative;
+    margin: 15px;
+}

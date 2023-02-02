@@ -67,7 +67,8 @@ export class EventsComponent {
       description_it:"",
       dateRange:{id:0,from:'',to:''},
       interestIds:[],
-      image:""
+      image:"",
+      youtubeLink:""
     }
 
 
@@ -82,7 +83,8 @@ export class EventsComponent {
         description_it:"",
         dateRange:{id:0,from:'',to:''},
         interestIds:[],
-        image:""
+        image:"",
+        youtubeLink:""
         }];    
   
     });

@@ -19,48 +19,70 @@
           <p class="descripcion">{{p.title}}</p>
         </mat-panel-title>
         <mat-panel-description>
-            <p>Blog Entry Descrption:&nbsp;&nbsp;</p> 
-            <p class="descripcion">{{p.short_desc}}&nbsp;&nbsp;</p>
+            <p>Short Description:&nbsp;&nbsp;</p> 
+            <p class="descripcion">{{p.shortDescription}}&nbsp;&nbsp;</p>
             <mat-icon>note_add</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title" [required]="true">
+        <mat-label>English Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true" (ngModelChange)="changeBlog(p)">
       </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Italian Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true" (ngModelChange)="changeBlog(p)">
+      </mat-form-field>
+      <app-file-upload requiredFileType="logo" fileName="{{getName(p.thumb)}}"  elemId="{{p.id}}" type="/api/Blog/ThumbUpload/" tipo="0"></app-file-upload>     
+      <app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}" elemId="{{p.id}}" type="/api/Blog/ImgUpload/" tipo="1"></app-file-upload>
 
-      <app-file-upload requiredFileType="img" fileName="Upload Image" ></app-file-upload>     
-      <app-file-upload requiredFileType="img" fileName="Upload Thumb" type="1"></app-file-upload>
+
   
       <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
+        <mat-label>English Description</mat-label>
         <textarea matInput
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (ngModelChange)="changeBlog(p)"></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Short Description</mat-label>
+        <mat-label>Italian Description</mat-label>
         <textarea matInput
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.short_desc"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (ngModelChange)="changeBlog(p)"></textarea>
       </mat-form-field>
 
+      <mat-form-field appearance="outline">
+        <mat-label>English Short Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.shortDescription" (ngModelChange)="changeBlog(p)"></textarea>
+      </mat-form-field>
 
 
       <mat-form-field appearance="outline">
-        <mat-label>Highlight</mat-label>
-        <input matInput >
+        <mat-label>Italian Short Description</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.shortDescription_it" (ngModelChange)="changeBlog(p)"></textarea>
       </mat-form-field>
+
+      <div class="hdiv">
+      <mat-label>Highlight</mat-label>
+      <input type="checkbox" class="hcheck" [(ngModel)]="p.highlight" (ngModelChange)="changeBlog(p)">
+      </div>
       <button class="mat-icon-color" mat-icon-button (click)="deleteEntry(p)" >
         <mat-icon>delete</mat-icon>
       </button>
-    </mat-expansion-panel>
+      </mat-expansion-panel>
 
   </mat-accordion>
   </div>

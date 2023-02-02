@@ -10,5 +10,6 @@ export interface Evento{
     image:String;
     interestIds:LineaInteres_event[];
     iiId?:Number[];
+    youtubeLink?:String;
     dateRange:Rango;
 }

@@ -51,7 +51,10 @@
             cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (ngModelChange)="changeEvent(p)"></textarea>
       </mat-form-field>
 
-
+      <mat-form-field appearance="outline">
+        <mat-label>Youtube link</mat-label>
+        <input matInput type="text" [(ngModel)]="p.youtubeLink" (ngModelChange)="changeEvent(p)">
+      </mat-form-field>
       <app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}"  elemId="{{p.id}}" type="/api/Events/ImgUpload/"></app-file-upload>
 
 
