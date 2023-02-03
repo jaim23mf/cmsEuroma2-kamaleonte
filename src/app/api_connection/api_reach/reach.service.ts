@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry } from 'rxjs';
+import { debounce, map, Observable, retry, timer } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Reach } from 'src/app/models/reach-model';
 
@@ -27,6 +27,7 @@ export class ReachService {
 
   postReach(ev:Reach): Observable<any> {
     return this.http.post(this.api + "/api/Reach",ev).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -40,6 +41,7 @@ export class ReachService {
 
   putReach(ev:Reach): Observable<any> {
     return this.http.put(this.api + "/api/Reach/"+ev.id,ev).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

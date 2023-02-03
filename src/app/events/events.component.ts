@@ -110,7 +110,9 @@ export class EventsComponent {
      data.interestIds = realInterest;
 
     }
-
+    if(data.description == null) {data.description="";}
+    if(data.description_it == null) {data.description_it="";}
+    if(data.title_it == null) {data.title_it="";}
     this.eventService.putEvent(data).subscribe();
   }
 

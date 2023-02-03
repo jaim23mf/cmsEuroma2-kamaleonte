@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry } from 'rxjs';
+import { debounce, map, Observable, retry, timer } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { FloorSaveInfo } from 'src/app/editor-communication/models/floor-save-info.type';
 import { Floor } from 'src/app/models/floor-model';
@@ -82,6 +82,7 @@ export class MapService {
 
   postFloor(ev:Floor): Observable<any> {
     return this.http.post(this.api + "/Map/Floor",ev).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -95,6 +96,7 @@ export class MapService {
 
   putFloor(ev:Floor): Observable<any> {
     return this.http.put(this.api + "/Map/Floor/"+ev.id,ev).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -120,6 +122,7 @@ export class MapService {
   }
   uploadGltf(id:any,file:any): Observable<any> {
     return this.http.post(this.api + "/Map/Floor/"+id + "/GltfFile",file).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

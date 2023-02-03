@@ -150,6 +150,9 @@ export class PromoComponent {
      p.interestIds = realInterest;
 
     }
+    if(p.description == null) {p.description="";}
+    if(p.description_it == null) {p.description_it="";}
+    if(p.title_it == null) {p.title_it="";}
 
     this.promosService.putPromo(p).subscribe();
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry } from 'rxjs';
+import { debounce, map, Observable, retry, timer } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { BlogEntry } from 'src/app/models/blog-model';
 
@@ -26,6 +26,7 @@ export class ApiBlogService {
 
   postBlog(ev:BlogEntry): Observable<any> {
     return this.http.post(this.api + "/api/Blog",ev).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -39,6 +40,7 @@ export class ApiBlogService {
 
   putBlog(ev:BlogEntry): Observable<any> {
     return this.http.put(this.api + "/api/Blog/"+ev.id,ev).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

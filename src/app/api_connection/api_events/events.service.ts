@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry } from 'rxjs';
+import { debounce, map, Observable, retry, timer } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Evento } from 'src/app/models/evento-model';
 
@@ -27,6 +27,7 @@ export class EventsService {
 
   postEvent(ev:Evento): Observable<any> {
     return this.http.post(this.api + "/api/Events",ev).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -41,6 +42,7 @@ export class EventsService {
   putEvent(ev:Evento): Observable<any> {
     console.log(this.api + "/api/Events/"+ev.id,ev);
     return this.http.put(this.api + "/api/Events/"+ev.id,ev).pipe(
+      debounce(() => timer(5000)),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
