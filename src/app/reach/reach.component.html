@@ -15,22 +15,22 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <p>Reach Title: &nbsp;&nbsp;</p>
-          <p class="descripcion">{{p.title}}</p>
+          <p class="descripcion">{{p.title.length>15?p.title.slice(0,15)+"...":p.title}}&nbsp;&nbsp;</p>
         </mat-panel-title>
         <mat-panel-description>
             <p>Reach Description:&nbsp;&nbsp;</p> 
-            <p class="descripcion">{{p.description}}</p>
+            <p class="descripcion">{{p.description.length>15?p.description.slice(0,15)+"...":p.description}}&nbsp;&nbsp;</p>
         </mat-panel-description>
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
         <mat-label>English Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title" [required]="true" (ngModelChange)="changeService(p)">
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true" (focusout)="changeService(p)">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Italian Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true" (ngModelChange)="changeService(p)">
+        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true" (focusout)="changeService(p)">
       </mat-form-field>
   
       <mat-form-field appearance="outline">
@@ -39,7 +39,7 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (ngModelChange)="changeService(p)"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (focusout)="changeService(p)"></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -48,14 +48,14 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (ngModelChange)="changeService(p)"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (focusout)="changeService(p)"></textarea>
       </mat-form-field>
       <app-file-upload requiredFileType="img" fileName="{{getName(p.icon)}}"  elemId="{{p.id}}" type="/api/Reach/ImgUpload/"></app-file-upload>
 
 
       <mat-form-field appearance="outline">
         <mat-label>Order</mat-label>
-        <input matInput type="number" [(ngModel)]="p.order" (ngModelChange)="changeService(p)">
+        <input matInput type="number" [(ngModel)]="p.order" (focusout)="changeService(p)">
       </mat-form-field>
       <button class="mat-icon-color" mat-icon-button (click)="deleteService(p)" >
         <mat-icon>delete</mat-icon>

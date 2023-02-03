@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry, throttleTime } from 'rxjs';
+import { map, Observable, retry, debounceTime } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Evento } from 'src/app/models/evento-model';
 
@@ -10,7 +10,6 @@ import { Evento } from 'src/app/models/evento-model';
 export class EventsService {
 
   api:string = GlobalConstants.api;
-  defaultThrottleConfig = GlobalConstants.throttleConfig;
   constructor(private http: HttpClient) {}
 
   getAllEvents(): Observable<any> {
@@ -28,7 +27,7 @@ export class EventsService {
 
   postEvent(ev:Evento): Observable<any> {
     return this.http.post(this.api + "/api/Events",ev).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -43,7 +42,7 @@ export class EventsService {
   putEvent(ev:Evento): Observable<any> {
     console.log(this.api + "/api/Events/"+ev.id,ev);
     return this.http.put(this.api + "/api/Events/"+ev.id,ev).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

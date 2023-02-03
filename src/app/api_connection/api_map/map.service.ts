@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry, throttleTime } from 'rxjs';
+import { map, Observable, retry, debounceTime } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { FloorSaveInfo } from 'src/app/editor-communication/models/floor-save-info.type';
 import { Floor } from 'src/app/models/floor-model';
@@ -11,7 +11,6 @@ import { Floor } from 'src/app/models/floor-model';
 export class MapService {
 
   api:string = GlobalConstants.api;
-  defaultThrottleConfig = GlobalConstants.throttleConfig;
 
   constructor(private http: HttpClient) {}
 
@@ -84,7 +83,7 @@ export class MapService {
 
   postFloor(ev:Floor): Observable<any> {
     return this.http.post(this.api + "/Map/Floor",ev).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -98,7 +97,7 @@ export class MapService {
 
   putFloor(ev:Floor): Observable<any> {
     return this.http.put(this.api + "/Map/Floor/"+ev.id,ev).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -124,7 +123,7 @@ export class MapService {
   }
   uploadGltf(id:any,file:any): Observable<any> {
     return this.http.post(this.api + "/Map/Floor/"+id + "/GltfFile",file).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

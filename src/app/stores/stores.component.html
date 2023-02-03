@@ -15,7 +15,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <p>Store Name: &nbsp;&nbsp;</p>
-          <p class="descripcion">{{p.title}}&nbsp;&nbsp;</p>
+          <p class="descripcion">{{p.title.length>15?p.title.slice(0,15)+"...":p.title}}&nbsp;&nbsp;</p>
         </mat-panel-title>
         <mat-panel-description>
         <mat-icon>store</mat-icon>
@@ -24,11 +24,11 @@
   
       <mat-form-field appearance="outline">
         <mat-label>English Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title" [required]="true" (ngModelChange)="changeStore(p)">
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true" (focusout)="changeStore(p)">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Italian Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true" (ngModelChange)="changeStore(p)">
+        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true" (focusout)="changeStore(p)">
       </mat-form-field>
       <!--<mat-form-field appearance="outline">
         <mat-label>Type</mat-label>
@@ -75,7 +75,7 @@
       
       <mat-form-field appearance="outline">
         <mat-label>Phone Number</mat-label>
-        <input matInput type="text" [(ngModel)]="p.phoneNumber" (ngModelChange)="changeStore(p)">
+        <input matInput type="text" [(ngModel)]="p.phoneNumber" (focusout)="changeStore(p)">
       </mat-form-field>
 <br>
       <mat-form-field appearance="outline">
@@ -84,7 +84,7 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (ngModelChange)="changeStore(p)"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (focusout)="changeStore(p)"></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -93,7 +93,7 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (ngModelChange)="changeStore(p)"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (focusout)="changeStore(p)"></textarea>
       </mat-form-field>
 
       <mat-form-field  appearance="outline" class="example-full-width" >

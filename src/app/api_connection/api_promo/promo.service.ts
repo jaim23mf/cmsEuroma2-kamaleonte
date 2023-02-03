@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry, throttleTime } from 'rxjs';
+import { map, Observable, retry, debounceTime } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Promo } from 'src/app/models/promo-model';
 
@@ -9,7 +9,6 @@ import { Promo } from 'src/app/models/promo-model';
 })
 export class PromoService {
   api:string = GlobalConstants.api;
-  defaultThrottleConfig = GlobalConstants.throttleConfig;
 
   constructor(private http: HttpClient) {}
 
@@ -29,7 +28,7 @@ export class PromoService {
 
     postPromo(promo:Promo): Observable<any>{
       return this.http.post(this.api + "/api/Promo" , promo).pipe(
-        throttleTime(500, undefined, this.defaultThrottleConfig),
+        debounceTime(5000),
         map((res: any) => {
           if (!res) {
             //console.log('Error occurred.');
@@ -43,7 +42,7 @@ export class PromoService {
 
     putPromo(promo:Promo): Observable<any>{
       return this.http.put(this.api + "/api/Promo/" + promo.id , promo).pipe(
-        throttleTime(500, undefined, this.defaultThrottleConfig),
+        debounceTime(5000),
         map((res: any) => {
           if (!res) {
             //console.log('Error occurred.');

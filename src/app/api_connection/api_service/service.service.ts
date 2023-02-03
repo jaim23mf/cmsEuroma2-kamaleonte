@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry, throttleTime } from 'rxjs';
+import { map, Observable, retry, debounceTime } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Servicio } from 'src/app/models/servicio-model';
 
@@ -10,7 +10,6 @@ import { Servicio } from 'src/app/models/servicio-model';
 export class ServiceService {
 
   api:string = GlobalConstants.api;
-  defaultThrottleConfig = GlobalConstants.throttleConfig;
 
   constructor(private http: HttpClient) {}
 
@@ -29,7 +28,7 @@ export class ServiceService {
 
   postService(ev:Servicio): Observable<any> {
     return this.http.post(this.api + "/api/Service",ev).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -43,7 +42,7 @@ export class ServiceService {
 
   putService(ev:Servicio): Observable<any> {
     return this.http.put(this.api + "/api/Service/"+ev.id,ev).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

@@ -15,23 +15,24 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <p>Promo Title: &nbsp;&nbsp;</p>
-          <p class="descripcion">{{p.title}}</p>
+          <p class="descripcion">{{p.title.length>15?p.title.slice(0,15)+"...":p.title}}&nbsp;&nbsp;</p>
         </mat-panel-title>
         <mat-panel-description>
             <p>Promo Descrption: &nbsp;&nbsp;</p> 
-            <p class="descripcion">{{p.description}} &nbsp;&nbsp;</p>
+            <p class="descripcion">{{p.description.length>15?p.description.slice(0,15)+"...":p.description}}&nbsp;&nbsp;</p>
+
         <mat-icon>event</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
         <mat-label>English Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title" [required]="true"  (ngModelChange)="changePromo(p)">
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true"  (focusout)="changePromo(p)">
       </mat-form-field>
   
       <mat-form-field appearance="outline">
         <mat-label>Italian Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true"  (ngModelChange)="changePromo(p)">
+        <input matInput type="text" [(ngModel)]="p.title_it" [required]="true"  (focusout)="changePromo(p)">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -40,7 +41,7 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"  (ngModelChange)="changePromo(p)"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description"  (focusout)="changePromo(p)"></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -49,7 +50,7 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it"  (ngModelChange)="changePromo(p)"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it"  (focusout)="changePromo(p)"></textarea>
       </mat-form-field>
 
     <app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}"  elemId="{{p.id}}" type="/api/Promo/ImgUpload/"></app-file-upload>

@@ -23,22 +23,22 @@
         <div>
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Global</mat-label>
-          <input matInput type="time" [(ngModel)]="general.global.from" name="global" (ngModelChange)="changeGeneral(general)">
+          <input matInput type="time" [(ngModel)]="general.global.from" name="global" (focusout)="changeGeneral(general)">
         </mat-form-field>
       
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Food Court</mat-label>
-            <input matInput type="time" [(ngModel)]="general.food.from" name="food" (ngModelChange)="changeGeneral(general)">
+            <input matInput type="time" [(ngModel)]="general.food.from" name="food" (focusout)="changeGeneral(general)">
         </mat-form-field>
 
           <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Hypermarket</mat-label>
-            <input matInput type="time" [(ngModel)]="general.hypermarket.from" name="market" (ngModelChange)="changeGeneral(general)">
+            <input matInput type="time" [(ngModel)]="general.hypermarket.from" name="market" (focusout)="changeGeneral(general)">
         </mat-form-field>
 
           <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Our Stores</mat-label>
-            <input matInput type="time" [(ngModel)]="general.ourStores.from" name="stores" (ngModelChange)="changeGeneral(general)">
+            <input matInput type="time" [(ngModel)]="general.ourStores.from" name="stores" (focusout)="changeGeneral(general)">
         </mat-form-field>
       </div>
       <div>
@@ -73,22 +73,22 @@
     <div>
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Global</mat-label>
-            <input matInput type="time" [(ngModel)]="general.global.to" name="global" (ngModelChange)="changeGeneral(general)">
+            <input matInput type="time" [(ngModel)]="general.global.to" name="global" (focusout)="changeGeneral(general)">
           </mat-form-field>
         
           <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Food Court</mat-label>
-              <input matInput type="time" [(ngModel)]="general.food.to" name="food" (ngModelChange)="changeGeneral(general)">
+              <input matInput type="time" [(ngModel)]="general.food.to" name="food" (focusout)="changeGeneral(general)">
           </mat-form-field>
   
             <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>Hypermarket</mat-label>
-              <input matInput type="time" [(ngModel)]="general.hypermarket.to" name="market" (ngModelChange)="changeGeneral(general)">
+              <input matInput type="time" [(ngModel)]="general.hypermarket.to" name="market" (focusout)="changeGeneral(general)">
           </mat-form-field>
   
             <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>Our Stores</mat-label>
-              <input matInput type="time" [(ngModel)]="general.ourStores.to" name="stores" (ngModelChange)="changeGeneral(general)">
+              <input matInput type="time" [(ngModel)]="general.ourStores.to" name="stores" (focusout)="changeGeneral(general)">
           </mat-form-field>
         </div>
         <div>
@@ -153,7 +153,7 @@
     </mat-form-field>
     <mat-form-field  appearance="outline" class="example-full-width">
         <mat-label>Closing Date (Optional)</mat-label>
-        <input matInput [matDatepicker]="Cdate" [(ngModel)]="hora.dateRange.to" (ngModelChange)="changeException(hora)">
+        <input matInput [matDatepicker]="Cdate" [(ngModel)]="hora.dateRange.to" (focusout)="changeException(hora)">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Cdate"></mat-datepicker-toggle>
         <mat-datepicker #Cdate></mat-datepicker>
@@ -163,22 +163,22 @@
 
         <mat-form-field appearance="outline" class="example-full-width">
           <mat-label>Global</mat-label>
-          <input matInput type="time" [(ngModel)]="hora.global.from" name="global" (ngModelChange)="changeException(hora)">
+          <input matInput type="time" [(ngModel)]="hora.global.from" name="global" (focusout)="changeException(hora)">
         </mat-form-field>
       
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Food Court</mat-label>
-            <input matInput type="time" [(ngModel)]="hora.food.from" name="food" (ngModelChange)="changeException(hora)">
+            <input matInput type="time" [(ngModel)]="hora.food.from" name="food" (focusout)="changeException(hora)">
         </mat-form-field>
 
           <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Hypermarket</mat-label>
-            <input matInput type="time" [(ngModel)]="hora.hypermarket.from" name="market" (ngModelChange)="changeException(hora)">
+            <input matInput type="time" [(ngModel)]="hora.hypermarket.from" name="market" (focusout)="changeException(hora)">
         </mat-form-field>
 
           <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Our Stores</mat-label>
-            <input matInput type="time" [(ngModel)]="hora.ourStores.from" name="stores" (ngModelChange)="changeException(hora)">
+            <input matInput type="time" [(ngModel)]="hora.ourStores.from" name="stores" (focusout)="changeException(hora)">
         </mat-form-field>
     </form>
     <div>
@@ -212,22 +212,22 @@
     <form class="hours-form">
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Global</mat-label>
-            <input matInput type="time" [(ngModel)]="hora.global.to" name="global" (ngModelChange)="changeException(hora)">
+            <input matInput type="time" [(ngModel)]="hora.global.to" name="global" (focusout)="changeException(hora)">
           </mat-form-field>
         
           <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Food Court</mat-label>
-              <input matInput type="time" [(ngModel)]="hora.food.to" name="food" (ngModelChange)="changeException(hora)">
+              <input matInput type="time" [(ngModel)]="hora.food.to" name="food" (focusout)="changeException(hora)">
           </mat-form-field>
   
             <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>Hypermarket</mat-label>
-              <input matInput type="time" [(ngModel)]="hora.hypermarket.to" name="market" (ngModelChange)="changeException(hora)">
+              <input matInput type="time" [(ngModel)]="hora.hypermarket.to" name="market" (focusout)="changeException(hora)">
           </mat-form-field>
   
             <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>Our Stores</mat-label>
-              <input matInput type="time" [(ngModel)]="hora.ourStores.to" name="stores" (ngModelChange)="changeException(hora)">
+              <input matInput type="time" [(ngModel)]="hora.ourStores.to" name="stores" (focusout)="changeException(hora)">
           </mat-form-field>
 
     </form>
@@ -317,7 +317,8 @@
               <!--<p class="descripcion">{{cat.title}}</p>-->
             </mat-panel-title>
             <mat-panel-description>
-                <p class="descripcion"> {{cat.title}} </p> 
+                <p class="descripcion">{{cat.title.length>15?cat.title.slice(0,15)+"...":cat.title}}&nbsp;&nbsp;</p>
+
             </mat-panel-description>
           </mat-expansion-panel-header>
 
@@ -325,11 +326,11 @@
        
         <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>English Title</mat-label>
-            <input matInput type="text" [required]="true" [(ngModel)]="cat.title" (ngModelChange)="changeCat(cat)">
+            <input matInput type="text" [required]="true" [(ngModel)]="cat.title" (focusout)="changeCat(cat)">
         </mat-form-field>
         <mat-form-field  appearance="outline" class="example-full-width">
           <mat-label>Italian Title</mat-label>
-          <input matInput type="text" [required]="true" [(ngModel)]="cat.title_it" (ngModelChange)="changeCat(cat)">
+          <input matInput type="text" [required]="true" [(ngModel)]="cat.title_it" (focusout)="changeCat(cat)">
       </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Shop Type</mat-label>
@@ -368,18 +369,19 @@
                 <!--<p class="descripcion">{{sub.title}}</p>-->
               </mat-panel-title>
               <mat-panel-description>
-                <p class="descripcion">{{sub.title}}</p>
+                <p class="descripcion">{{sub.title.length>15?sub.title.slice(0,15)+"...":sub.title}}&nbsp;&nbsp;</p>
+
               </mat-panel-description>
             </mat-expansion-panel-header>
   
       <div>
           <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>English Title</mat-label>
-              <input matInput type="text" [required]="true" [(ngModel)]="sub.title" (ngModelChange)="changeSubCat(sub)">
+              <input matInput type="text" [required]="true" [(ngModel)]="sub.title" (focusout)="changeSubCat(sub)">
           </mat-form-field>
           <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Italian Title</mat-label>
-            <input matInput type="text" [required]="true" [(ngModel)]="sub.title_it" (ngModelChange)="changeSubCat(sub)">
+            <input matInput type="text" [required]="true" [(ngModel)]="sub.title_it" (focusout)="changeSubCat(sub)">
         </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Category</mat-label>
@@ -417,19 +419,20 @@
                 <!--<p class="descripcion">{{sub.name}}</p>-->
               </mat-panel-title>
               <mat-panel-description>
-                <p class="descripcion">{{sub.name}}</p>
+                <p class="descripcion">{{sub.name.length>15?sub.name.slice(0,15)+"...":sub.name}}&nbsp;&nbsp;</p>
+
               </mat-panel-description>
             </mat-expansion-panel-header>
   
       <div>
           <mat-form-field  appearance="outline" class="example-full-width">
               <mat-label>English Title</mat-label>
-              <input matInput type="text" [required]="true" [(ngModel)]="sub.name" (ngModelChange)="changeInterest(sub)">
+              <input matInput type="text" [required]="true" [(ngModel)]="sub.name" (focusout)="changeInterest(sub)">
           </mat-form-field>
     
           <mat-form-field  appearance="outline" class="example-full-width">
             <mat-label>Italian Title</mat-label>
-            <input matInput type="text" [required]="true" [(ngModel)]="sub.name_it" (ngModelChange)="changeInterest(sub)">
+            <input matInput type="text" [required]="true" [(ngModel)]="sub.name_it" (focusout)="changeInterest(sub)">
         </mat-form-field>
 
           <mat-form-field appearance="outline">

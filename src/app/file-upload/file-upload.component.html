@@ -6,7 +6,7 @@
 
 <!--<label matformfieldfloatinglabel class="mdc-floating-label mat-mdc-floating-label ng-tns-c57-3 ng-star-inserted mdc-floating-label--float-above" style="    left: initial;
 top: 77px;"  ng-reflect-floating="true">GLTF</label>-->
-  <p style="display: contents;"> {{fileName}}</p>
+  <p style="display: contents;">{{fileName.length>20?"...":""}} {{fileName.length>20?fileName.substr(fileName.length - 20):fileName}}</p>
 
     <button class="mat-icon-color btn" mat-icon-button
       (click)="fileUpload.click()">

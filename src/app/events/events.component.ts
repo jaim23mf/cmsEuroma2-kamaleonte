@@ -113,6 +113,7 @@ export class EventsComponent {
     if(data.description == null) {data.description="";}
     if(data.description_it == null) {data.description_it="";}
     if(data.title_it == null) {data.title_it="";}
+    if(data.youtubeLink == null) {data.youtubeLink="";}
     this.eventService.putEvent(data).subscribe();
   }
 

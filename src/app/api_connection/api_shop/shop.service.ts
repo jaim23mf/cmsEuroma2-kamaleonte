@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry, throttleTime } from 'rxjs';
+import { debounceTime, map, Observable, retry} from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Category } from 'src/app/models/category-model';
 import { Subcategory } from 'src/app/models/subcat-model';
@@ -10,7 +10,6 @@ import { Subcategory } from 'src/app/models/subcat-model';
 })
 export class ShopService {
   api:string = GlobalConstants.api;
-  defaultThrottleConfig = GlobalConstants.throttleConfig;
   constructor(private http: HttpClient) {}
 
 
@@ -98,7 +97,7 @@ export class ShopService {
   //LLAMADA POST A LA API
   postCategory(shop: Category): Observable<any> {
     return this.http.post(this.api + "/Shop/Category",shop).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -111,7 +110,7 @@ export class ShopService {
   }
   postSubCategory(shop: Subcategory): Observable<any> {
     return this.http.post(this.api + "/Shop/SubCategory",shop).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -124,7 +123,7 @@ export class ShopService {
   }
   postShop(id: any): Observable<any> {
     return this.http.post(this.api + "/Shop",id).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -140,7 +139,7 @@ export class ShopService {
   //LLAMADA PUT A LA API
   putCategory(shop: Category): Observable<any> {
     return this.http.put(this.api + "/Shop/Category/"+shop.id,shop).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -153,7 +152,7 @@ export class ShopService {
   }
   putSubCategory(id: any): Observable<any> {
     return this.http.put(this.api + "/Shop/SubCategory/"+id.id,id).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(5000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -166,7 +165,7 @@ export class ShopService {
   }
   putShop(id: any): Observable<any> {
     return this.http.put(this.api + "/Shop/"+id.id,id).pipe(
-      throttleTime(500, undefined, this.defaultThrottleConfig),
+      debounceTime(10000),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

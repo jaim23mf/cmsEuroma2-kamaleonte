@@ -15,23 +15,25 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <p>Event Title: &nbsp;&nbsp;</p>
-          <p class="descripcion">{{p.title}}</p>
+          <p class="descripcion">{{p.title.length>15?p.title.slice(0,15)+"...":p.title}}&nbsp;&nbsp;</p>
+
         </mat-panel-title>
         <mat-panel-description>
             <p>Event Descrption:&nbsp;&nbsp;</p> 
-            <p class="descripcion">{{p.description}} &nbsp;&nbsp;</p>
+            <p class="descripcion">{{p.description.length>15?p.description.slice(0,15)+"...":p.description}}&nbsp;&nbsp;</p>
+
         <mat-icon>event</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
   
       <mat-form-field appearance="outline">
         <mat-label>English Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title" (ngModelChange)="changeEvent(p)" [required]="true">
+        <input matInput type="text" [(ngModel)]="p.title" (focusout)="changeEvent(p)" [required]="true">
       </mat-form-field>
   
       <mat-form-field appearance="outline">
         <mat-label>Italian Title</mat-label>
-        <input matInput type="text" [(ngModel)]="p.title_it" (ngModelChange)="changeEvent(p)" [required]="true">
+        <input matInput type="text" [(ngModel)]="p.title_it" (focusout)="changeEvent(p)" [required]="true">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -40,7 +42,7 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (ngModelChange)="changeEvent(p)"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description" (focusout)="changeEvent(p)"></textarea>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Italian Description</mat-label>
@@ -48,12 +50,12 @@
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (ngModelChange)="changeEvent(p)"></textarea>
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (focusout)="changeEvent(p)"></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Youtube link</mat-label>
-        <input matInput type="text" [(ngModel)]="p.youtubeLink" (ngModelChange)="changeEvent(p)">
+        <input matInput type="text" [(ngModel)]="p.youtubeLink" (focusout)="changeEvent(p)">
       </mat-form-field>
       <app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}"  elemId="{{p.id}}" type="/api/Events/ImgUpload/"></app-file-upload>
 
