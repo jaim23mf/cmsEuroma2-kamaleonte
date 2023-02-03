@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, retry } from 'rxjs';
+import { map, Observable, retry, throttleTime } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Promo } from 'src/app/models/promo-model';
 

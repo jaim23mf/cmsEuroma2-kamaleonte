@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { debounce, identity, map, Observable, retry, timer } from 'rxjs';
+import { map, Observable, retry, throttleTime } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Horario } from 'src/app/models/horario-model';
 
@@ -10,6 +10,8 @@ import { Horario } from 'src/app/models/horario-model';
 export class OpeningService {
 
   api:string = GlobalConstants.api;
+  defaultThrottleConfig = GlobalConstants.throttleConfig;
+
   constructor(private http: HttpClient) {}
 
 
@@ -43,7 +45,7 @@ export class OpeningService {
 
   postException(op:Horario): Observable<any> {
     return this.http.post(this.api + "/api/Opening/Exceptions",op).pipe(
-      debounce(() => timer(5000)),
+      throttleTime(500, undefined, this.defaultThrottleConfig),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -73,7 +75,7 @@ export class OpeningService {
 
   putGeneral(op:any): Observable<any> {
     return this.http.put(this.api + "/api/Opening/General/1" , op).pipe(
-      debounce(() => timer(5000)),
+      throttleTime(500, undefined, this.defaultThrottleConfig),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -87,7 +89,7 @@ export class OpeningService {
 
   putException(op:Horario):Observable<any>{
     return this.http.put(this.api + "/api/Opening/Exception/"+op.id , op).pipe(
-      debounce(() => timer(5000)),
+      throttleTime(500, undefined, this.defaultThrottleConfig),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
