@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { debounce, map, Observable, retry, timer } from 'rxjs';
+import { map, Observable, retry } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Interest } from 'src/app/models/interest.model';
 
@@ -10,6 +10,8 @@ import { Interest } from 'src/app/models/interest.model';
 export class InterestService {
 
   api:string = GlobalConstants.api;
+  defaultThrottleConfig = GlobalConstants.throttleConfig;
+
   constructor(private http: HttpClient) {}
 
   getAllInterests(): Observable<any> {
@@ -40,7 +42,7 @@ export class InterestService {
 
   putInterest(i:Interest):Observable<any>{
     return this.http.put(this.api + "/api/Interest/"+i.id,i).pipe(
-      debounce(() => timer(5000)),
+      throttleTime(500, undefined, this.defaultThrottleConfig),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -54,7 +56,7 @@ export class InterestService {
 
   postInterest(i:Interest):Observable<any>{
     return this.http.post(this.api + "/api/Interest",i).pipe(
-      debounce(() => timer(5000)),
+      throttleTime(500, undefined, this.defaultThrottleConfig),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');

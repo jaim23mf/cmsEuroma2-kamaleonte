@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { debounce, map, Observable, retry, timer } from 'rxjs';
+import {  map, Observable, retry, throttleTime } from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { BlogEntry } from 'src/app/models/blog-model';
 
@@ -9,6 +9,8 @@ import { BlogEntry } from 'src/app/models/blog-model';
 })
 export class ApiBlogService {
   api:string = GlobalConstants.api;
+  defaultThrottleConfig = GlobalConstants.throttleConfig;
+
   constructor(private http: HttpClient) {}
 
   getAllBlog(): Observable<any> {
@@ -26,7 +28,7 @@ export class ApiBlogService {
 
   postBlog(ev:BlogEntry): Observable<any> {
     return this.http.post(this.api + "/api/Blog",ev).pipe(
-      debounce(() => timer(5000)),
+      throttleTime(500, undefined, this.defaultThrottleConfig),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
@@ -40,7 +42,7 @@ export class ApiBlogService {
 
   putBlog(ev:BlogEntry): Observable<any> {
     return this.http.put(this.api + "/api/Blog/"+ev.id,ev).pipe(
-      debounce(() => timer(5000)),
+      throttleTime(500, undefined, this.defaultThrottleConfig),
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
