@@ -195,6 +195,7 @@ export class StoresComponent implements OnInit{
 
     if(s.title_it == null){s.title_it ="";}
     if(s.description_it == null) {s.description_it ="";}
+    if(s.firstOpeningDay == null) {s.firstOpeningDay ="";}
 
     this.shopService.putShop(s).subscribe();
 

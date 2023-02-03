@@ -153,7 +153,8 @@ export class PromoComponent {
     if(p.description == null) {p.description="";}
     if(p.description_it == null) {p.description_it="";}
     if(p.title_it == null) {p.title_it="";}
-
+    if(p.dateRange.from == null){p.dateRange.from = "";}
+    if(p.dateRange.to == null){p.dateRange.to = "";}
     this.promosService.putPromo(p).subscribe();
 
   }

@@ -128,7 +128,8 @@ export class GeneralComponent implements OnInit{
   }
 
   changeException(hora:Horario){
-
+    if(hora.dateRange.from == null){hora.dateRange.from = "";}
+    if(hora.dateRange.to == null){hora.dateRange.to = "";}
     this.openingService.putException(hora).subscribe();
 
   }

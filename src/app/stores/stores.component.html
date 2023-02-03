@@ -7,7 +7,9 @@
 <div class="center">
     <button mat-button (click)="openAllPanels()">Expand All</button>
     <button mat-button (click)="closeAllPanels()">Collapse All</button>
+
   </div>
+
 
   <div class="center acordeon"   *ngFor="let p of stores">
   <mat-accordion class="example-headers-align" multi>
@@ -98,7 +100,7 @@
 
       <mat-form-field  appearance="outline" class="example-full-width" >
         <mat-label>First Opening Date</mat-label>
-        <input matInput [matDatepicker]="Odate" [required]="true" [(ngModel)]="p.firstOpeningDay" (ngModelChange)="changeStore(p)" >
+        <input matInput [matDatepicker]="Odate" type="number" [required]="true" [(ngModel)]="p.firstOpeningDay" (ngModelChange)="changeStore(p)" >
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Odate"></mat-datepicker-toggle>
         <mat-datepicker #Odate></mat-datepicker>

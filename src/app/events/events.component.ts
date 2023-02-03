@@ -114,6 +114,8 @@ export class EventsComponent {
     if(data.description_it == null) {data.description_it="";}
     if(data.title_it == null) {data.title_it="";}
     if(data.youtubeLink == null) {data.youtubeLink="";}
+    if(data.dateRange.from == null){data.dateRange.from = "";}
+    if(data.dateRange.to == null){data.dateRange.to = "";}
     this.eventService.putEvent(data).subscribe();
   }
 

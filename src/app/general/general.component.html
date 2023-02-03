@@ -146,7 +146,7 @@
     <div>
       <mat-form-field  appearance="outline" class="example-full-width" >
         <mat-label>Opening Date</mat-label>
-        <input matInput [matDatepicker]="Odate" [required]="true" [(ngModel)]="hora.dateRange.from" (ngModelChange)="changeException(hora)" >
+        <input matInput [matDatepicker]="Odate" [required]="true" [(ngModel)]="hora.dateRange.from" (focusout)="changeException(hora)" >
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Odate"></mat-datepicker-toggle>
         <mat-datepicker #Odate></mat-datepicker>
