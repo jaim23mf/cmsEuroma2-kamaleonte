@@ -58,14 +58,14 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Start Date</mat-label>
-        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.dateRange.from"  (ngModelChange)="changePromo(p)">
+        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.dateRange.from"  (focusout)="changePromo(p)">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Sdate"></mat-datepicker-toggle>
         <mat-datepicker #Sdate></mat-datepicker>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>End Date</mat-label>
-        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.dateRange.to"  (ngModelChange)="changePromo(p)">
+        <input matInput [matDatepicker]="Edate" [required]="true" [(ngModel)]="p.dateRange.to"  (focusout)="changePromo(p)">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Edate"></mat-datepicker-toggle>
         <mat-datepicker #Edate></mat-datepicker>

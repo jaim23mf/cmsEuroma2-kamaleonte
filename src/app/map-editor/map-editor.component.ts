@@ -20,7 +20,7 @@ export class MapEditorComponent implements OnInit {
     constructor(private mapService:MapService, private _route:ActivatedRoute,private _router:Router) {}
 
     private piso:Number = 0;
-
+    private lang:string="en";
   ngOnInit(): void {
     this._hostingIframe = document.getElementById("iframeId") as HTMLIFrameElement;
     this.componentProxy = new EditorComponetProxy(this._hostingIframe.contentWindow!);
@@ -57,7 +57,7 @@ ngOnDestroy(){
 
 
 private sendFloorInfo(){
- this.mapService.getFloor(this.piso).subscribe((data:any) =>{
+ this.mapService.getFloor(this.piso,this.lang).subscribe((data:any) =>{
   this.componentProxy.sendResponse({
     type: ResponseType.FloorInformation,
     data: data

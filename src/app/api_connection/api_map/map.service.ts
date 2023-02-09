@@ -54,8 +54,8 @@ export class MapService {
   }
 
 
-  getFloor(id:any): Observable<any> {
-    return this.http.get(this.api + "/Map/FloorView/"+id).pipe(
+  getFloor(id:any, lang:string): Observable<any> {
+    return this.http.get(this.api + "/Map/"+lang+"/FloorView/"+id).pipe(
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
