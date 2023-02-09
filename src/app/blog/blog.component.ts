@@ -116,7 +116,7 @@ export class BlogComponent {
     .subscribe((confirmado: Boolean) => {
       if (confirmado) {
         this.blog = this.blog.filter((event) => event !== entry);
-        this.blogService.deleteReach(entry).subscribe();
+        this.blogService.deleteReach(entry.id).subscribe();
       } 
     });
   }
