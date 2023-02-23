@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { DateRange } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
@@ -84,12 +85,14 @@ export class GeneralComponent implements OnInit{
   interest: Interest[]=[]
 
   catList:Category[] = [];
-  constructor(private dateAdapter: DateAdapter<Date>, public confirm: MatDialog,public shopService: ShopService , public openingService:OpeningService , public interestService:InterestService) {
+  constructor(private dateAdapter: DateAdapter<Date>, public confirm: MatDialog, public erorDialog:MatDialog,public shopService: ShopService , public openingService:OpeningService , public interestService:InterestService) {
     this.dateAdapter.setLocale('it-IT'); //dd/MM/yyyy
     
   }
 
   ngOnInit(): void {
+
+
     this.shopService.getAllCategory().subscribe((data: Category[]) => {
       this.category = data;
     });    
@@ -128,11 +131,56 @@ export class GeneralComponent implements OnInit{
   }
 
   changeException(hora:Horario){
-    if(hora.dateRange.from == null){hora.dateRange.from = "";}
+    /*if(hora.dateRange.from == null){hora.dateRange.from = "";}
     if(hora.dateRange.to == null){hora.dateRange.to = "";}
-    this.openingService.putException(hora).subscribe();
+    this.openingService.putException(hora).subscribe();*/
 
   }
+
+  async saveRule(hora:Horario){
+
+
+        this.confirm
+        .open(ConfirmDialogComponent, {
+          data: 'You are going to save this special rule.'
+        })
+        .afterClosed()
+        .subscribe((confirmado: Boolean) => {
+          if (confirmado) {
+    
+        let errorSave:Boolean = false;;
+        
+        if(hora.dateRange.from == null){hora.dateRange.from = "";}
+        if(hora.dateRange.to == null){hora.dateRange.to = "";}
+
+        if(hora.dateRange.from == ""){errorSave =true;}
+        if(!errorSave){
+            if(hora.id == 0 ){
+
+              this.openingService.postException(hora).subscribe((data:Horario)=>{
+                console.log(data);
+                hora.id = data.id; 
+                hora.dateRange.id = data.dateRange.id;
+                hora.food.id = data.food.id;
+                hora.global.id = data.global.id;
+                hora.hypermarket.id = data.hypermarket.id;
+                hora.ourStores.id = data.ourStores.id;
+              });
+            }
+            else{
+              this.openingService.putException(hora).subscribe();
+            }
+        }
+        else{
+          this.erorDialog
+        .open(ConfirmDialogComponent, {
+          data: 'You need to enter all required fields.'
+        })
+        }
+      } 
+    });
+  }
+
 
   changeCatList(){
     this.shopService.getAllCategory().subscribe((data: Category[]) => {
@@ -147,6 +195,119 @@ export class GeneralComponent implements OnInit{
     });    
   }
 
+  saveCategory(cat:Category){
+ 
+     this.confirm
+    .open(ConfirmDialogComponent, {
+      data: 'You are going to save this category.'
+    })
+    .afterClosed()
+    .subscribe((confirmado: Boolean) => {
+      if (confirmado) {
+
+    let errorSave:Boolean = false;;
+    
+    if(cat.title == ""){errorSave =true;}
+    if(cat.title_it == ""){errorSave = true;}
+    if(!errorSave){
+        if(cat.id == 0 ){
+
+          this.shopService.postCategory({id:0,title:"",title_it:"",shopType:0}).subscribe((data:Category)=>{
+            cat = data;
+            this.changeCatList();
+          });
+        }
+        else{
+          this.shopService.putCategory(cat).subscribe(()=>{
+            this.changeCatList();
+          }); 
+        }
+    }
+    else{
+      this.erorDialog
+    .open(ConfirmDialogComponent, {
+      data: 'You need to enter all required fields.'
+    })
+    }
+      } 
+    });
+
+  }
+
+
+  saveSubCategory(cat:Subcategory){
+ 
+    this.confirm
+   .open(ConfirmDialogComponent, {
+     data: 'You are going to save this subcategory.'
+   })
+   .afterClosed()
+   .subscribe((confirmado: Boolean) => {
+     if (confirmado) {
+
+   let errorSave:Boolean = false;;
+   
+   if(cat.title == ""){errorSave =true;}
+   if(cat.title_it == ""){errorSave = true;}
+   if(!errorSave){
+       if(cat.id == 0 ){
+
+         this.shopService.postSubCategory({id:0,categoryId:0,title:"",title_it:""}).subscribe((data:Subcategory) =>{
+            cat = data;
+        })
+       }
+       else{
+         this.shopService.putSubCategory(cat).subscribe(()=>{}); 
+       }
+   }
+   else{
+     this.erorDialog
+   .open(ConfirmDialogComponent, {
+     data: 'You need to enter all required fields.'
+   })
+   }
+ } 
+});
+
+ }
+
+
+ saveInterest(cat:Interest){
+ 
+  this.confirm
+ .open(ConfirmDialogComponent, {
+   data: 'You are going to save this interest.'
+ })
+ .afterClosed()
+ .subscribe((confirmado: Boolean) => {
+   if (confirmado) {
+
+ let errorSave:Boolean = false;;
+ 
+ if(cat.name == ""){errorSave =true;}
+ if(cat.name_it == ""){errorSave = true;}
+ if(!errorSave){
+     if(cat.id == 0 ){
+
+      this.interestService.postInterest({id:0,name:"",name_it:"",group:0}).subscribe((data:Interest) =>{
+       cat = data;
+      })
+     }
+     else{
+      this.interestService.putInterest(cat).subscribe();
+     }
+ }
+ else{
+   this.erorDialog
+ .open(ConfirmDialogComponent, {
+   data: 'You need to enter all required fields.'
+ })
+ }
+} 
+});
+
+}
+
   async newRule(){
 
     let elem = {
@@ -158,7 +319,9 @@ export class GeneralComponent implements OnInit{
       ourStores:{id:0,from:"",to:""}
       };
 
-    await this.openingService.postException(elem).subscribe((data:Horario)=>{
+      this.horasEspeciales = [... this.horasEspeciales, elem ];
+
+    /*await this.openingService.postException(elem).subscribe((data:Horario)=>{
     this.horasEspeciales = [... this.horasEspeciales,{
       id:data.id,
       dateRange:{id:data.dateRange.id,from:data.dateRange.from,to:data.dateRange.from},
@@ -168,11 +331,20 @@ export class GeneralComponent implements OnInit{
       ourStores:{id:data.ourStores.id,from:data.ourStores.from,to:data.ourStores.to,fromWeekDay:data.ourStores.fromWeekDay , toWeekDay:data.ourStores.toWeekDay}
       }
     ];
-    });
+    });*/
   }
 
   async newCat(){
-    await this.shopService.postCategory({id:0,title:"",title_it:"",shopType:0}).subscribe((data:Category)=>{
+
+    this.category = [... this.category,{
+      id:0,
+      title: "",
+      title_it: "",
+      shopType:0
+    }
+    ];
+
+    /*await this.shopService.postCategory({id:0,title:"",title_it:"",shopType:0}).subscribe((data:Category)=>{
       this.category = [... this.category,{
         id:data.id,
         title: data.title,
@@ -181,11 +353,18 @@ export class GeneralComponent implements OnInit{
       }
       ];
       this.changeCatList();
-    });
+    });*/
 
   }
   async newSub(){
-    await this.shopService.postSubCategory({id:0,categoryId:0,title:"",title_it:""}).subscribe((data:Subcategory) =>{
+    this.subcategory = [... this.subcategory,{
+      id:0,
+      categoryId:0,
+      title: "",
+      title_it: ""
+    }
+    ];
+    /*await this.shopService.postSubCategory({id:0,categoryId:0,title:"",title_it:""}).subscribe((data:Subcategory) =>{
       this.subcategory = [... this.subcategory,{
         id:data.id,
         categoryId:data.categoryId,
@@ -193,12 +372,20 @@ export class GeneralComponent implements OnInit{
         title_it:data.title_it || ""
       }
       ];
-    })
+    })*/
 
   }
 
   async newInterest(){
-    await this.interestService.postInterest({id:0,name:"",name_it:"",group:0}).subscribe((data:Interest) =>{
+
+    this.interest = [... this.interest,{
+      id:0,
+      name: "",
+      name_it: "",
+      group:0
+    }
+    ];
+    /*await this.interestService.postInterest({id:0,name:"",name_it:"",group:0}).subscribe((data:Interest) =>{
       console.log(data);
       this.interest = [... this.interest,{
         id:data.id,
@@ -207,24 +394,24 @@ export class GeneralComponent implements OnInit{
         group:data.group
       }
       ];
-    })
+    })*/
 
   }
 
 
   changeCat(cat:Category){
-    this.shopService.putCategory(cat).subscribe(()=>{
+    /*this.shopService.putCategory(cat).subscribe(()=>{
       this.changeCatList();
-    }); 
+    }); */
     
   }
 
   changeSubCat(cat:Subcategory){    
-    this.shopService.putSubCategory(cat).subscribe();
+    //this.shopService.putSubCategory(cat).subscribe();
   }
 
   changeInterest(i:Interest){    
-    this.interestService.putInterest(i).subscribe();
+    //this.interestService.putInterest(i).subscribe();
   }
 
   deleteRule(hora:Horario){
@@ -295,7 +482,7 @@ export class GeneralComponent implements OnInit{
     //console.log(this.horasEspeciales);
   }*/
 
-  showDate(today:Date| undefined | string){
+  showDate(today:Date| undefined | string, to:Date| undefined | string){
     
     if(today === undefined) return '';
 
@@ -303,11 +490,31 @@ export class GeneralComponent implements OnInit{
       today = new Date(today);
     };
 
+    ​if(Number.isNaN(today.getDate())){
+      return "";
+    }
+
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
-    ​
+
     let salida = dd + '/' + mm + '/' + yyyy;
+   
+    
+    //return salida;
+
+    if(typeof to === "string"){
+      to = new Date(to);
+    };
+    ​if(to == undefined || Number.isNaN(to.getDate())){
+      return salida;
+    }
+
+    var dd2 = String(to.getDate()).padStart(2, '0');
+    var mm2 = String(to.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy2 = to.getFullYear();
+
+    salida += " - " + dd2 + '/' + mm2 + '/' + yyyy2;
 
     return salida;
   }

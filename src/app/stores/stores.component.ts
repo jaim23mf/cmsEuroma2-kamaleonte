@@ -25,7 +25,7 @@ export class StoresComponent implements OnInit{
 
   subs:Subscription;
 
-  public constructor(public dialog: MatDialog,public confirm: MatDialog, private msg_service:MsgService , private shopService:ShopService , private interestService:InterestService){
+  public constructor(public dialog: MatDialog,public confirm: MatDialog,public errorDialog: MatDialog, private msg_service:MsgService , private shopService:ShopService , private interestService:InterestService){
     this.subs = this.msg_service.getText().subscribe((data:any) =>{
 
       let prom = this.stores.find(f=>f.id == data.type); 
@@ -117,7 +117,9 @@ export class StoresComponent implements OnInit{
       interestIds: []
     };
 
-    await this.shopService.postShop(shop).subscribe((data:Store)=>{
+    this.stores = [...this.stores, shop];
+
+    /*await this.shopService.postShop(shop).subscribe((data:Store)=>{
       let oph:Opening_Day[] = []
       console.log(data);
       let i = 0;
@@ -149,7 +151,7 @@ export class StoresComponent implements OnInit{
       interestIds: []
     }];
   
-    });
+    });*/
   }
 
 
@@ -182,7 +184,7 @@ export class StoresComponent implements OnInit{
 
   changeStore(s:Store){
     
-    if(s.iiId != null){
+    /*if(s.iiId != null){
      
       let realInterest:LineaInteres_shop[] = [];
        s.iiId.forEach(element => {
@@ -192,14 +194,99 @@ export class StoresComponent implements OnInit{
      s.interestIds = realInterest;
 
     }
-
+*/
     if(s.title_it == null){s.title_it ="";}
     if(s.description_it == null) {s.description_it ="";}
     if(s.firstOpeningDay == null) {s.firstOpeningDay ="";}
 
-    this.shopService.putShop(s).subscribe();
+    //this.shopService.putShop(s).subscribe();
 
   }
+
+
+  saveStore(s:Store){
+ 
+    if(s.title_it == null){s.title_it ="";}
+    if(s.description_it == null) {s.description_it ="";}
+    if(s.firstOpeningDay == null) {s.firstOpeningDay ="";}
+
+    this.confirm
+   .open(ConfirmDialogComponent, {
+     data: 'You are going to save this store.'
+   })
+   .afterClosed()
+   .subscribe((confirmado: Boolean) => {
+     if (confirmado) {
+
+   let errorSave:Boolean = false;;
+   
+   if(s.title == ""){errorSave =true;}
+   if(s.title_it == ""){errorSave = true;}
+   if(s.firstOpeningDay == ""){errorSave = true;}
+   if(!errorSave){
+       if(s.id == 0 ){
+
+        this.shopService.postShop(s).subscribe((data:Store)=>{
+          let oph:Opening_Day[] = []
+          console.log(data);
+          let i = 0;
+          while(data.openingHours.length<7){
+            oph.push({
+              id:data.openingHours[i].id,
+              from:data.openingHours[i].from,
+              to:data.openingHours[i].to,
+              description:data.openingHours[i].description,
+              id_shop:data.openingHours[i].id_shop
+            });
+            i++;
+          }
+          s.id = data.id; 
+          s.openingHours = oph;
+        /*this.stores = [...this.stores,{
+          id: data.id,
+          title: "",
+          title_it:"",
+          type: data.type,
+          categoryId: 0,
+          subcategoryId: 0,
+          logo: "",
+          photo: "",
+          openingHours: oph,
+          phoneNumber: "",
+          description: "",
+          description_it :"",
+          firstOpeningDay: "",
+          interestIds: []
+        }];*/
+      
+        });
+       }
+       else{
+        if(s.iiId != null){
+     
+          let realInterest:LineaInteres_shop[] = [];
+           s.iiId.forEach(element => {
+             realInterest.push({id:0,id_interest:element,id_shop:s.id});
+         });
+    
+         s.interestIds = realInterest;
+    
+        }
+
+        this.shopService.putShop(s).subscribe();
+
+       }
+   }
+   else{
+     this.errorDialog
+   .open(ConfirmDialogComponent, {
+     data: 'You need to enter all required fields.'
+   })
+   }
+     } 
+   });
+
+ }
 
   deleteStore(s:Store){
     this.confirm

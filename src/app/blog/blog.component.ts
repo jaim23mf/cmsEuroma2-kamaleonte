@@ -17,7 +17,7 @@ export class BlogComponent {
 
   subs:Subscription;
   hideRequiredControl = new FormControl(false);
-  public constructor(public confirm: MatDialog, private msg_service:MsgService, private blogService:ApiBlogService){
+  public constructor(public confirm: MatDialog,public errorDialog: MatDialog,  private msg_service:MsgService, private blogService:ApiBlogService){
     //this.subs = this.msg_service.getText().subscribe(this.fileUploaded);
     this.subs = this.msg_service.getText().subscribe((data:any)=>{
       let prom = this.blog.find(f=>f.id == data.type); 
@@ -87,8 +87,8 @@ export class BlogComponent {
       highlight:false,
 
     };
-
-    await this.blogService.postBlog(entry).subscribe((data:BlogEntry)=>{
+    this.blog = [...this.blog,entry];
+    /*await this.blogService.postBlog(entry).subscribe((data:BlogEntry)=>{
 
       this.blog = [...this.blog,{
         id: data.id,
@@ -104,7 +104,7 @@ export class BlogComponent {
         highlight:data.highlight,
       }];
   
-    });
+    });*/
   }
 
   deleteEntry(entry:BlogEntry){
@@ -121,6 +121,54 @@ export class BlogComponent {
     });
   }
 
+
+  saveBlog(s:BlogEntry){
+    if(s.description_it == null) {s.description_it="";}
+    if(s.shortDescription_it == null) {s.shortDescription_it="";}
+    if(s.title_it == null) {s.title_it="";}
+
+    this.confirm
+   .open(ConfirmDialogComponent, {
+     data: 'You are going to save this category.'
+   })
+   .afterClosed()
+   .subscribe((confirmado: Boolean) => {
+     if (confirmado) {
+
+   let errorSave:Boolean = false;;
+   
+   if(s.title == ""){errorSave =true;}
+   if(s.title_it == ""){errorSave = true;}
+   if(!errorSave){
+       if(s.id == 0 ){
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+  
+        let fecha = yyyy + '-' + mm + '-' + dd;
+
+        this.blogService.postBlog(s).subscribe((data:BlogEntry)=>{
+           s = data;
+           s.date = fecha;
+         });
+       }
+       else{
+        this.blogService.putBlog(s).subscribe();
+       }
+   }
+   else{
+     this.errorDialog
+   .open(ConfirmDialogComponent, {
+     data: 'You need to enter all required fields.'
+   })
+   }
+     } 
+   });
+
+ }
+
   fileUploaded(value:any){
     //console.log(value.msg, value.type);
     
@@ -131,7 +179,7 @@ export class BlogComponent {
     if(s.shortDescription_it == null) {s.shortDescription_it="";}
     if(s.title_it == null) {s.title_it="";}
 
-    this.blogService.putBlog(s).subscribe();
+    //this.blogService.putBlog(s).subscribe();
   }
 
   ngOnDestroy(){

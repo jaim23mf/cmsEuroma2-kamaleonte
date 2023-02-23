@@ -22,7 +22,7 @@ export class PromoComponent {
   
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService ,
+  public constructor(public confirm: MatDialog,public errorDialog: MatDialog,  private msg_service:MsgService ,
   private promosService:PromoService , private shopService:ShopService , private interestService:InterestService)
   {
     this.subs = this.msg_service.getText().subscribe((data:any) =>{
@@ -84,8 +84,8 @@ export class PromoComponent {
       description_it: "",
       interestIds: []
     };
-
-    await this.promosService.postPromo(promo).subscribe((data:Promo)=>{
+    this.promociones = [...this.promociones,promo];
+    /*await this.promosService.postPromo(promo).subscribe((data:Promo)=>{
 
       this.promociones = [...this.promociones,{
         id:data.id,
@@ -99,7 +99,7 @@ export class PromoComponent {
         interestIds:[]
       }];
   
-    });
+    });*/
   }
 
 
@@ -140,7 +140,7 @@ export class PromoComponent {
 
   changePromo(p:Promo){
 
-    if(p.iiId != null){
+    /*if(p.iiId != null){
      
       let realInterest:LineaInteres_promo[] = [];
        p.iiId.forEach(element => {
@@ -149,15 +149,70 @@ export class PromoComponent {
 
      p.interestIds = realInterest;
 
-    }
+    }*/
     if(p.description == null) {p.description="";}
     if(p.description_it == null) {p.description_it="";}
     if(p.title_it == null) {p.title_it="";}
     if(p.dateRange.from == null){p.dateRange.from = "";}
     if(p.dateRange.to == null){p.dateRange.to = "";}
-    this.promosService.putPromo(p).subscribe();
+    //this.promosService.putPromo(p).subscribe();
 
   }
+
+
+  savePromo(p:Promo){
+ 
+    if(p.description == null) {p.description="";}
+    if(p.description_it == null) {p.description_it="";}
+    if(p.title_it == null) {p.title_it="";}
+    if(p.dateRange.from == null){p.dateRange.from = "";}
+    if(p.dateRange.to == null){p.dateRange.to = "";}
+
+    this.confirm
+   .open(ConfirmDialogComponent, {
+     data: 'You are going to save this promotion.'
+   })
+   .afterClosed()
+   .subscribe((confirmado: Boolean) => {
+     if (confirmado) {
+
+   let errorSave:Boolean = false;;
+   
+   if(p.title == "") {errorSave=true;}
+   if(p.title_it == "") {errorSave=true;}
+   if(p.dateRange.from == ""){errorSave=true;}
+   if(p.dateRange.to == ""){errorSave=true;}
+   if(p.shopId == 0 ){errorSave=true;}
+   if(!errorSave){
+       if(p.id == 0 ){
+
+        this.promosService.postPromo(p).subscribe((data:Promo)=>{
+           p = data;
+           p.dateRange.id = data.dateRange.id;
+         });
+       }
+       else{
+        if(p.iiId != null){
+     
+          let realInterest:LineaInteres_promo[] = [];
+           p.iiId.forEach(element => {
+             realInterest.push({id:0,id_interest:element,id_promo:p.id?p.id:0});
+         });
+         p.interestIds = realInterest;
+        }
+        this.promosService.putPromo(p).subscribe();
+       }
+   }
+   else{
+     this.errorDialog
+   .open(ConfirmDialogComponent, {
+     data: 'You need to enter all required fields.'
+   })
+   }
+     } 
+   });
+
+ }
 
 
 

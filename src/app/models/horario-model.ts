@@ -9,6 +9,7 @@ export interface Horario{
    ourStores:Rango
 }
 
+
 export interface Rango{
     id:number,
     from:string,

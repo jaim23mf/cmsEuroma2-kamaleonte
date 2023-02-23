@@ -16,7 +16,7 @@ export class ServicesComponent {
 
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService , private serviceService:ServiceService){
+  public constructor(public confirm: MatDialog, public errorDialog:MatDialog,private msg_service:MsgService , private serviceService:ServiceService){
     this.subs = this.msg_service.getText().subscribe((data:any) =>{
       let prom = this.services.find(f=>f.id == data.type); 
 
@@ -69,7 +69,8 @@ export class ServicesComponent {
         order:0
       }
     
-    this.serviceService.postService(serv).subscribe((data:Servicio) =>{
+      this.services = [...this.services,serv];
+   /* this.serviceService.postService(serv).subscribe((data:Servicio) =>{
       this.services = [...this.services,{
         id:data.id,
         icon: data.icon,
@@ -79,7 +80,7 @@ export class ServicesComponent {
         description_it:data.description_it ||"",
         order:data.order
       }];
-    });
+    });*/
 
   }
 
@@ -88,8 +89,47 @@ export class ServicesComponent {
     if(s.description_it == null){s.description_it ="";}
     if(s.title_it == null){s.title_it ="";}
     
-    this.serviceService.putService(s).subscribe();
+    //this.serviceService.putService(s).subscribe();
   }
+
+
+
+  saveService(s:Servicio){
+    if(s.description_it == null){s.description_it ="";}
+    if(s.title_it == null){s.title_it ="";}
+    this.confirm
+   .open(ConfirmDialogComponent, {
+     data: 'You are going to save this service.'
+   })
+   .afterClosed()
+   .subscribe((confirmado: Boolean) => {
+     if (confirmado) {
+
+   let errorSave:Boolean = false;;
+   
+   if(s.title == ""){errorSave =true;}
+   if(s.title_it == ""){errorSave = true;}
+   if(!errorSave){
+       if(s.id == 0 ){
+
+        this.serviceService.postService(s).subscribe((data:Servicio) =>{
+           s = data;
+         });
+       }
+       else{
+        this.serviceService.putService(s).subscribe();
+       }
+   }
+   else{
+     this.errorDialog
+   .open(ConfirmDialogComponent, {
+     data: 'You need to enter all required fields.'
+   })
+   }
+     } 
+   });
+
+ }
 
   deleteService(s:Servicio){
     this.confirm

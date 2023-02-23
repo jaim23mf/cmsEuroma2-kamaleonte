@@ -18,7 +18,7 @@ import { MsgService } from '../msg.service';
 export class EventsComponent {
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService, private interestService:InterestService, private eventService: EventsService){
+  public constructor(public confirm: MatDialog,public errorDialog: MatDialog, private msg_service:MsgService, private interestService:InterestService, private eventService: EventsService){
     this.subs = this.msg_service.getText().subscribe((data:any)=>{
       let prom = this.events.find(f=>f.id == data.type); 
 
@@ -71,9 +71,9 @@ export class EventsComponent {
       youtubeLink:""
     }
 
+    this.events = [...this.events,ev];
 
-
-    await this.eventService.postEvent(ev).subscribe((data:Evento)=>{
+    /*await this.eventService.postEvent(ev).subscribe((data:Evento)=>{
 
       this.events = [...this.events,{
         id:data.id,
@@ -87,7 +87,7 @@ export class EventsComponent {
         youtubeLink:""
         }];    
   
-    });
+    });*/
 
   }
 
@@ -100,7 +100,7 @@ export class EventsComponent {
 
   changeEvent(data:Evento){
 
-    if(data.iiId != null){
+    /*if(data.iiId != null){
      
       let realInterest:LineaInteres_event[] = [];
        data.iiId.forEach(element => {
@@ -109,15 +109,71 @@ export class EventsComponent {
 
      data.interestIds = realInterest;
 
-    }
+    }*/
     if(data.description == null) {data.description="";}
     if(data.description_it == null) {data.description_it="";}
     if(data.title_it == null) {data.title_it="";}
     if(data.youtubeLink == null) {data.youtubeLink="";}
     if(data.dateRange.from == null){data.dateRange.from = "";}
     if(data.dateRange.to == null){data.dateRange.to = "";}
-    this.eventService.putEvent(data).subscribe();
+    //this.eventService.putEvent(data).subscribe();
   }
+
+
+  saveEvent(p:Evento){
+ 
+    if(p.description == null) {p.description="";}
+    if(p.description_it == null) {p.description_it="";}
+    if(p.title_it == null) {p.title_it="";}
+    if(p.dateRange.from == null){p.dateRange.from = "";}
+    if(p.dateRange.to == null){p.dateRange.to = "";}
+    if(p.youtubeLink == null) {p.youtubeLink="";}
+
+    this.confirm
+   .open(ConfirmDialogComponent, {
+     data: 'You are going to save this event.'
+   })
+   .afterClosed()
+   .subscribe((confirmado: Boolean) => {
+     if (confirmado) {
+
+   let errorSave:Boolean = false;;
+   
+   if(p.title == "") {errorSave=true;}
+   if(p.title_it == "") {errorSave=true;}
+   if(p.dateRange.from == ""){errorSave=true;}
+   if(p.dateRange.to == ""){errorSave=true;}
+   if(!errorSave){
+       if(p.id == 0 ){
+
+        this.eventService.postEvent(p).subscribe((data:Evento)=>{
+           p = data;
+           p.dateRange.id = data.dateRange.id;
+         });
+       }
+       else{
+        if(p.iiId != null){
+     
+          let realInterest:LineaInteres_event[] = [];
+           p.iiId.forEach(element => {
+             realInterest.push({id:0,id_interest:element,id_event:p.id?p.id:0});
+         });
+    
+         p.interestIds = realInterest;
+    
+        }
+        this.eventService.putEvent(p).subscribe();       
+      }
+   }
+   else{
+     this.errorDialog
+   .open(ConfirmDialogComponent, {
+     data: 'You need to enter all required fields.'
+   })
+   }
+     } 
+   });
+ }
 
   closeAllPanels() {
     this.panels.forEach(panel => {

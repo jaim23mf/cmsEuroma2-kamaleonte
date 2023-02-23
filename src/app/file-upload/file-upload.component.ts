@@ -42,7 +42,7 @@ export class FileUploadComponent implements OnInit{
 
     if (file) {
 
-      //console.log(this.elemId);
+      console.log(this.api+this.type+this.elemId);
 
 
         this.fileName = file.name;

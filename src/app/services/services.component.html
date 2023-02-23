@@ -57,8 +57,11 @@
         <mat-label>Order</mat-label>
         <input matInput type="number" [(ngModel)]="p.order" (focusout)="changeService(p)">
       </mat-form-field>
-      <button class="mat-icon-color" mat-icon-button (click)="deleteService(p)" >
+      <button class="mat-icon-color" style="margin-left: 26px;" mat-icon-button (click)="deleteService(p)" >
         <mat-icon>delete</mat-icon>
+      </button>
+      <button class="mat-icon-color" mat-icon-button (click)="saveService(p)" >
+        <mat-icon>save</mat-icon>
       </button>
     </mat-expansion-panel>
    

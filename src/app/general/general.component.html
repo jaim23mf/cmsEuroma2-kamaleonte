@@ -134,7 +134,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title>
               <p>Special Rule Day: &nbsp;</p>
-              <p>{{showDate(hora.dateRange.from)}} - {{showDate(hora.dateRange.to)}}</p>
+              <p>{{showDate(hora.dateRange.from,hora.dateRange.to)}}</p>
             </mat-panel-title>
             <mat-panel-description>
                 <p> All hours have a 24h format</p>
@@ -209,7 +209,7 @@
 
 </div>
     <h3>Close at :</h3>
-    <form class="hours-form">
+    <form class="hours-form" >
         <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Global</mat-label>
             <input matInput type="time" [(ngModel)]="hora.global.to" name="global" (focusout)="changeException(hora)">
@@ -291,7 +291,9 @@
         <button class="mat-icon-color" mat-icon-button (click)="deleteRule(hora)" >
             <mat-icon>delete</mat-icon>
           </button>
-          
+          <button class="mat-icon-color" mat-icon-button (click)="saveRule(hora)" >
+            <mat-icon>save</mat-icon>
+          </button>
     </div>
   </mat-expansion-panel>
    
@@ -341,6 +343,9 @@
           <br>        
         <button class="mat-icon-color" mat-icon-button (click)="deleteCat(cat)" >
             <mat-icon>delete</mat-icon>
+          </button>
+          <button class="mat-icon-color" mat-icon-button (click)="saveCategory(cat)" >
+            <mat-icon>save</mat-icon>
           </button>
           
     </div>
@@ -393,7 +398,9 @@
           <button class="mat-icon-color" mat-icon-button (click)="deleteSub(sub)" >
               <mat-icon>delete</mat-icon>
             </button>
-            
+            <button class="mat-icon-color" mat-icon-button (click)="saveSubCategory(sub)" >
+              <mat-icon>save</mat-icon>
+            </button>
       </div>
     </mat-expansion-panel>
      
@@ -444,6 +451,9 @@
             <br>
           <button class="mat-icon-color" mat-icon-button (click)="deleteInterest(sub)" >
             <mat-icon>delete</mat-icon>
+          </button>
+          <button class="mat-icon-color" mat-icon-button (click)="saveInterest(sub)" >
+            <mat-icon>save</mat-icon>
           </button>
       </div>
     </mat-expansion-panel>

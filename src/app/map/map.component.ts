@@ -19,7 +19,7 @@ export class MapComponent {
 
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService, private floorService:MapService , private router:Router){
+  public constructor(public confirm: MatDialog,  public erorDialog:MatDialog,private msg_service:MsgService, private floorService:MapService , private router:Router){
 
 
     this.subs = this.msg_service.getText().subscribe((data:any)=>{
@@ -79,7 +79,8 @@ export class MapComponent {
       shopsNodes:[]
     };
 
-    this.floorService.postFloor(f).subscribe((data:Floor)=>{
+    this.floors = [...this.floors,f];
+    /*this.floorService.postFloor(f).subscribe((data:Floor)=>{
       this.floors = [...this.floors,{
         id:data.id,
         name: data.name,
@@ -90,12 +91,46 @@ export class MapComponent {
         navPoints:data.navPoints,
         shopsNodes:data.shopsNodes
       }];
-    });
+    });*/
   }
 
   changeFloor(f:Floor){
-    this.floorService.putFloor(f).subscribe();
+    //this.floorService.putFloor(f).subscribe();
   }
+
+  saveFloor(f:Floor){ 
+      this.confirm
+      .open(ConfirmDialogComponent, {
+        data: 'You are going to save this category.'
+      })
+      .afterClosed()
+      .subscribe((confirmado: Boolean) => {
+        if (confirmado) {
+  
+      let errorSave:Boolean = false;;
+      
+      if(f.name == ""){errorSave =true;}
+      if(f.name_it == ""){errorSave = true;}
+      if(f.floor == null){errorSave = true;}
+      if(!errorSave){
+          if(f.id == 0 ){
+  
+            this.floorService.postFloor(f).subscribe((data:Floor)=>{
+              f = data;
+              })
+          }
+          else{
+            this.floorService.putFloor(f).subscribe();         
+          }
+      }
+      else{
+        this.erorDialog.open(ConfirmDialogComponent, {data: 'You need to enter all required fields.'});
+
+      }
+        } 
+      });
+
+}
 
   deleteFloor(piso:Floor){
     this.confirm

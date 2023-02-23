@@ -98,9 +98,9 @@
             cdkAutosizeMaxRows="5" [(ngModel)]="p.description_it" (focusout)="changeStore(p)"></textarea>
       </mat-form-field>
 
-      <mat-form-field  appearance="outline" class="example-full-width" >
+      <mat-form-field  appearance="outline">
         <mat-label>First Opening Date</mat-label>
-        <input matInput [matDatepicker]="Odate" type="number" [required]="true" [(ngModel)]="p.firstOpeningDay" (ngModelChange)="changeStore(p)" >
+        <input matInput [matDatepicker]="Odate" [required]="true" [(ngModel)]="p.firstOpeningDay" (ngModelChange)="changeStore(p)" >
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="Odate"></mat-datepicker-toggle>
         <mat-datepicker #Odate></mat-datepicker>
@@ -110,6 +110,9 @@
 
       <button class="mat-icon-color" mat-icon-button (click)="deleteStore(p)" >
         <mat-icon>delete</mat-icon>
+      </button>
+      <button class="mat-icon-color" mat-icon-button (click)="saveStore(p)" >
+        <mat-icon>save</mat-icon>
       </button>
     </mat-expansion-panel>
    

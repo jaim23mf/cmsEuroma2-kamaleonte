@@ -15,7 +15,7 @@ import { MsgService } from '../msg.service';
 export class ReachComponent {
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog, private msg_service:MsgService , private serviceService:ReachService){
+  public constructor(public confirm: MatDialog, public errorDialog: MatDialog, private msg_service:MsgService , private serviceService:ReachService){
     this.subs = this.msg_service.getText().subscribe((data:any)=>{
       let prom = this.services.find(f=>f.id == data.type); 
 
@@ -70,7 +70,10 @@ export class ReachComponent {
         order:0
       }
     
-    this.serviceService.postReach(serv).subscribe((data:Reach) =>{
+
+      this.services = [...this.services,serv];
+
+    /*this.serviceService.postReach(serv).subscribe((data:Reach) =>{
       this.services = [...this.services,{
         id:data.id,
         icon: data.icon,
@@ -80,7 +83,7 @@ export class ReachComponent {
         description_it: data.description_it|| " ",
         order:data.order
       }];
-    });
+    });*/
 
   }
 
@@ -90,8 +93,45 @@ export class ReachComponent {
     
     if(s.title_it == null) {s.title_it="";}
 
-    this.serviceService.putReach(s).subscribe();
+    //this.serviceService.putReach(s).subscribe();
   }
+
+
+  saveReach(s:Reach){
+ 
+    this.confirm
+   .open(ConfirmDialogComponent, {
+     data: 'You are going to save this reach us.'
+   })
+   .afterClosed()
+   .subscribe((confirmado: Boolean) => {
+     if (confirmado) {
+
+   let errorSave:Boolean = false;;
+   
+   if(s.title == ""){errorSave =true;}
+   if(s.title_it == ""){errorSave = true;}
+   if(!errorSave){
+       if(s.id == 0 ){
+
+        this.serviceService.postReach(s).subscribe((data:Reach) =>{
+           s = data;
+         });
+       }
+       else{
+        this.serviceService.putReach(s).subscribe();
+       }
+   }
+   else{
+     this.errorDialog
+   .open(ConfirmDialogComponent, {
+     data: 'You need to enter all required fields.'
+   })
+   }
+     } 
+   });
+
+ }
 
   deleteService(s:Reach){
     this.confirm
