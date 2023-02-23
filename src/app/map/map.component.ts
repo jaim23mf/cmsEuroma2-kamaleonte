@@ -101,7 +101,7 @@ export class MapComponent {
   saveFloor(f:Floor){ 
       this.confirm
       .open(ConfirmDialogComponent, {
-        data: 'You are going to save this category.'
+        data: 'You are going to save this floor.'
       })
       .afterClosed()
       .subscribe((confirmado: Boolean) => {

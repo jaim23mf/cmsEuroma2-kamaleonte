@@ -129,7 +129,7 @@ export class BlogComponent {
 
     this.confirm
    .open(ConfirmDialogComponent, {
-     data: 'You are going to save this category.'
+     data: 'You are going to save this blog.'
    })
    .afterClosed()
    .subscribe((confirmado: Boolean) => {
