@@ -1,11 +1,11 @@
-<div class="center">
+<div class="center" *ngIf="admin">
     <h1>Map</h1>
 </div>
 
 
-<button class="mr pegado" mat-raised-button (click)="newFloor()" >NEW FLOOR</button>
+<button class="mr pegado" mat-raised-button (click)="newFloor()" *ngIf="admin">NEW FLOOR</button>
 
-<div class="center">
+<div class="center" *ngIf="admin">
     <button mat-button (click)="openAllPanels()">Expand All</button>
     <button mat-button (click)="closeAllPanels()">Collapse All</button>
   </div>

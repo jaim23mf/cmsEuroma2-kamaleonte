@@ -50,6 +50,14 @@ export class UsersService {
     return this.cookies.get("token");
   }
 
+  setProfile(token: string) {
+    this.cookies.set("profile", token);
+
+  }
+  getProfile() {
+    return this.cookies.get("profile");
+  }
+
   getUserLogged():Observable<any> {
     //console.log(this.cookies.get("token"));
     return this.http.post(this.api + "/PostUser",{token:this.getToken()});

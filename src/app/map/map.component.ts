@@ -9,6 +9,7 @@ import { MsgService } from '../msg.service';
 import { delay, retry, Subscription } from 'rxjs';
 import { MapService } from '../api_connection/api_map/map.service';
 import { Router } from '@angular/router';
+import { UsersService } from '../usersService/users.service';
 
 @Component({
   selector: 'app-map',
@@ -16,13 +17,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent {
-
+  admin = false;
   subs:Subscription;
+  profile = 0;
+  public constructor(public confirm: MatDialog, private userService:UsersService,  public erorDialog:MatDialog,private msg_service:MsgService, private floorService:MapService , private router:Router){
+    this.profile = +this.userService.getProfile();
+    if(this.profile == 1){this.admin=true;}
+    else{this.admin = false;}
 
-  public constructor(public confirm: MatDialog,  public erorDialog:MatDialog,private msg_service:MsgService, private floorService:MapService , private router:Router){
-
-
-    this.subs = this.msg_service.getText().subscribe((data:any)=>{
+    if(this.profile !=0 ){this.subs = this.msg_service.getText().subscribe((data:any)=>{
       let floor = this.floors.find(f=>f.id == data.type); 
       if(floor){
 
@@ -43,6 +46,8 @@ export class MapComponent {
     this.floorService.getAllFloors().subscribe((data:Floor[])=>{
       this.floors = data;
     });
+  }
+  else {this.subs = new Subscription();}
 
   }
 

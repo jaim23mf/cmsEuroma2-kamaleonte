@@ -16,7 +16,7 @@
 <div class="sideNav" >
 <mat-sidenav-container class="sideNav-container" >
   <mat-sidenav class="sideNavBnt" #sidenav mode="side" position="start">
-    <p class="optionBtn"><button mat-button color="white" routerLink="/Map" *ngIf="visible">Map</button></p>
+    <p class="optionBtn"><button mat-button color="white" routerLink="/Map" *ngIf="visible && admin">Map</button></p>
     <p class="optionBtn"><button mat-button color="white" routerLink="/General" *ngIf="visible">General</button></p>
     <p class="optionBtn"><button mat-button color="white" routerLink="/Promo" *ngIf="visible">Promo</button></p>
     <p class="optionBtn"><button mat-button color="white" routerLink="/Events" *ngIf="visible">Events</button></p>
@@ -24,6 +24,7 @@
     <p class="optionBtn"><button mat-button color="white" routerLink="/Services" *ngIf="visible">Services</button></p>
     <p class="optionBtn"><button mat-button color="white" routerLink="/Reach" *ngIf="visible">Reach Us</button></p>
     <p class="optionBtn"><button mat-button color="white" routerLink="/Blog" *ngIf="visible">Blog</button></p>
+    <p class="optionBtn"><button mat-button color="white" (click)="logOut()"  *ngIf="visible">Log Out</button></p>
 
   </mat-sidenav>
   <mat-sidenav-content>
