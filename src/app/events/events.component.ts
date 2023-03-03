@@ -1,10 +1,12 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { delay, retry, Subscription } from 'rxjs';
 import { EventsService } from '../api_connection/api_events/events.service';
 import { InterestService } from '../api_connection/api_interest/interest.service';
+import { setLocalTime } from '../common/global-constants';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Evento } from '../models/evento-model';
 import { Interest, LineaInteres_event } from '../models/interest.model';
@@ -18,7 +20,9 @@ import { MsgService } from '../msg.service';
 export class EventsComponent {
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog,public errorDialog: MatDialog, private msg_service:MsgService, private interestService:InterestService, private eventService: EventsService){
+  public constructor(private dateAdapter: DateAdapter<Date>,public confirm: MatDialog,public errorDialog: MatDialog, private msg_service:MsgService, private interestService:InterestService, private eventService: EventsService){
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
+
     this.subs = this.msg_service.getText().subscribe((data:any)=>{
       let prom = this.events.find(f=>f.id == data.type); 
 
@@ -126,7 +130,10 @@ export class EventsComponent {
     if(p.description_it == null) {p.description_it="";}
     if(p.title_it == null) {p.title_it="";}
     if(p.dateRange.from == null){p.dateRange.from = "";}
+    else{p.dateRange.from = setLocalTime(p.dateRange.from);}
     if(p.dateRange.to == null){p.dateRange.to = "";}
+    else{p.dateRange.to = setLocalTime(p.dateRange.to);}
+
     if(p.youtubeLink == null) {p.youtubeLink="";}
 
     this.confirm
@@ -138,14 +145,13 @@ export class EventsComponent {
      if (confirmado) {
 
    let errorSave:Boolean = false;;
-   
+
    if(p.title == "") {errorSave=true;}
    if(p.title_it == "") {errorSave=true;}
    if(p.dateRange.from == ""){errorSave=true;}
    if(p.dateRange.to == ""){errorSave=true;}
    if(!errorSave){
        if(p.id == 0 ){
-
         this.eventService.postEvent(p).subscribe((data:Evento)=>{
            p = data;
            p.dateRange.id = data.dateRange.id;

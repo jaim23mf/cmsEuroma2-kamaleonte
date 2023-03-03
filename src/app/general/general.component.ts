@@ -7,6 +7,7 @@ import { delay, retry } from 'rxjs';
 import { InterestService } from '../api_connection/api_interest/interest.service';
 import { OpeningService } from '../api_connection/api_opening/opening.service';
 import { ShopService } from '../api_connection/api_shop/shop.service';
+import { setLocalTime } from '../common/global-constants';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Category } from '../models/category-model';
 import { Horario } from '../models/horario-model';
@@ -86,7 +87,7 @@ export class GeneralComponent implements OnInit{
 
   catList:Category[] = [];
   constructor(private dateAdapter: DateAdapter<Date>, public confirm: MatDialog, public erorDialog:MatDialog,public shopService: ShopService , public openingService:OpeningService , public interestService:InterestService) {
-    this.dateAdapter.setLocale('it-IT'); //dd/MM/yyyy
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
     
   }
 
@@ -151,7 +152,9 @@ export class GeneralComponent implements OnInit{
         let errorSave:Boolean = false;;
         
         if(hora.dateRange.from == null){hora.dateRange.from = "";}
+        else{hora.dateRange.from = setLocalTime(hora.dateRange.from);}
         if(hora.dateRange.to == null){hora.dateRange.to = "";}
+        else{hora.dateRange.to = setLocalTime(hora.dateRange.to);}
 
         if(hora.dateRange.from == ""){errorSave =true;}
         if(!errorSave){

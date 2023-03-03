@@ -1,9 +1,11 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { Subscription } from 'rxjs';
 import { InterestService } from '../api_connection/api_interest/interest.service';
 import { ShopService } from '../api_connection/api_shop/shop.service';
+import { setLocalTime } from '../common/global-constants';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Category } from '../models/category-model';
 import { Interest, LineaInteres_shop } from '../models/interest.model';
@@ -25,8 +27,9 @@ export class StoresComponent implements OnInit{
 
   subs:Subscription;
 
-  public constructor(public dialog: MatDialog,public confirm: MatDialog,public errorDialog: MatDialog, private msg_service:MsgService , private shopService:ShopService , private interestService:InterestService){
+  public constructor(private dateAdapter: DateAdapter<Date>,public dialog: MatDialog,public confirm: MatDialog,public errorDialog: MatDialog, private msg_service:MsgService , private shopService:ShopService , private interestService:InterestService){
     this.subs = this.msg_service.getText().subscribe((data:any) =>{
+      this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
 
       let prom = this.stores.find(f=>f.id == data.type); 
       //console.log(data.tipo);
@@ -198,7 +201,7 @@ export class StoresComponent implements OnInit{
     if(s.title_it == null){s.title_it ="";}
     if(s.description_it == null) {s.description_it ="";}
     if(s.firstOpeningDay == null) {s.firstOpeningDay ="";}
-
+    else{s.firstOpeningDay = setLocalTime(s.firstOpeningDay);}
     //this.shopService.putShop(s).subscribe();
 
   }

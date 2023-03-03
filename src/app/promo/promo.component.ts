@@ -1,11 +1,12 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { delay, retry, Subscription } from 'rxjs';
 import { InterestService } from '../api_connection/api_interest/interest.service';
 import { PromoService } from '../api_connection/api_promo/promo.service';
 import { ShopService } from '../api_connection/api_shop/shop.service';
-import { GlobalConstants } from '../common/global-constants';
+import { GlobalConstants, setLocalTime } from '../common/global-constants';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { SelectModel } from '../models/global-model';
 import { Interest, LineaInteres_promo } from '../models/interest.model';
@@ -22,9 +23,10 @@ export class PromoComponent {
   
   subs:Subscription;
 
-  public constructor(public confirm: MatDialog,public errorDialog: MatDialog,  private msg_service:MsgService ,
+  public constructor(private dateAdapter: DateAdapter<Date>,public confirm: MatDialog,public errorDialog: MatDialog,  private msg_service:MsgService ,
   private promosService:PromoService , private shopService:ShopService , private interestService:InterestService)
   {
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
     this.subs = this.msg_service.getText().subscribe((data:any) =>{
       let prom = this.promociones.find(f=>f.id == data.type); 
 
@@ -166,7 +168,9 @@ export class PromoComponent {
     if(p.description_it == null) {p.description_it="";}
     if(p.title_it == null) {p.title_it="";}
     if(p.dateRange.from == null){p.dateRange.from = "";}
+    else{p.dateRange.from = setLocalTime(p.dateRange.from);}
     if(p.dateRange.to == null){p.dateRange.to = "";}
+    else{p.dateRange.to = setLocalTime(p.dateRange.to);}
 
     this.confirm
    .open(ConfirmDialogComponent, {
