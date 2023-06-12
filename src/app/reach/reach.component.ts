@@ -13,6 +13,9 @@ import { MsgService } from '../msg.service';
   styleUrls: ['./reach.component.css']
 })
 export class ReachComponent {
+  currentItemsToShow:Reach[]= [];
+  pageSize = 10;
+  pagesLength = 0;
   subs:Subscription;
 
   public constructor(public confirm: MatDialog, public errorDialog: MatDialog, private msg_service:MsgService , private serviceService:ReachService){
@@ -27,6 +30,8 @@ export class ReachComponent {
 
     this.serviceService.getAllReach().subscribe((data:Reach[]) => {
       this.services = data;
+      this.pagesLength = this.services.length;
+      this.currentItemsToShow = this.services.slice(0,this.pageSize);
     });
 
   }
@@ -148,7 +153,17 @@ export class ReachComponent {
   }
 
 
-
+  onPageChange($event: { pageIndex: number; pageSize: number; }) {
+    this.pageSize = $event.pageSize;
+    this.currentItemsToShow =  this.services.slice($event.pageIndex*$event.pageSize, $event.pageIndex*$event.pageSize + $event.pageSize);
+  }
+  
+  search(text:string){
+    let filter:Reach[] = this.services.filter(elem => elem.title.toLowerCase().includes(text.toLowerCase()));
+    this.currentItemsToShow = filter.slice(0,this.pageSize);
+    this.pagesLength = filter.length;
+  
+  }   
 
   ngOnDestroy(){
     this.subs.unsubscribe();

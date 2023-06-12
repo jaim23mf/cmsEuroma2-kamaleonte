@@ -5,11 +5,12 @@
 <button class="mr pegado" mat-raised-button (click)="newEvent()" > NEW EVENT</button>
 
 <div class="center">
+  <div><input class="search" type="text" placeholder="Search.." #filter (keyup)="search(filter.value)"></div>
     <button mat-button (click)="openAllPanels()">Expand All</button>
     <button mat-button (click)="closeAllPanels()">Collapse All</button>
   </div>
 
-  <div class="center acordeon"   *ngFor="let p of events">
+  <div class="center acordeon"   *ngFor="let p of currentItemsToShow ,let i=index;">
   <mat-accordion class="example-headers-align" multi>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -94,3 +95,9 @@
    
   </mat-accordion>
   </div>
+  <mat-paginator 
+  (page)="onPageChange($event)"
+  [length]="pagesLength"
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25]">
+</mat-paginator>

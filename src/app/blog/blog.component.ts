@@ -14,7 +14,9 @@ import { MsgService } from '../msg.service';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent {
-
+  currentItemsToShow:BlogEntry[]= [];
+  pageSize = 10;
+  pagesLength = 0;
   subs:Subscription;
   hideRequiredControl = new FormControl(false);
   public constructor(public confirm: MatDialog,public errorDialog: MatDialog,  private msg_service:MsgService, private blogService:ApiBlogService){
@@ -37,6 +39,11 @@ export class BlogComponent {
 
     this.blogService.getAllBlog().subscribe((data:BlogEntry[]) => {
       this.blog = data;
+
+
+      this.pagesLength = this.blog.length;
+      this.currentItemsToShow = this.blog.slice(0,this.pageSize);
+
     });
 
 
@@ -181,6 +188,19 @@ export class BlogComponent {
 
     //this.blogService.putBlog(s).subscribe();
   }
+
+
+  onPageChange($event: { pageIndex: number; pageSize: number; }) {
+    this.pageSize = $event.pageSize;
+    this.currentItemsToShow =  this.blog.slice($event.pageIndex*$event.pageSize, $event.pageIndex*$event.pageSize + $event.pageSize);
+  }
+  
+  search(text:string){
+    let filter:BlogEntry[] = this.blog.filter(elem => elem.title.toLowerCase().includes(text.toLowerCase()));
+    this.currentItemsToShow = filter.slice(0,this.pageSize);
+    this.pagesLength = filter.length;
+  
+  }  
 
   ngOnDestroy(){
     this.subs.unsubscribe();

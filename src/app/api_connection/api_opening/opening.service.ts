@@ -48,7 +48,7 @@ export class OpeningService {
       map((res: any) => {
         if (!res) {
           //console.log('Error occurred.');
-          throw new Error('Error');
+          throw new Error(res);
         }
         return res;
       }),

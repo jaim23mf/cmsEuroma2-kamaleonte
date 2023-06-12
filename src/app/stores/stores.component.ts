@@ -23,8 +23,9 @@ import { OphoursDialogComponent } from '../ophours-dialog/ophours-dialog.compone
   styleUrls: ['./stores.component.css']
 })
 export class StoresComponent implements OnInit{
-
-
+  currentItemsToShow:Store[]= [];
+  pagesLength = 0;
+  pageSize = 10;
   subs:Subscription;
 
   public constructor(private dateAdapter: DateAdapter<Date>,public dialog: MatDialog,public confirm: MatDialog,public errorDialog: MatDialog, private msg_service:MsgService , private shopService:ShopService , private interestService:InterestService){
@@ -48,6 +49,7 @@ export class StoresComponent implements OnInit{
     });
   }
   ngOnInit(): void {
+
     this.shopService.getAllShop().subscribe((data:Store[])=>{
         this.stores = data;
         console.log(data);
@@ -59,6 +61,8 @@ export class StoresComponent implements OnInit{
         });
 
         //console.log(this.stores);
+        this.pagesLength = this.stores.length;
+        this.currentItemsToShow = this.stores.slice(0,this.pageSize);
     });
     this.shopService.getAllCategory().subscribe((data: Category[]) => {
       this.catList.push({id:0,title:"Nothing Selected",title_it:"",shopType:0});
@@ -206,6 +210,12 @@ export class StoresComponent implements OnInit{
 
   }
 
+  
+
+  onPageChange($event: { pageIndex: number; pageSize: number; }) {
+    this.pageSize = $event.pageSize;
+    this.currentItemsToShow =  this.stores.slice($event.pageIndex*$event.pageSize, $event.pageIndex*$event.pageSize + $event.pageSize);
+  }
 
   saveStore(s:Store){
  
@@ -316,5 +326,14 @@ export class StoresComponent implements OnInit{
   ngOnDestroy(){
     this.subs.unsubscribe();
   }
+
+
+
+  search(text:string){
+    let filter:Store[] = this.stores.filter(elem => elem.title.toLowerCase().includes(text.toLowerCase()));
+    this.currentItemsToShow = filter.slice(0,this.pageSize);
+    this.pagesLength = filter.length;
+
+  }     
 
 }

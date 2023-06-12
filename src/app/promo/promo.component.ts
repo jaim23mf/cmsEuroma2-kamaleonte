@@ -20,7 +20,9 @@ import { MsgService } from '../msg.service';
   styleUrls: ['./promo.component.css']
 })
 export class PromoComponent {
-  
+  currentItemsToShow:Promo[]= [];
+  pageSize = 10;
+  pagesLength = 0;
   subs:Subscription;
 
   public constructor(private dateAdapter: DateAdapter<Date>,public confirm: MatDialog,public errorDialog: MatDialog,  private msg_service:MsgService ,
@@ -57,7 +59,8 @@ export class PromoComponent {
            s.iiId?.push(i.id_interest);
         });
       });
-
+      this.pagesLength = this.promociones.length;
+      this.currentItemsToShow = this.promociones.slice(0,this.pageSize);
       //console.log(this.promociones);
 
     });
@@ -218,8 +221,17 @@ export class PromoComponent {
 
  }
 
+ onPageChange($event: { pageIndex: number; pageSize: number; }) {
+  this.pageSize = $event.pageSize;
+  this.currentItemsToShow =  this.promociones.slice($event.pageIndex*$event.pageSize, $event.pageIndex*$event.pageSize + $event.pageSize);
+}
 
+search(text:string){
+  let filter:Promo[] = this.promociones.filter(elem => elem.title.toLowerCase().includes(text.toLowerCase()));
+  this.currentItemsToShow = filter.slice(0,this.pageSize);
+  this.pagesLength = filter.length;
 
+}    
   ngOnDestroy(){
     this.subs.unsubscribe();
   }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { debounceTime, map, Observable, retry} from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, retry} from 'rxjs';
 import { GlobalConstants } from 'src/app/common/global-constants';
 import { Category } from 'src/app/models/category-model';
 import { Subcategory } from 'src/app/models/subcat-model';
@@ -138,6 +138,7 @@ export class ShopService {
 
   //LLAMADA PUT A LA API
   putCategory(shop: Category): Observable<any> {
+    console.log(shop);
     return this.http.put(this.api + "/Shop/Category/"+shop.id,shop).pipe(
       debounceTime(5000),
       map((res: any) => {

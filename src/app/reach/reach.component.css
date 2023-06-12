@@ -14,3 +14,20 @@
     position: fixed;
 }
 
+.mat-mdc-paginator {
+    display: block;
+    position: absolute;
+    margin: 10px;
+    width: max-content;
+    margin-left: 40%;
+}
+
+.search{
+    /* display: block; */
+    color: #000000;
+    text-decoration: none;
+    padding: 5px 13px;
+    border: rgb(78, 78, 78) 1px;
+    outline: rgb(134, 118, 118) auto 1px;
+    outline-offset: 0px;
+}

@@ -18,6 +18,9 @@ import { MsgService } from '../msg.service';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent {
+  currentItemsToShow:Evento[]= [];
+  pageSize = 10;
+  pagesLength = 0;
   subs:Subscription;
 
   public constructor(private dateAdapter: DateAdapter<Date>,public confirm: MatDialog,public errorDialog: MatDialog, private msg_service:MsgService, private interestService:InterestService, private eventService: EventsService){
@@ -47,7 +50,8 @@ export class EventsComponent {
            s.iiId?.push(i.id_interest);
         });
       });
-
+      this.pagesLength = this.events.length;
+      this.currentItemsToShow = this.events.slice(0,this.pageSize);
       //console.log(this.events);
 
     });
@@ -212,6 +216,18 @@ export class EventsComponent {
     //console.log(value.msg);
     
   }
+
+  onPageChange($event: { pageIndex: number; pageSize: number; }) {
+    this.pageSize = $event.pageSize;
+    this.currentItemsToShow =  this.events.slice($event.pageIndex*$event.pageSize, $event.pageIndex*$event.pageSize + $event.pageSize);
+  }
+  
+  search(text:string){
+    let filter:Evento[] = this.events.filter(elem => elem.title.toLowerCase().includes(text.toLowerCase()));
+    this.currentItemsToShow = filter.slice(0,this.pageSize);
+    this.pagesLength = filter.length;
+  
+  }    
 
   ngOnDestroy(){
     this.subs.unsubscribe();

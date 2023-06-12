@@ -29,7 +29,7 @@ import { LoginComponent } from './login/login.component';
 import { TokenInterceptorService } from './usersService/token-interceptor.service';
 import { ReachComponent } from './reach/reach.component';
 import { MapEditorComponent } from './map-editor/map-editor.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -62,6 +62,7 @@ import { MapEditorComponent } from './map-editor/map-editor.component';
     FormsModule,
     MatExpansionModule,
     MatSelectModule,
+    MatPaginatorModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatDialogModule
