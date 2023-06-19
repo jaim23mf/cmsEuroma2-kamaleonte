@@ -1,6 +1,6 @@
 export class GlobalConstants {
 
-    public static api: string = "https://localhost:7260";  
+    public static api: string = "https://euroma2.mcms.quantela.com/";  
 
 }
 
