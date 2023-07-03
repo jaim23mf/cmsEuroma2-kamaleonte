@@ -1,0 +1,127 @@
+<div class="center">
+    <h1>Message </h1>
+</div>
+
+<button class="mr pegado" mat-raised-button (click)="newFire()" > NEW MESSAGE</button>
+
+<div class="center">
+  <div><input class="search" type="text" placeholder="Search.." #filter (keyup)="search(filter.value)"></div>
+
+    <button mat-button (click)="openAllPanels()">Expand All</button>
+    <button mat-button (click)="closeAllPanels()">Collapse All</button>
+  </div>
+
+  <div class="center acordeon"   *ngFor="let p of currentItemsToShow ,let i=index;">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <p>Notification Title: &nbsp;&nbsp;</p>
+          <p class="descripcion">{{p.title.length>15?p.title.slice(0,15)+"...":p.title}}&nbsp;&nbsp;</p>
+        </mat-panel-title>
+        <mat-panel-description>
+            <p>Notification Message &nbsp;&nbsp;</p> 
+            <p class="descripcion">{{p.msg.length>15?p.msg.slice(0,15)+"...":p.msg}}&nbsp;&nbsp;</p>
+
+        <mat-icon>sms</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" [(ngModel)]="p.title" [required]="true"  (focusout)="changeFire(p)" [readonly]="!p.editable?true:false">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="p.name" [required]="false"  (focusout)="changeFire(p)" [readonly]="!p.editable?true:false">
+      </mat-form-field>
+
+      <mat-form-field  appearance="outline" class="example-full-width">
+        <mat-label>Target</mat-label>
+        <mat-select [(ngModel)]="target" [disabled]="!p.editable?true:false">
+            <mat-option value="" >--</mat-option>
+            <mat-option value="It" >Italian</mat-option>
+            <mat-option value="En" >English</mat-option>
+          </mat-select>
+    </mat-form-field>
+
+
+      <mat-form-field  appearance="outline" class="example-full-width">
+        <mat-label>Notification Type</mat-label>
+        <mat-select [required]="true" [(ngModel)]="p.notificationType"  (ngModelChange)="changeFire(p)" onchange="changeType(p)" [disabled]="!p.editable?true:false" >
+            <mat-option *ngFor="let s of NotificationTypes"  [value]="s.key" >
+              {{s.value}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+
+      <mat-form-field appearance="outline" [class.cdk-visually-hidden]="p.editable?true:false">
+        <mat-label>Notification Id</mat-label>
+        <input matInput type="text" [(ngModel)]="p.notificationName" [required]="true" [readonly]="true">
+      </mat-form-field>
+      <br>
+<br>
+
+      <mat-form-field  appearance="outline" class="example-full-width" [class.cdk-visually-hidden]="!p.editable?true:false">
+        <mat-label>Notification ID</mat-label>
+        <mat-select [required]="true" [(ngModel)]="p.notificationId"  (ngModelChange)="changeFire(p)" [disabled]="!p.editable?true:false" >
+            <mat-option *ngFor="let s of NotificationIds"  [value]="s.id" >
+              {{s.title}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Message</mat-label>
+        <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5" [(ngModel)]="p.msg"  (focusout)="changeFire(p)" [readonly]="!p.editable?true:false"></textarea>
+      </mat-form-field>
+
+
+    <!--<app-file-upload requiredFileType="img" fileName="{{getName(p.image)}}"  elemId="{{p.id}}" type="/api/Firebase/ImgUpload/" [disabled]="p.editable==undefined?false:p.editable" ></app-file-upload>-->
+
+
+      <!--<mat-form-field appearance="outline">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="Sdate" [required]="true" [(ngModel)]="p.dateRange.from"  (focusout)="changePromo(p)">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="Sdate"></mat-datepicker-toggle>
+        <mat-datepicker #Sdate></mat-datepicker>
+      </mat-form-field> -->
+
+
+
+      <!--<mat-form-field  appearance="outline" class="example-full-width">
+        <mat-label>Store</mat-label>
+        <mat-select [required]="true" [(ngModel)]="p.shopId"  (ngModelChange)="changeFire(p)" >
+            <mat-option *ngFor="let s of stores"  [value]="s.value" >
+              {{s.viewValue}}
+            </mat-option>
+          </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Insterests</mat-label>
+      <mat-select [(ngModel)]="p.iiId" (ngModelChange)="changeFire(p)" multiple>
+        <mat-option *ngFor="let t of interestList" [value]="t.id">{{t.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>-->
+
+      <button class="mat-icon-color" mat-icon-button (click)="saveFire(p)"  [hidden]="!p.editable?true:false"  >
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-expansion-panel>
+   
+  </mat-accordion>
+  </div>
+
+  <mat-paginator 
+  (page)="onPageChange($event)"
+  [length]="pagesLength"
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25]">
+</mat-paginator>

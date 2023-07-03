@@ -89,7 +89,12 @@ export class PromoComponent {
       description_it: "",
       interestIds: []
     };
-    this.promociones = [...this.promociones,promo];
+    //this.promociones = [...this.promociones,promo];
+    let aux:Promo[] = [];
+    aux.push(promo);
+    this.promociones = aux.concat(this.promociones);
+    this.currentItemsToShow = this.promociones.slice(0,this.pageSize);
+
     /*await this.promosService.postPromo(promo).subscribe((data:Promo)=>{
 
       this.promociones = [...this.promociones,{
@@ -184,7 +189,6 @@ export class PromoComponent {
      if (confirmado) {
 
    let errorSave:Boolean = false;;
-   
    if(p.title == "") {errorSave=true;}
    if(p.title_it == "") {errorSave=true;}
    if(p.dateRange.from == ""){errorSave=true;}

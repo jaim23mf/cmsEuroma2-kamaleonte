@@ -94,7 +94,12 @@ export class BlogComponent {
       highlight:false,
 
     };
-    this.blog = [...this.blog,entry];
+    //this.blog = [...this.blog,entry];
+    let aux:BlogEntry[] = [];
+    aux.push(entry);
+    this.blog = aux.concat(this.blog);
+    this.currentItemsToShow = this.blog.slice(0,this.pageSize);
+
     /*await this.blogService.postBlog(entry).subscribe((data:BlogEntry)=>{
 
       this.blog = [...this.blog,{

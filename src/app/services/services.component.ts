@@ -75,7 +75,13 @@ export class ServicesComponent {
         order:0
       }
     
-      this.services = [...this.services,serv];
+      //this.services = [...this.services,serv];
+
+      let aux:Servicio[] = [];
+      aux.push(serv);
+      this.services = aux.concat(this.services);
+      this.currentItemsToShow = this.services.slice(0,this.pageSize);
+
    /* this.serviceService.postService(serv).subscribe((data:Servicio) =>{
       this.services = [...this.services,{
         id:data.id,

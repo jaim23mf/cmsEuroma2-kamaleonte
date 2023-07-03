@@ -29,6 +29,9 @@ export class FileUploadComponent implements OnInit{
   @Input()
   elemId:string = "0";
 
+  @Input()
+  disabled:boolean = false;
+
   api:string = GlobalConstants.api;
 
   constructor(private http: HttpClient, private msg:MsgService,private userService:UsersService,public confirm: MatDialog) {

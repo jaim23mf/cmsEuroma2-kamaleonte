@@ -11,6 +11,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { ReachComponent } from './reach/reach.component';
 import { MapEditorComponent } from './map-editor/map-editor.component';
+import { FrirebaseComponent } from './frirebase/frirebase.component';
 
 const routes: Routes = [
   { path:"Map",component:MapComponent,pathMatch:"full" , canActivate:[AuthGuard]},
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path:"Stores",component:StoresComponent,pathMatch:"full",canActivate:[AuthGuard]},
   { path:"Services",component:ServicesComponent,pathMatch:"full",canActivate:[AuthGuard]},
   { path:"Reach",component:ReachComponent,pathMatch:"full",canActivate:[AuthGuard]},
+  { path:"Notification",component:FrirebaseComponent,pathMatch:"full",canActivate:[AuthGuard]},
   { path:"Blog",component:BlogComponent,pathMatch:"full",canActivate:[AuthGuard]},
   { path:"MapEditor/:floor",component:MapEditorComponent,pathMatch:"full"},
   { path: "Login",component:LoginComponent, pathMatch:"full"},

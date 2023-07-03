@@ -1,0 +1,52 @@
+.acordeon{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.descripcion{
+    max-width: 80%;
+    max-height: 20px;
+    word-break: break-all;
+
+}
+
+.pegado{
+    position: fixed;
+}
+
+mat-form-field{
+    padding: 5px;
+}
+
+.hcheck{
+    height: 20px;
+    position: relative;
+    width: 40px;
+    top: 5px;
+    left:8px;
+}
+
+.hdiv{
+    display: inline-grid;
+    bottom: 15px;
+    position: relative;
+    margin: 15px;
+}
+
+.mat-mdc-paginator {
+    display: block;
+    position: absolute;
+    margin: 10px;
+    width: max-content;
+    margin-left: 40%;
+}
+
+.search{
+    /* display: block; */
+    color: #000000;
+    text-decoration: none;
+    padding: 5px 13px;
+    border: rgb(78, 78, 78) 1px;
+    outline: rgb(134, 118, 118) auto 1px;
+    outline-offset: 0px;
+}

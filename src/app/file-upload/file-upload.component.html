@@ -1,5 +1,5 @@
 <input type="file" class="file-input"
-       (change)="onFileSelected($event)" #fileUpload>
+       (change)="onFileSelected($event)" #fileUpload [readOnly]="disabled">
 
 <div class="file-upload">
 
@@ -9,11 +9,11 @@ top: 77px;"  ng-reflect-floating="true">GLTF</label>-->
   <p style="display: contents;">{{fileName.length>20?"...":""}} {{fileName.length>20?fileName.substr(fileName.length - 20):fileName}}</p>
 
     <button class="mat-icon-color btn" mat-icon-button
-      (click)="fileUpload.click()">
+      (click)="fileUpload.click()" [hidden]="!disabled">
         <mat-icon>attach_file</mat-icon>
     </button>
     <button class="mat-icon-color btn" mat-icon-button
-    (click)="removeFile()">
+    (click)="removeFile()" [hidden]="!disabled">
       <mat-icon>clear</mat-icon>
     </button>
 </div>

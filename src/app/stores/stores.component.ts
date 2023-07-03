@@ -124,8 +124,11 @@ export class StoresComponent implements OnInit{
       interestIds: []
     };
 
-    this.stores = [...this.stores, shop];
-
+    //this.stores = [...this.stores, shop];
+    let aux:Store[] = [];
+    aux.push(shop);
+    this.stores = aux.concat(this.stores);
+    this.currentItemsToShow = this.stores.slice(0,this.pageSize);
     /*await this.shopService.postShop(shop).subscribe((data:Store)=>{
       let oph:Opening_Day[] = []
       console.log(data);

@@ -30,6 +30,7 @@ import { TokenInterceptorService } from './usersService/token-interceptor.servic
 import { ReachComponent } from './reach/reach.component';
 import { MapEditorComponent } from './map-editor/map-editor.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { FrirebaseComponent } from './frirebase/frirebase.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ConfirmDialogComponent,
     LoginComponent,
     ReachComponent,
-    MapEditorComponent
+    MapEditorComponent,
+    FrirebaseComponent
     ],
   imports: [
     BrowserAnimationsModule,

@@ -76,8 +76,11 @@ export class ReachComponent {
       }
     
 
-      this.services = [...this.services,serv];
-
+      //this.services = [...this.services,serv];
+      let aux:Reach[] = [];
+      aux.push(serv);
+      this.services = aux.concat(this.services);
+      this.currentItemsToShow = this.services.slice(0,this.pageSize);
     /*this.serviceService.postReach(serv).subscribe((data:Reach) =>{
       this.services = [...this.services,{
         id:data.id,

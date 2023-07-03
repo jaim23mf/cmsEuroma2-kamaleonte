@@ -79,7 +79,11 @@ export class EventsComponent {
       youtubeLink:""
     }
 
-    this.events = [...this.events,ev];
+    //this.events = [...this.events,ev];
+    let aux:Evento[] = [];
+    aux.push(ev);
+    this.events = aux.concat(this.events);
+    this.currentItemsToShow = this.events.slice(0,this.pageSize);
 
     /*await this.eventService.postEvent(ev).subscribe((data:Evento)=>{
 
