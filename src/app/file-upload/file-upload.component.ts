@@ -30,7 +30,7 @@ export class FileUploadComponent implements OnInit{
   elemId:string = "0";
 
   @Input()
-  disabled:boolean = false;
+  disabled:boolean = true;
 
   api:string = GlobalConstants.api;
 
